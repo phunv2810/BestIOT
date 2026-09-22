@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, user-scalable=2">
+<meta name="mobile-web-app-capable" content="yes">
+
+<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/>
+
+<title>SmartFarm Controller</title>
+
+<script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+<script src="/js/animsition.js" charset="utf-8"></script>
+<link rel="stylesheet" href="css/animsition.min.css">
+
+<script type="text/javascript" src="/js/detect-swipe-event.js"></script>
+
+<script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.categoryAxisRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.highlighter.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.cursor.js"></script>	
+<link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
+
+<script type="text/javascript" src="/js/pagination.js"></script>
+<link rel="stylesheet" type="text/css"href="css/pagination.css" >
+
+<link rel="stylesheet" href="css/view_data.css"/>
+
+<style type="text/css">
+
+</style>
+
+
+</head>
+
+<body>
+<div class="animsition">
+
+<!-------------- Tab ------------------//-->
+<div class="tabs">
+	<!-- 탭 표시 항목 //-->
+	<input id="view_graph" type="radio" name="tab_item" checked>
+	<label class="tab_item" for="view_graph">그래프 보기</label>
+
+	<input id="data_download" type="radio" name="tab_item">
+	<label class="tab_item" for="data_download">데이터 다운로드</label>
+
+	<input id="search_push" type="radio" name="tab_item">
+	<label class="tab_item" for="search_push">푸시 알람 검색</label>
+	
+	
+	<!-- 탭 표시 내용 //-->	
+	<div class="tab_content" id="view_graph_content"></div>
+
+	<div class="tab_content" id="data_download_content"></div>
+
+	<div class="tab_content" id="search_push_content">
+		<div id="push_searchterm"></div>
+		<div id="wrapper1">
+			<section>
+				<div class="data-container1"></div>
+				<div id="pagination-demo1"></div>
+			</section>
+		</div>
+	</div>
+</div>
+<!------------------------------------//-->
+
+</div>
+</body>
+
+<script class="include" type="text/javascript" src="/js/view_data.js"></script>
+
+</html>
+

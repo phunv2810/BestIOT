@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, user-scalable=2">
+<meta name="mobile-web-app-capable" content="yes">
+
+<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/><input type='hidden' id='session_occtrlnum' value='3'/><input type='hidden' id='session_tempctrlnum' value='3'/><input type='hidden' id='session_timectrlnum' value='3'/>
+
+<title>SmartFarm Controller</title>
+
+<script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+<script src="/js/animsition.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/detect-swipe-event.js"></script>
+
+<script class="include" type="text/javascript" src="/js/set_config.js"></script>
+<link rel="stylesheet" href="css/set_config.css"/>
+<link rel="stylesheet" href="css/animsition.min.css">
+
+<style type="text/css">
+
+</style>
+
+
+</head>
+
+<body>
+<div class="animsition">
+
+<!-------------- Tab ------------------//-->
+<div class="tabs">
+	<input id="set_io" type="radio" name="tab_item" checked>
+	<label class="tab_item" for="set_io">동작설정</label>
+
+	<input id="set_alarm" type="radio" name="tab_item">
+	<label class="tab_item" for="set_alarm">알림설정</label>
+
+	<input id="set_system" type="radio" name="tab_item">
+	<label class="tab_item" for="set_system">시스템설정</label>
+
+	<input id="set_network" type="radio" name="tab_item">
+	<label class="tab_item" for="set_network">네트워크설정</label>
+
+	
+	<div class="tab_content" id="set_io_content"></div>
+	<div class="tab_content" id="set_alarm_content"></div>
+
+	<!--<div class="tab_content" id="set_password_content">//-->
+	<div class="tab_content" id="set_system_content">
+		<div class="div1">
+		<div class="lntag">신규 암호 입력</div>
+		
+		<table width="100%" border="0">
+			<tr>
+				<td class="itemname" width="35%">아 &nbsp;&nbsp;&nbsp; 이 &nbsp;&nbsp;&nbsp; 디 </td>
+				<td width="auto">				
+					<input name='id' type='text' id='id' value='' disabled>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="itemname">비밀번호 입력</td>
+				<td>
+					<input name='pw' type='password' id='pw'>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="itemname">비밀번호 확인</td>
+				<td>
+					<input name='pw2' type='password' id='pw2'>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" align="center" style="padding-top:70px; padding-bottom:50px">
+					<input type="button" id="set_password_save" value="설 정 저 장">
+				</td>
+			</tr>
+			
+		</table>
+		
+		</div>
+		
+		<div style="text-align:center;font-size:1.6em;color:#AA8888">
+		<p><br>시스템을 재시작하기 위해서는 화면을 아래로 스크롤 하세요.</p>
+		</div>
+
+		<div style="display:flex; flex-direction: column; justify-content: flex-end; height: 75vh; text-align:center;">
+		<div class="div1">
+		<br>
+		<span>시스템을 재시작 합니다.</span>
+		<br><br>
+		<table width="100%" border="0">
+			<tr>
+				<td align="center">
+					<input type="button" id="system_reset" value="시스템 재시작">
+				</td>
+			</tr>
+		</table>
+		</div>
+		</div>
+		<br>
+	</div>
+	
+
+	<div class="tab_content" id="set_network_content">
+		<div id="loader" class="loader" style="display:none;"></div>
+		<div id="state_msg" style="font-size:2em;padding:35px 0px 10px 30px;color:#888888">WiFi 검색 중...</div>
+		<div id="wifi_list"></div>
+	</div>
+	
+</div>
+<!------------------------------------//-->
+
+</div>
+
+
+</body>
+</html>

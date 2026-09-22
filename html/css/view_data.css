@@ -1,0 +1,501 @@
+html, body{
+  margin:0;
+  padding:0;
+  height:100vh;
+  /*overflow:auto;*/
+}
+
+tr td {
+	border-right-width: 1px;
+	border-right-style: dotted;
+	border-right-color: #DDD;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #DDD;
+}
+
+td label {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2em;
+}
+
+
+.tbl_border00 {
+	border-radius: 5px;
+	border: 1px solid #000000;
+	text-align: center;
+	border-collapse: separate;
+}
+.tbl_border01 {
+	border-radius: 5px;
+	border: 2px solid #000000;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+
+/* text 박스 스타일 */
+input[type=text] {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+	width: 90%;
+	border-radius:4px;
+	margin:0px 0;
+	text-align: center;
+	outline:none;
+}
+input[type=text] + label {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+}
+input[type=text]:focus {
+	border-color:dodgerBlue;
+	box-shadow:0 0 4px 0 dodgerBlue;
+}
+
+/* number 박스 스타일 */
+input[type=number] {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+	width: 90%;
+	border-radius:4px;
+	margin:0px 0;
+	text-align: center;
+	outline:none;
+}
+input[type=number] + label {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+}
+input[type=number]:focus {
+	border-color:dodgerBlue;
+	box-shadow:0 0 4px 0 dodgerBlue;
+}
+
+/* password 박스 스타일 */
+input[type=password] {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+	width: 90%;
+	border-radius:4px;
+	margin:0px 0;
+	text-align: center;
+	outline:none;
+}
+input[type=password] + label {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+}
+input[type=password]:focus {
+	border-color:dodgerBlue;
+	box-shadow:0 0 4px 0 dodgerBlue;
+}
+
+/* 날짜 선택 스타일 */
+input[type=date] {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	padding: 8px 0px;
+	color: #333;
+}
+
+
+/* 체크박스 스타일 */
+input[type=checkbox] {  
+	display: none;  
+}
+input[type=checkbox] + label{
+	display: inline-block;  
+	cursor: pointer;  
+	position: relative;  
+	padding-left: 20px; 
+	padding-top: 10px;
+	padding-bottom: 0px;
+	/*padding: 20px 0px 0px 40px;*/
+	font-size: 1.8em;
+}
+input[type=checkbox]+ label:before {     
+	content: "";  
+	display: inline-block;  
+	width: 35px;
+	height: 35px;
+	/*margin-right: 10px;  */
+	/*margin: 0px 0px 0px 0px;*/
+	position: absolute;  
+	left: -20px; 
+	bottom: -0px;
+	background-color: #ccc;  
+	border-radius: 2px; 
+	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
+}
+input[type=checkbox]:checked + label:before { 
+	content: "\2713";  /* 체크모양 */
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
+	font-size: 1.2em; 
+	font-weight:800; 
+	color: #fff;  
+	background:#2f87c1;
+	text-align: center;  
+	line-height: 26px;
+}
+
+/* 버튼 스타일 */
+input[type=button] {
+	border-radius:5px;
+	border:1px solid #222;
+	display:inline-block;
+	cursor:pointer;
+	color:#333;
+	font-family:Arial;
+	font-size:1em;
+	padding:5px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+
+select {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 0.9em;
+	text-align: center;
+	border: 1px solid #999;
+	background-color: #FFF;
+	font-family: inherit;
+	border-radius: 4px;
+	/*padding-top: 1px;*/
+	/*padding-bottom: 1px;*/
+	text-align-last: center;
+}
+select:focus {
+	border-color:dodgerBlue;
+	box-shadow:0 0 8px 0 dodgerBlue;
+}
+
+
+/* 탭 전체 스타일 */
+.tabs {
+  padding-top: 10px;
+  padding-bottom: 0px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /*width: 700px;*/
+  width: 99%;
+  margin: 0 auto;
+}
+
+/* 탭 스타일 */
+.tab_item {
+  /*width: calc(100%/4);*/
+  width: calc(100%/3 - 1px);
+  height: 80px;
+  border-bottom: 3px solid #333333;
+  border-right: 1px solid #B3B3B3;
+  background-color: #f8f8f8;
+  line-height: 80px;
+  font-size: 26px;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+/* 라디오 버튼 UI삭제*/
+input[name="tab_item"] {
+  display: none;
+}
+
+/* 탭 컨텐츠 스타일 */
+.tab_content {
+  display: none;
+  padding: 0px 0px;
+  clear: both;
+  overflow: hidden;
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#view_graph:checked ~ #view_graph_content, 
+#data_download:checked ~ #data_download_content,
+#search_push:checked ~ #search_push_content
+{
+	display: block;
+}
+
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item {
+  background-color: #333333;
+  color: #fff;
+}
+
+
+
+.div_selectterm {
+	height: auto;
+	width: 100%;
+}
+.tbl_selectterm {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1.8em;
+	font-weight: bold;
+	color: #33F;
+
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border: 1px solid #000;
+	position: relative;
+	background-color: #F3F3F3;
+	text-align: center;
+	border-radius: 5px;
+}
+
+
+
+table input[type=radio] {
+	display:none;
+}
+table input[type=radio] + label {
+	display:inline-block;
+	margin:5px 15px;
+	padding: 7px 20px;
+	font-size: 0.8em;
+	/*line-height: 20px;*/
+	color: #333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
+	background-image: -o-linear-gradient(top,#fff,#e6e6e6);
+	background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+	background-repeat: repeat-x;
+	border: 1px solid #ccc;
+	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	border-bottom-color: #b3b3b3;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+}
+table input[type=radio]:checked + label {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+	background-color:#e0e0e0;
+}
+
+#btn_viewgraph, #btn_datadownload {
+	background-color:#44c767;
+	border-radius:20px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:1em;
+	padding:25px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#btn_viewgraph:disabled, #btn_datadownload:disabled {
+	background-color:#D0D0D0;
+	border-radius:20px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#B9B9B9;
+	font-family:Arial;
+	font-size:1em;
+	padding:25px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+#btn_pushsearch {
+	background-color:#44c767;
+	border-radius:20px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:1em;
+	padding:25px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#btn_pushsearch:disabled {
+	background-color:#D0D0D0;
+	border-radius:20px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#B9B9B9;
+	font-family:Arial;
+	font-size:1em;
+	padding:25px 30px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+#wrapper1, #wrapper2{
+	width: 99%;
+	margin: 20px auto;
+	/*
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ff9999;
+	*/
+}
+.data-container1, .data-container2{
+	font-family: "Arial", "맑은 고딕", "돋움";
+	font-size: 1.4em;
+	width:100%;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;	
+}
+#pagination-demo1, #pagination-demo2{
+	display: flex;
+	justify-content: center;
+}
+
+
+/*
+section table  {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 15px;
+	text-align: center;
+}
+section th {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 15px;
+	text-align: center;
+}
+section tr {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 15px;
+	text-align: center;
+}
+section td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 15px;
+	text-align: center;
+}
+*/
+
+section table, section th, section tr, section td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 5px 15px;
+	text-align: center;
+}
+
+section table thead th{
+	padding: 13px 15px;
+	background-color: DarkGray;
+}
+section table tbody tr:hover{
+	background-color: LightGray;
+}
+
+
+
+
+
+
+.jqplot-title {
+    top: 0px;
+    left: 0px;
+	padding: 0.4em;
+    font-size: 1.4em;
+}
+table.jqplot-table-legend {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+td.jqplot-table-legend-label {
+	padding-left: -1em;
+	font-size: 1.2em;
+}
+td.jqplot-table-legend-label + td.jqplot-table-legend-swatch {
+	padding-left: 2em;
+}
+
+.jqplot-yaxis-label {
+    margin-right: 2px;
+    font-size: 1em;
+    position: absolute;
+}
+.jqplot-y2axis-label, .jqplot-y3axis-label, .jqplot-y4axis-label, .jqplot-y5axis-label, .jqplot-y6axis-label, .jqplot-y7axis-label, .jqplot-y8axis-label, .jqplot-y9axis-label {
+    font-size: 0.6em;
+    margin-left: 0px;
+    position: absolute;
+}
+
+/*======================================================================*/
+.jqplot-highlighter-tooltip {
+	z-index: 9999 !important; /* 충분히 큰 값을 부여 */
+	/*opacity: 1;*/
+	/*background-color: rgba(255, 255, 240, 1);*/ /* 가독성을 위해 배경색 지정 (배경만 투명하게 하고 싶을 때) */
+	background-color: rgba(231, 231, 231, 1); /* 가독성을 위해 배경색 지정 (배경만 투명하게 하고 싶을 때) */
+	/*border: 1px solid #cdcdcd;*/
+	padding: 5px;
+}
+.jqplot-highlighter-tooltip tr td {
+	border : none;
+}
+/*======================================================================*/
+
+
+.chart_area {
+	border: 1px solid #000;
+	position: relative;
+	background-color: #FEFEFE;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.txt_cell_item {
+	color: #000000;
+	font-weight: bolder;
+	font-size: 1.8em;
+	padding: 3px 5px;
+	background-color: #D3D3D3;
+}
+.txt_cell_title {
+	font-size: 2em;
+	font-weight: bold;
+	color: #FFFFE7;
+}
+.txt_cell_value {
+	font-family: "Arial", "맑은 고딕", "돋움";
+	/*color: #5D9FAC;*/
+	color: #BD3F3C;
+	font-weight: bolder;
+	font-size: 2em;
+}

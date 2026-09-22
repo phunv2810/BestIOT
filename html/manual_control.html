@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0, maximum-scale=2.0">
+<meta name="mobile-web-app-capable" content="yes">
+
+<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/>
+
+<title>SmartFarm Controller</title>
+
+<!--<script type="text/javascript" src="/js/jQuery.min.js"></script>//-->
+<!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>//-->
+<script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+<script src="/js/animsition.js" charset="utf-8"></script>
+<link rel="stylesheet" href="css/animsition.min.css">
+
+<script type="text/javascript" src="/js/detect-swipe-event.js"></script>
+<script type="text/javascript" src="/canvas-gauges-master/gauge.min.js"></script>
+
+<script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.pointLabels.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
+<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasOverlay.js"></script>
+
+<!--<script type="text/javascript" src="/jqPlot/jquery-ui/js/jquery-ui.min.js"></script>//-->
+<link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
+
+<script class="include" type="text/javascript" src="/js/portcontrol.js"></script>
+
+
+
+<style type="text/css">
+@font-face{
+	font-family:"lcddot";
+	src:url('/font/lcddot.eot');
+	src:url('/font/lcddot.eot?#iefix') format('embedded-opentype'),
+	url('/font/lcddot.woff') format('woff'),
+	url('/font/lcddot.ttf') format('truetype');
+	src:local(※), url('/font/lcddot.woff') format('woff');
+}
+@font-face{
+	font-family:"SevenSegment5";
+	url('/font/SevenSegment5.woff') format('woff'),
+	url('/font/SevenSegment5.ttf') format('truetype');
+	src:local(※), url('/font/SevenSegment5.woff') format('woff');
+}
+
+/*
+@font-face {
+  font-family: 'digital-7';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/font/digital-7.ttf') format('truetype');
+}
+*/
+
+html, body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:#AAAAAA;
+}
+
+#main {
+	height: auto;
+	width: 100%;
+}
+
+/*jqPlot pointLabel의 속성을 변경시킨다*/
+.jqplot-point-label {
+	color: #FFFF99;
+}
+.jqplot-xaxis-tick {
+    top: 10px;
+    /* initial position untill tick is drawn in proper place */
+    left: 0px;
+    vertical-align: top;
+}
+
+
+
+.tbl_sensor {
+	/*border: 1px solid #000;*/
+	background-color: #444444;
+	text-align: center;
+	margin-top: 2px;
+}
+
+.tbl_sensor2 {
+	/*border: 1px solid #000;*/
+	/*background-color: #5C2A2F;*/
+	background-color: #634343;
+	text-align: center;
+	margin-top: 2px;
+}
+
+.tbl_sensor tr td {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEEEAA;
+	
+	/*padding-left: 40px;*/
+	padding: 10px 20px 10px 20px;
+}
+.tbl_sensor2 tr td {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EEEEAA;
+	
+	/*padding-left: 40px;*/
+	padding: 10px 20px 10px 20px;
+}
+
+
+.tbl_control {
+	/*border: 1px solid #000;*/
+	/*background-color: #AAB;*/
+	background-color: #F0F1F0;
+	text-align: center;
+	border-radius: 5px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	margin-top: 2px;
+}
+
+.tbl_channel {
+	text-align: center;
+	margin-top: 0px;
+	border-radius: 5px;
+	background-color: #F0F1F0;
+	
+	border-collapse: collapse;
+	background: url('/html/img/metal_bg.jpg') no-repeat center;
+	background-size: 100% 100%; /* 테이블 크기에 강제로 맞춤 (비율 무시) */
+}
+
+.tbl_channel2 {
+	text-align: center;
+	margin-top: 0px;
+	border-radius: 5px;
+	background-color: #F0F1F0;
+	
+	border-collapse: collapse;
+	background: url('/html/img/metal_bg.jpg') no-repeat center;
+	background-size: 100% 100%; /* 테이블 크기에 강제로 맞춤 (비율 무시) */
+
+	font-size: 1.6em;
+}
+
+.tbl_control tr td {
+	/*
+	border-right-width: 1px;
+	border-right-style: dotted;
+	border-right-color: #DDD;
+	*/
+	
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #DDD;	
+}
+
+
+.txt_sensor_value {
+	font-family: "Arial", "맑은 고딕", "돋움";
+	font-size: 3em;
+	font-weight: bold;
+	text-align: center;
+	color: #FF0000;
+	/*border-right-color: #F3F3F3;*/
+}
+
+
+
+
+.txt_occtrl_title {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.6em;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px 0px;
+	/*color: #FAFAFB;*/
+	/*background-color: #434363;*/
+
+	color: #222222;
+	background-color: #5BDE40;
+}
+
+.txt_occtrl_name {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.2em;
+	font-weight: bold;
+	text-align: left;
+	padding: 3px 20px;
+	color: #330;
+	background-color: #C3C3D3;
+}
+
+.txt_tempctrl_title {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.6em;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px 0px;
+	/*color: #FAFAFB;*/
+	/*background-color: #634343;*/
+
+	color: #222222;
+	background-color: #FFF61A;
+}
+.txt_tempctrl_name {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.2em;
+	font-weight: bold;
+	text-align: left;
+	padding: 3px 20px;
+	color: #033;
+	background-color: #CAC3C3;
+}
+
+.txt_timectrl_title {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.6em;
+	font-weight: bold;
+	text-align: center;
+	padding: 10px 0px;
+	/*color: #FAFAFB;*/
+	/*background-color: #634343;*/
+
+	color: #222222;
+	background-color: #73FBFD;
+}
+.txt_timectrl_name {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 2.2em;
+	font-weight: bold;
+	text-align: left;
+	padding: 3px 20px;
+	color: #033;
+	background-color: #AFB1D1;
+}
+
+
+.txt_item_value {
+	font-family: "SevenSegment5", "lcddot", "Impact", "맑은 고딕", "돋움";
+	font-size: 3.6em;
+	font-weight: bold;
+	text-align: center;
+	background-color:#222222;
+	/*color: #FF0000;*/
+	color: #FF3636;
+	height: 80%;
+	width: 95%;
+	margin:0px;
+	border-radius:2px;
+	outline:none;
+	/*border-right-color: #F3F3F3;*/
+}
+.txt_item_value2 {
+	font-family: "SevenSegment5", "lcddot", "Impact", "맑은 고딕", "돋움";
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	background-color:#222222;
+	/*color: #FF0000;*/
+	color: #FF3636;
+	height: 80%;
+	width: 95%;
+	margin:0px;
+	border-radius:2px;
+	outline:none;
+	/*border-right-color: #F3F3F3;*/
+}
+
+
+.ctrlbutton{
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	width:95%;
+	height:90%;
+	padding: 1px 0px;
+	color: #888;
+}
+
+.txt_label1 {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1.4em;
+	font-weight: bold;
+	text-align: center;
+	line-height: 2;
+	letter-spacing: 0px;	/* 글자 간격을 10px 넓힘 */
+	color: #222;
+	/*background-color: #EEEEF9;*/
+}
+.txt_unit {
+	font-family: "맑은 고딕", "돋움";
+	font-size: 1.8em;
+	font-weight: bold;
+	text-align: left;
+	line-height: 1;
+	letter-spacing: 10px;	/* 글자 간격을 10px 넓힘 */
+	color: #222;
+	/*background-color: #EEEEF9;*/
+}
+
+
+</style>
+
+</head>
+
+<body>
+<div class="animsition">
+
+	<div id="main">
+	</div>
+	
+	<!-- 
+	<div align='company_info'>
+		<div class="company_telno">아미텔 ☎010-2711-0067</div>
+	</div>
+	//-->
+
+</div>
+</body>
+</html>
