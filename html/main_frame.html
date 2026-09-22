@@ -10,36 +10,23 @@
 
 	<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/>
 
-	<title>신바람 스마트팜</title>
+	<title>고도리 스마트팜</title>
 
 	<script type="text/javascript" src="/js/jQuery.min.js"></script>
-	<!--<script type="text/javascript" src="detect-swipe-event.js"></script>//-->
-	<!--<script src="https://kit.fontawesome.com/15b04007a7.js" crossorigin="anonymous"></script>//-->
 
 	<script type="text/javascript">
-		//var modulenum;
-		
 		$(document).ready(function(){
-			let navbarMenu = document.querySelector('.navbar_menu');
-			//modulenum = $("#session_modulenum").prop("value");
-			
 			setScreenSize();
 
 			$("#menu").click(function(){
 				if(confirm("작업을 종료하고 창을 닫겠습니까?")){		
-					//window.close();
-					window.open('about:blank', '_self').selft.close();	//chrome
-					
-					window.open('', '_self');	//iOS
+					window.open('about:blank', '_self').selft.close();
+					window.open('', '_self');
 					window.close();
-					//closeWindow();
 				}
-				//navbarMenu.classList.toggle('active');
 			});
-
 			
 			$("#control").click(function(){
-				//$("#mainframe").attr('src', "video_screen.html");
 				$("#mainframe").attr('src', "manual_control.html");
 				remove_selectedClass();
 				document.getElementById('control').classList.add('menu-selected');
@@ -55,152 +42,99 @@
 				document.getElementById('config').classList.add('menu-selected');
 			});
 			
-			
-			//iframe 내부에서 message가 도착한 경우
+			// iframe internal message
 			window.addEventListener("message", function(message){
-				//alert("Child Message : " + message.data);
 				if(message.data == "암호변경"){
 					location.href = "/html/login.html";
 				}
-				//if(message.data == "푸시알람"){
-				//	location.href = "https://handfarm.net/pwa/login.html";
-				//}
 			});
-			
-			//select_videochannel(0);
 		});
 
-
-		//window.addEventListener('resize', () => setScreenSize());
 		$(window).resize(function(){
 			setScreenSize();
-			//$("#mainframe").get(0).contentWindow.document
-			//$("#mainframe").get(0).contentWindow.set_screensize();
-			
 		});
-
-		/*
-		window.detectSwipeEvent(window, function (element, direction) {
-
-			console.log("You swiped on element " + element + " to " + direction + " direction");
-
-			switch (direction)  {
-				case "up":
-					alert("Up swipe");
-					break;
-				case "down":
-					alert("Down swipe");
-					break;
-				case "left":
-					//window.history.back();
-					alert("Left swipe");
-					break;
-				case "right":
-					//window.history.go(1);
-					alert("Right swipe");
-					break;
-			}
-		});
-		*/
-
-		/*
-		function closeWindow() {
-			let my_window = window.open(location, '_self');
-
-			setTimeout(function () {
-				my_window.close();
-			}, 1000);
-
-			return false;
-		}
-		*/
 
 		function setScreenSize() {
-			//console.log("setScreenSize() => " + document.querySelector('.title').offsetHeight);
-			
 			let title_heigt = document.querySelector('.title').offsetHeight;			
 			let vh = (window.innerHeight - getNavBarHeight() - 2 - title_heigt) * 0.01;
-			
 			document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-			//console.log("window.innerWidth = " + window.innerWidth);
-			//console.log("window.innerHeight = " + window.innerHeight);
-			//console.log("nav Height = " + document.querySelector('nav').offsetHeight);
-			//console.log("title Height = " + document.querySelector('.title').offsetHeight);
-			
-			//alert("(Width,Height)=" + window.innerWidth + ", " + window.innerHeight);
 		};
+
 		function getNavBarHeight(){
 			return document.querySelector('nav').offsetHeight;
 		};
-		
-
 
 		function remove_selectedClass(){
 			document.getElementById('control').classList.remove('menu-selected');
 			document.getElementById('data').classList.remove('menu-selected');
 			document.getElementById('config').classList.remove('menu-selected');
 		}
-
 	</script>
 
     <link rel="stylesheet" href="css/main.css"/>
-
-	<style type="text/css">
-	</style>
 
 </head>
 
 <body>
 
+	<!-- Top Red Header -->
 	<div class="title">
-		<span>
-		<svg width="48" viewBox="0 0 448 512" fill="#AAAAAA" id="menu">
-		<path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
-		</svg>
-		<div class="title_text">신바람 스마트팜</div>
-		</span>
+		<button class="header-power-btn" id="menu" title="Exit">
+			<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+				<line x1="12" y1="2" x2="12" y2="12"></line>
+			</svg>
+		</button>
+		<div class="header-title-wrapper">
+			<svg width="34" height="26" viewBox="0 0 40 30" fill="#FFFFFF">
+				<path d="M10 26 C15 18 26 12 37 10 C28 16 18 20 12 28 Z"></path>
+				<path d="M2 13 C9 9 22 7 35 5 C22 10 11 16 3 20 Z"></path>
+			</svg>
+			<span class="title_text">고도리 스마트팜</span>
+		</div>
 	</div>
 
-
+	<!-- Main Frame (loads manual_control.html) -->
 	<div class="mframe">
 		<iframe src="/html/manual_control.html" style="width:100%;height:100%;border:0px;top:0px;left:0px;" id="mainframe"></iframe>
 	</div>
 
+	<!-- Bottom Navigation Bar -->
 	<nav>
 		<span class="nav-menu menu-selected" id="control">
 			<div class="icon-wrapper">
-				<svg width="20" fill="white" viewBox="0 0 320 512">
-				<path d="M0 64C0 28.7 28.7 0 64 0H256c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm64 96v64c0 17.7 14.3 32 32 32H224c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H96c-17.7 0-32 14.3-32 32zM80 352a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm24 56a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zm56-56a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm24 56a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zm56-56a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm24 56a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zM128 48c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16H128z"/>
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="9" stroke-dasharray="2 3"></circle>
+					<path d="M12 7v5"></path>
+					<path d="M9.5 15h5"></path>
+					<circle cx="12" cy="12" r="3"></circle>
 				</svg>
 			</div>
-			<div style="font-size:1.6em;">Control</div>
+			<div class="nav-label">Control</div>
 		</span>
 
 		<span class="nav-menu" id="data">
 			<div class="icon-wrapper">
-				<svg width="32" fill="white" viewBox="0 0 512 512">
-				<path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/>
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="20" x2="18" y2="10"></line>
+					<line x1="12" y1="20" x2="12" y2="4"></line>
+					<line x1="6" y1="20" x2="6" y2="14"></line>
+					<polyline points="2 18 8 12 14 16 22 8"></polyline>
 				</svg>
 			</div>
-			<div style="font-size:1.6em;">&nbsp;&nbsp;Data&nbsp;&nbsp;</div>
+			<div class="nav-label">Data</div>
 		</span>
 
 		<span class="nav-menu" id="config">
 			<div class="icon-wrapper">
-				<svg width="32" fill="white" viewBox="0 0 512 512">
-				<path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"/>
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="3"></circle>
+					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
 				</svg>
 			</div>
-			<div style="font-size:1.6em;">Config</div>
+			<div class="nav-label">Setting</div>
 		</span>
 	</nav>
 
-
-	<!-- 
-	<div align='company_info'>
-		<div class="company_telno">아미텔 ☎010-2711-0067</div>
-	</div>
-	 //-->
 </body>
 </html>

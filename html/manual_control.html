@@ -1,332 +1,1347 @@
 <!doctype html>
 <html>
+
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0, maximum-scale=2.0">
-<meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0, maximum-scale=2.0">
+    <meta name="mobile-web-app-capable" content="yes">
 
-<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/>
+    <input type='hidden' id='session_id' value='admin' /><input type='hidden' id='session_lv' value='' />
 
-<title>SmartFarm Controller</title>
+    <title>SmartFarm Controller</title>
 
-<!--<script type="text/javascript" src="/js/jQuery.min.js"></script>//-->
-<!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>//-->
-<script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
-<script src="/js/animsition.js" charset="utf-8"></script>
-<link rel="stylesheet" href="css/animsition.min.css">
+    <!--<script type="text/javascript" src="/js/jQuery.min.js"></script>//-->
+    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>//-->
+    <script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+    <script src="/js/animsition.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/animsition.min.css">
 
-<script type="text/javascript" src="/js/detect-swipe-event.js"></script>
-<script type="text/javascript" src="/canvas-gauges-master/gauge.min.js"></script>
+    <script type="text/javascript" src="/js/detect-swipe-event.js"></script>
+    <script type="text/javascript" src="/canvas-gauges-master/gauge.min.js"></script>
 
-<script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.pointLabels.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasOverlay.js"></script>
+    <script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.pointLabels.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasOverlay.js"></script>
 
-<!--<script type="text/javascript" src="/jqPlot/jquery-ui/js/jquery-ui.min.js"></script>//-->
-<link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
+    <!--<script type="text/javascript" src="/jqPlot/jquery-ui/js/jquery-ui.min.js"></script>//-->
+    <link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
 
-<script class="include" type="text/javascript" src="/js/portcontrol.js"></script>
+    <!-- Chart.js Modern Charting Library -->
+    <script type="text/javascript" src="../js/chart.min.js"></script>
+    <script type="text/javascript" src="/js/chart.min.js"></script>
 
+    <script class="include" type="text/javascript" src="../js/portcontrol.js"></script>
+    <script class="include" type="text/javascript" src="/js/portcontrol.js"></script>
 
+    <style type="text/css">
+        /* ==========================================================================
+           CUSTOM CSS CHANGELOG & ARCHITECTURE GUIDE
+           ==========================================================================
+           Modern card UI built with CSS while preserving 100% existing HTML structure
+           and element IDs for full compatibility with PHP/JS backend logic.
+           - Replaced legacy gauge with full-width line chart.
+           - Added "Recent Temperature Trend" header.
+           - Refined transparent background, axis labels, and temperature indicators.
+           ========================================================================== */
 
-<style type="text/css">
-@font-face{
-	font-family:"lcddot";
-	src:url('/font/lcddot.eot');
-	src:url('/font/lcddot.eot?#iefix') format('embedded-opentype'),
-	url('/font/lcddot.woff') format('woff'),
-	url('/font/lcddot.ttf') format('truetype');
-	src:local(※), url('/font/lcddot.woff') format('woff');
-}
-@font-face{
-	font-family:"SevenSegment5";
-	url('/font/SevenSegment5.woff') format('woff'),
-	url('/font/SevenSegment5.ttf') format('truetype');
-	src:local(※), url('/font/SevenSegment5.woff') format('woff');
-}
+        /* ==========================================================================
+           1. GLOBAL & PAGE RESET
+           ========================================================================== */
 
-/*
-@font-face {
-  font-family: 'digital-7';
-  font-style: normal;
-  font-weight: 100;
-  src: url('/font/digital-7.ttf') format('truetype');
-}
-*/
+        /* Reset box-sizing and disable tap highlight on mobile */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-html, body{
-  margin:0;
-  padding:0;
-  height:100%;
-  background:#AAAAAA;
-}
+        /* Modern light gray page background with default system fonts */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #F6F7F9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "맑은 고딕", "Malgun Gothic", sans-serif;
+            color: #1E293B;
+        }
 
-#main {
-	height: auto;
-	width: 100%;
-}
+        /* ==========================================================================
+           2. MAIN CONTAINER & CARD LAYOUT
+           ========================================================================== */
 
-/*jqPlot pointLabel의 속성을 변경시킨다*/
-.jqplot-point-label {
-	color: #FFFF99;
-}
-.jqplot-xaxis-tick {
-    top: 10px;
-    /* initial position untill tick is drawn in proper place */
-    left: 0px;
-    vertical-align: top;
-}
+        /* Main container (#main): max width 980px and centered */
+        #main {
+            height: auto;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 10px 16px 40px 16px;
+            box-sizing: border-box;
+        }
 
+        /* Outer table: 16px vertical gap between channels */
+        #main>table {
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 0px !important;
+        }
 
+        /* White card container for content cells */
+        #main>table>tbody>tr>td:not(.txt_occtrl_title):not(.txt_occtrl_name):not(.txt_tempctrl_title):not(.txt_tempctrl_name):not(.txt_timectrl_title):not(.txt_timectrl_name):not(.card_wrapper_td),
+        #main>table>tr>td:not(.txt_occtrl_title):not(.txt_occtrl_name):not(.txt_tempctrl_title):not(.txt_tempctrl_name):not(.txt_timectrl_title):not(.txt_timectrl_name):not(.card_wrapper_td) {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+            padding: 0 !important;
+            /* Remove padding so tbl_channel sits flush with card borders */
+            display: block !important;
+            margin-bottom: 16px !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
+            /* 16px border-radius */
+        }
 
-.tbl_sensor {
-	/*border: 1px solid #000;*/
-	background-color: #444444;
-	text-align: center;
-	margin-top: 2px;
-}
+        /* Hide legacy group headers and spacers replaced by tab bar */
+        .txt_occtrl_title,
+        .txt_tempctrl_title,
+        .txt_timectrl_title,
+        #main>table>tbody>tr>td[style*="font-size:10px"],
+        #main>table>tr>td[style*="font-size:10px"] {
+            display: none !important;
+        }
 
-.tbl_sensor2 {
-	/*border: 1px solid #000;*/
-	/*background-color: #5C2A2F;*/
-	background-color: #634343;
-	text-align: center;
-	margin-top: 2px;
-}
+        /* Channel header (e.g., Ventilation, Heater Controller) with green bar */
+        .txt_occtrl_name,
+        .txt_tempctrl_name,
+        .txt_timectrl_name {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 6px 0 6px 2px !important;
+            margin: 6px 0 0px 0 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "맑은 고딕", "Malgun Gothic", sans-serif !important;
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            line-height: 1.2 !important;
+            letter-spacing: -0.3px !important;
+            text-align: left !important;
+        }
 
-.tbl_sensor tr td {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #EEEEAA;
-	
-	/*padding-left: 40px;*/
-	padding: 10px 20px 10px 20px;
-}
-.tbl_sensor2 tr td {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #EEEEAA;
-	
-	/*padding-left: 40px;*/
-	padding: 10px 20px 10px 20px;
-}
+        /* Dark green vertical accent bar */
+        .txt_occtrl_name::before,
+        .txt_tempctrl_name::before,
+        .txt_timectrl_name::before {
+            content: "" !important;
+            display: inline-block !important;
+            width: 6px !important;
+            height: 25px !important;
+            background-color: #15803D !important;
+            border-radius: 2px !important;
+            margin-right: 12px !important;
+            flex-shrink: 0 !important;
+        }
 
+        /* ==========================================================================
+           2.1. SMART CARD DIV ARCHITECTURE
+           3 control columns + divider line + 24h trend chart
+           ========================================================================== */
 
-.tbl_control {
-	/*border: 1px solid #000;*/
-	/*background-color: #AAB;*/
-	background-color: #F0F1F0;
-	text-align: center;
-	border-radius: 5px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-	margin-top: 2px;
-}
+        /* Reset table td wrapper for new card component */
+        .card_wrapper_td {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 0 20px 0 !important;
+            display: block !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
 
-.tbl_channel {
-	text-align: center;
-	margin-top: 0px;
-	border-radius: 5px;
-	background-color: #F0F1F0;
-	
-	border-collapse: collapse;
-	background: url('/html/img/metal_bg.jpg') no-repeat center;
-	background-size: 100% 100%; /* 테이블 크기에 강제로 맞춤 (비율 무시) */
-}
+        /* White card container wrapping controls and chart */
+        .smart_card {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+            padding: 0 !important;
+            margin-top: 8px !important;
+            margin-bottom: 0px !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+            overflow: hidden !important;
+        }
 
-.tbl_channel2 {
-	text-align: center;
-	margin-top: 0px;
-	border-radius: 5px;
-	background-color: #F0F1F0;
-	
-	border-collapse: collapse;
-	background: url('/html/img/metal_bg.jpg') no-repeat center;
-	background-size: 100% 100%; /* 테이블 크기에 강제로 맞춤 (비율 무시) */
+        /* Upper card section: 3-column horizontal layout */
+        .card_control_top {
+            display: flex !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
 
-	font-size: 1.6em;
-}
+        .card_col {
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 0 !important;
+        }
 
-.tbl_control tr td {
-	/*
-	border-right-width: 1px;
-	border-right-style: dotted;
-	border-right-color: #DDD;
-	*/
-	
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #DDD;	
-}
+        /* Column 1: Current temp + 4 status indicators */
+        .card_col_current {
+            flex: 1.15 !important;
+        }
 
+        /* Column 2: Temperature settings (Set Temp / Hysteresis Temp) */
+        .card_col_settings {
+            flex: 1.15 !important;
+            border-left: 1px solid #E2E8F0 !important;
+        }
 
-.txt_sensor_value {
-	font-family: "Arial", "맑은 고딕", "돋움";
-	font-size: 3em;
-	font-weight: bold;
-	text-align: center;
-	color: #FF0000;
-	/*border-right-color: #F3F3F3;*/
-}
+        /* Column 3: Manual control buttons */
+        .card_col_manual {
+            flex: 0.9 !important;
+            border-left: 1px solid #E2E8F0 !important;
+            padding: 14px 18px !important;
+            justify-content: center !important;
+        }
 
+        /* Current temperature display (Sub-row 1 of Column 1) */
+        .temp_main_row {
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            flex: 1 1 0px !important;
+            min-height: 80px !important;
+            padding: 14px 20px !important;
+            box-sizing: border-box !important;
+        }
 
+        .temp_icon_wrap {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 12px !important;
+            background: #F0FDF4 !important;
+        }
 
+        .thermometer_svg {
+            display: block !important;
+        }
 
-.txt_occtrl_title {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.6em;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px 0px;
-	/*color: #FAFAFB;*/
-	/*background-color: #434363;*/
+        .temp_info_box {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
 
-	color: #222222;
-	background-color: #5BDE40;
-}
+        .ctrl_label {
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: #1E293B !important;
+            letter-spacing: -0.2px !important;
+            margin-bottom: 2px !important;
+            line-height: 1.2 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
 
-.txt_occtrl_name {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.2em;
-	font-weight: bold;
-	text-align: left;
-	padding: 3px 20px;
-	color: #330;
-	background-color: #C3C3D3;
-}
+        .temp_value_row {
+            display: flex !important;
+            align-items: baseline !important;
+            gap: 2px !important;
+        }
 
-.txt_tempctrl_title {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.6em;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px 0px;
-	/*color: #FAFAFB;*/
-	/*background-color: #634343;*/
+        .temp_val_now,
+        .temp_val_set {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-size: 34px !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            border: none !important;
+            background: transparent !important;
+            width: 88px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            outline: none !important;
+            pointer-events: none !important;
+            user-select: none !important;
+            letter-spacing: -0.5px !important;
+        }
 
-	color: #222222;
-	background-color: #FFF61A;
-}
-.txt_tempctrl_name {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.2em;
-	font-weight: bold;
-	text-align: left;
-	padding: 3px 20px;
-	color: #033;
-	background-color: #CAC3C3;
-}
+        /* Hide number input spinner arrows */
+        .temp_val_now::-webkit-outer-spin-button,
+        .temp_val_now::-webkit-inner-spin-button,
+        .temp_val_set::-webkit-outer-spin-button,
+        .temp_val_set::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0 !important;
+        }
 
-.txt_timectrl_title {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.6em;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px 0px;
-	/*color: #FAFAFB;*/
-	/*background-color: #634343;*/
+        .temp_val_now,
+        .temp_val_set {
+            -moz-appearance: textfield !important;
+        }
 
-	color: #222222;
-	background-color: #73FBFD;
-}
-.txt_timectrl_name {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 2.2em;
-	font-weight: bold;
-	text-align: left;
-	padding: 3px 20px;
-	color: #033;
-	background-color: #AFB1D1;
-}
+        .temp_val_now {
+            color: #15803D !important;
+        }
 
+        .temp_val_set {
+            color: #EF4444 !important;
+        }
 
-.txt_item_value {
-	font-family: "SevenSegment5", "lcddot", "Impact", "맑은 고딕", "돋움";
-	font-size: 3.6em;
-	font-weight: bold;
-	text-align: center;
-	background-color:#222222;
-	/*color: #FF0000;*/
-	color: #FF3636;
-	height: 80%;
-	width: 95%;
-	margin:0px;
-	border-radius:2px;
-	outline:none;
-	/*border-right-color: #F3F3F3;*/
-}
-.txt_item_value2 {
-	font-family: "SevenSegment5", "lcddot", "Impact", "맑은 고딕", "돋움";
-	font-size: 2em;
-	font-weight: bold;
-	text-align: center;
-	background-color:#222222;
-	/*color: #FF0000;*/
-	color: #FF3636;
-	height: 80%;
-	width: 95%;
-	margin:0px;
-	border-radius:2px;
-	outline:none;
-	/*border-right-color: #F3F3F3;*/
-}
+        .ctrl_unit_c {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            line-height: 1 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
 
+        .unit_now {
+            color: #15803D !important;
+        }
 
-.ctrlbutton{
-	font-size: 2em;
-	font-weight: bold;
-	text-align: center;
-	width:95%;
-	height:90%;
-	padding: 1px 0px;
-	color: #888;
-}
+        .unit_set {
+            color: #EF4444 !important;
+        }
 
-.txt_label1 {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1.4em;
-	font-weight: bold;
-	text-align: center;
-	line-height: 2;
-	letter-spacing: 0px;	/* 글자 간격을 10px 넓힘 */
-	color: #222;
-	/*background-color: #EEEEF9;*/
-}
-.txt_unit {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1.8em;
-	font-weight: bold;
-	text-align: left;
-	line-height: 1;
-	letter-spacing: 10px;	/* 글자 간격을 10px 넓힘 */
-	color: #222;
-	/*background-color: #EEEEF9;*/
-}
+        /* Divider line between Sub-row 1 and Sub-row 2 */
+        .col_divider_h {
+            border: none !important;
+            border-top: 1px solid #E2E8F0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 1px !important;
+            flex-shrink: 0 !important;
+        }
 
+        /* 4 status indicators (Sub-row 2 of Column 1) */
+        .status_indicators_grid {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            text-align: center !important;
+            gap: 6px !important;
+            flex: 1 1 0px !important;
+            min-height: 80px !important;
+            padding: 14px 20px !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+        }
 
-</style>
+        .status_col {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+        }
+
+        .status_label {
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            line-height: 1.25 !important;
+            min-height: 28px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
+
+        .status_led_img {
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 50% !important;
+            margin-top: 6px !important;
+            display: block !important;
+            object-fit: contain !important;
+        }
+
+        /* Temperature settings (Sub-row 1 & 2 of Column 2) */
+        .setting_row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex: 1 1 0px !important;
+            min-height: 80px !important;
+            padding: 14px 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        .setting_info {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
+
+        .stepper_box {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 44px !important;
+            height: 56px !important;
+            border: 1.5px solid #CBD5E1 !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            background: #FFFFFF !important;
+            flex-shrink: 0 !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        }
+
+        .btn_stepper {
+            flex: 1 !important;
+            height: 28px !important;
+            border: none !important;
+            background: #FFFFFF !important;
+            color: #1E293B !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            outline: none !important;
+            transition: all 0.15s ease !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .btn_stepper:first-child {
+            border-bottom: 1px solid #E2E8F0 !important;
+        }
+
+        .btn_stepper:hover {
+            background-color: #F1F5F9 !important;
+            color: #000000 !important;
+        }
+
+        .btn_stepper:active {
+            background-color: #E2E8F0 !important;
+        }
+
+        /* Manual control buttons */
+        .manual_ctrl_title {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            margin-bottom: 8px !important;
+            letter-spacing: -0.2px !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
+
+        .manual_btn_group {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
+            border-radius: 8px !important;
+            padding: 8px !important;
+            background: #FFFFFF !important;
+        }
+
+        .btn_manual {
+            width: 100% !important;
+            height: 44px !important;
+            border-radius: 6px !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            outline: none !important;
+            box-sizing: border-box !important;
+            user-select: none !important;
+        }
+
+        .btn_manual_open {
+            background-color: #0B7347 !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #0B7347 !important;
+            box-shadow: 0 2px 6px rgba(11, 115, 71, 0.28) !important;
+        }
+
+        .btn_manual_open:hover {
+            background-color: #09633C !important;
+            border-color: #09633C !important;
+        }
+
+        .btn_manual_close {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border: 1.5px solid #CBD5E1 !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .btn_manual_close:hover {
+            background-color: #F8FAFC !important;
+            border-color: #94A3B8 !important;
+        }
+
+        .btn_icon {
+            display: block !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Horizontal divider separating controls and chart */
+        .card_divider_main {
+            border: none !important;
+            border-top: 1px solid #E2E8F0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 1px !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* 24-hour temperature trend chart section */
+        .card_chart_section {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 16px 20px 20px 20px !important;
+        }
+
+        .chart_header_row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 12px !important;
+        }
+
+        .chart_section_title {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            letter-spacing: -0.2px !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
+
+        .chart_legend_box {
+            display: flex !important;
+            align-items: center !important;
+            gap: 16px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }
+
+        .legend_item {
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+        }
+
+        .legend_line {
+            display: inline-block !important;
+            width: 16px !important;
+            height: 3px !important;
+            border-radius: 2px !important;
+        }
+
+        .legend_line_set {
+            background-color: #FCA5A5 !important;
+        }
+
+        .legend_line_now {
+            background-color: #15803D !important;
+        }
+
+        .chart_canvas_wrap {
+            position: relative !important;
+            width: 100% !important;
+            height: 260px !important;
+        }
+
+        /* ==========================================================================
+           3. TIMER CONTROL TABLE (ITEM 3: .tbl_channel2)
+           ========================================================================== */
+        .tbl_channel2,
+        .tbl_control {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            table-layout: fixed !important;
+            background: transparent !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .tbl_channel2 tr {
+            height: auto !important;
+        }
+
+        .tbl_channel2 tr td {
+            height: auto !important;
+            padding: 6px 8px !important;
+            vertical-align: middle !important;
+            border: none !important;
+            min-width: 0 !important;
+            max-width: none !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Timer input fields styling (Item 3) */
+        .txt_item_value2 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            background: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 6px !important;
+            outline: none !important;
+            height: 36px !important;
+            width: 100% !important;
+            max-width: 120px !important;
+            padding: 0 6px !important;
+            margin: 0 !important;
+            opacity: 1 !important;
+            -moz-appearance: textfield;
+        }
+
+        .txt_item_value2::-webkit-inner-spin-button,
+        .txt_item_value2::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .txt_item_value2:disabled {
+            opacity: 1 !important;
+            cursor: default;
+        }
+
+        /* ==========================================================================
+           5. TYPE 2: TEMPERATURE CONTROL CARD
+           4-column flexbox layout:
+           - Col 1: Current temp with thermometer icon
+           - Col 2: Set temp with stepper buttons
+           - Col 3: Mode indicators (COOL & HEAT)
+           - Col 4: Output LED indicator
+           ========================================================================== */
+
+        .temp_control_top {
+            display: flex !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            min-height: 86px !important;
+        }
+
+        .temp_col {
+            box-sizing: border-box !important;
+            display: flex !important;
+            align-items: center !important;
+            padding: 14px 20px !important;
+        }
+
+        /* Col 1: Current Temp */
+        .temp_col_current {
+            flex: 1.15 !important;
+            gap: 14px !important;
+        }
+
+        /* Col 2: Set Temp & Stepper */
+        .temp_col_setting {
+            position: relative !important;
+            flex: 1.2 !important;
+            padding-left: 28px !important;
+            justify-content: space-between !important;
+        }
+
+        .temp_col_setting::before {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 12px !important;
+            bottom: 12px !important;
+            width: 1px !important;
+            background-color: #E2E8F0 !important;
+        }
+
+        /* Col 3: Mode indicators (COOL & HEAT) */
+        .temp_col_mode {
+            position: relative !important;
+            flex: 1.15 !important;
+            padding-left: 28px !important;
+            border-left: none !important;
+            justify-content: space-around !important;
+        }
+
+        .temp_col_mode::before {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 12px !important;
+            bottom: 12px !important;
+            width: 1px !important;
+            background-color: #E2E8F0 !important;
+        }
+
+        .mode_item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+        }
+
+        .mode_title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.2px !important;
+            line-height: 1 !important;
+        }
+
+        .mode_title_cool {
+            color: #0D652D !important;
+        }
+
+        .mode_title_heat {
+            color: #64748B !important;
+        }
+
+        .mode_icon {
+            width: 24px !important;
+            height: 24px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .mode_icon svg {
+            display: block !important;
+        }
+
+        /* Mode indicator lights (COOL & HEAT) */
+        .temp_mode_indicator {
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 50% !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            object-fit: contain !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* Active COOL: green ring with center dot */
+        .mode_cool .temp_mode_indicator,
+        img[id^="templampcool_"]:not([src*="Disable"]) {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%230D652D' stroke-width='2.5'/%3E%3Ccircle cx='8' cy='8' r='2.5' fill='%230D652D'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Disabled COOL: empty gray ring */
+        img[id^="templampcool_"][src*="Disable"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%23CBD5E1' stroke-width='2'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Disabled HEAT: empty gray ring */
+        .mode_heat .temp_mode_indicator,
+        img[id^="templampheat_"][src*="Disable"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%23CBD5E1' stroke-width='2'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Active HEAT: red ring with center dot */
+        img[id^="templampheat_"][src*="Red"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%23EF4444' stroke-width='2.5'/%3E%3Ccircle cx='8' cy='8' r='2.5' fill='%23EF4444'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Col 4: Output */
+        .temp_col_output {
+            position: relative !important;
+            flex: 0.8 !important;
+            padding-left: 28px !important;
+            border-left: none !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            min-width: 90px !important;
+        }
+
+        /* Output vertical divider with 12px top/bottom margin */
+        .temp_col_output::before {
+            content: "" !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 12px !important;
+            bottom: 12px !important;
+            width: 1px !important;
+            background-color: #E2E8F0 !important;
+        }
+
+        .output_title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: #0F172A !important;
+            line-height: 1 !important;
+            letter-spacing: -0.2px !important;
+        }
+
+        /* 3D red metallic LED indicator for Output */
+        .temp_output_led,
+        img[id^="templampout_"] {
+            width: 26px !important;
+            height: 26px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            border: none !important;
+            outline: none !important;
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cdefs%3E%3CradialGradient id='redLed' cx='35%25' cy='35%25' r='65%25' fx='30%25' fy='30%25'%3E%3Cstop offset='0%25' stop-color='%23FF8888'/%3E%3Cstop offset='35%25' stop-color='%23EE0000'/%3E%3Cstop offset='85%25' stop-color='%23990000'/%3E%3Cstop offset='100%25' stop-color='%23550000'/%3E%3C/radialGradient%3E%3ClinearGradient id='rim' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23E2E8F0'/%3E%3Cstop offset='100%25' stop-color='%2394A3B8'/%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='1.5' stdDeviation='1.5' flood-color='rgba(238,0,0,0.35)'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23rim)'/%3E%3Ccircle cx='16' cy='16' r='12' fill='url(%23redLed)' filter='url(%23glow)'/%3E%3Cellipse cx='12' cy='11' rx='4.5' ry='2.5' transform='rotate(-30 12 11)' fill='rgba(255,255,255,0.75)'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Disabled Output LED */
+        img[id^="templampout_"][src*="Disable"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cdefs%3E%3CradialGradient id='grayLed' cx='35%25' cy='35%25' r='65%25' fx='30%25' fy='30%25'%3E%3Cstop offset='0%25' stop-color='%23CBD5E1'/%3E%3Cstop offset='35%25' stop-color='%2394A3B8'/%3E%3Cstop offset='85%25' stop-color='%2364748B'/%3E%3Cstop offset='100%25' stop-color='%23475569'/%3E%3C/radialGradient%3E%3ClinearGradient id='rim' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23E2E8F0'/%3E%3Cstop offset='100%25' stop-color='%2394A3B8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23rim)'/%3E%3Ccircle cx='16' cy='16' r='12' fill='url(%23grayLed)'/%3E%3Cellipse cx='12' cy='11' rx='4.5' ry='2.5' transform='rotate(-30 12 11)' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Cyan legend line for Set Temp (Item 2) */
+        .legend_line_temp_set {
+            background-color: #67E8F9 !important;
+        }
+
+        /* ==========================================================================
+           11. TAB BAR NAVIGATION (VENT CONTROLLER / TEMPERATURE CONTROLLER)
+           ========================================================================== */
+        .ctrl_tab_bar_wrap {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 16px 16px 4px 16px;
+            box-sizing: border-box;
+        }
+
+        .ctrl_tab_bar {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ctrl_tab_btn {
+            flex: 1;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            background-color: #FFFFFF;
+            color: #0F172A;
+            border: 1.5px solid #CBD5E1;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            user-select: none;
+        }
+
+        .ctrl_tab_btn:hover {
+            background-color: #F8FAFC;
+            border-color: #94A3B8;
+        }
+
+        .ctrl_tab_btn.active {
+            background-color: #0B7347 !important;
+            color: #FFFFFF !important;
+            border-color: #0B7347 !important;
+            box-shadow: 0 2px 8px rgba(11, 115, 71, 0.22) !important;
+        }
+
+        .ctrl_tab_btn.active:hover {
+            background-color: #09633C !important;
+            border-color: #09633C !important;
+        }
+    </style>
 
 </head>
 
 <body>
-<div class="animsition">
+    <div class="animsition">
 
-	<div id="main">
-	</div>
-	
-	<!-- 
+        <!-- TAB BAR: VENT CONTROLLER / TEMPERATURE CONTROLLER -->
+        <div class="ctrl_tab_bar_wrap">
+            <div class="ctrl_tab_bar">
+                <button type="button" class="ctrl_tab_btn active" id="tab_btn_vent"
+                    onclick="switchControllerTab('vent')">
+                    Vent Controller
+                </button>
+                <button type="button" class="ctrl_tab_btn" id="tab_btn_temp" onclick="switchControllerTab('temp')">
+                    Temperature Controller
+                </button>
+            </div>
+        </div>
+
+        <div id="main">
+        </div>
+
+        <!-- 
 	<div align='company_info'>
 		<div class="company_telno">아미텔 ☎010-2711-0067</div>
 	</div>
 	//-->
 
-</div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- LOCAL TEST MOCK DATA SCRIPT (For local testing)         -->
+    <!-- Set USE_TEST_MOCK = false for production                -->
+    <!-- Or click 'Test Mode' button in bottom-right corner      -->
+    <!-- Or append ?test=1 / ?test=0 to URL                      -->
+    <!-- ======================================================= -->
+    <script type="text/javascript">
+        // ==========================================
+        // CONFIG TEST MODE:
+        // true  : enable mock HTML for UI testing
+        // false : disable, use server render
+        // ==========================================
+        var USE_TEST_MOCK = true;
+
+        (function () {
+            // Toggle via URL parameter (?test=1 / ?test=0) or localStorage
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('test')) {
+                USE_TEST_MOCK = (urlParams.get('test') === '1' || urlParams.get('test') === 'true');
+            } else if (typeof localStorage !== 'undefined' && localStorage.getItem('SMARTFARM_TEST_MOCK') !== null) {
+                USE_TEST_MOCK = (localStorage.getItem('SMARTFARM_TEST_MOCK') === 'true');
+            }
+
+            // Floating button to toggle test mode directly in UI
+            function renderTestToggleBtn() {
+                var btn = document.createElement('div');
+                btn.id = 'dev-test-mode-toggle';
+                btn.style.cssText = 'position:fixed;bottom:14px;right:14px;z-index:99999;' +
+                    'background:' + (USE_TEST_MOCK ? '#15803D' : '#64748B') + ';' +
+                    'color:#fff;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;' +
+                    'font-family:-apple-system,sans-serif;box-shadow:0 3px 10px rgba(0,0,0,0.2);cursor:pointer;user-select:none;opacity:0.92;';
+                btn.innerHTML = '🧪 Test Mode: ' + (USE_TEST_MOCK ? 'ON' : 'OFF');
+                btn.title = 'Click here to toggle mock data';
+                btn.onclick = function () {
+                    var nextState = !USE_TEST_MOCK;
+                    if (typeof localStorage !== 'undefined') {
+                        localStorage.setItem('SMARTFARM_TEST_MOCK', String(nextState));
+                    }
+                    window.location.reload();
+                };
+                document.body.appendChild(btn);
+            }
+
+            function loadMockData() {
+                if (!USE_TEST_MOCK) return;
+
+                var mainDiv = document.getElementById('main');
+                if (!mainDiv) return;
+
+                var mockHtml = '<div class="card_vent_group">' +
+                    '<div class="txt_occtrl_name">Ventilation</div>' +
+                    '<div class="smart_card">' +
+                    '<div class="card_control_top">' +
+                    '<div class="card_col card_col_current">' +
+                    '  <div class="temp_main_row">' +
+                    '    <div class="temp_icon_wrap">' +
+                    '      <svg class="thermometer_svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#15803D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>' +
+                    '    </div>' +
+                    '    <div class="temp_info_box">' +
+                    '      <div class="ctrl_label">Current Temp.</div>' +
+                    '      <div class="temp_value_row">' +
+                    '        <input type="number" step="0.1" class="txt_item_value temp_val_now" id="ocnow_1" disabled>' +
+                    '        <span class="ctrl_unit_c unit_now">℃</span>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <div class="col_divider_h"></div>' +
+                    '  <div class="status_indicators_grid">' +
+                    '    <div class="status_col">' +
+                    '      <div class="status_label">Open<br>Status</div>' +
+                    '      <img class="status_led_img" id="oclampopens_1" src="/html/img/png_image/LED_Green(32).png">' +
+                    '    </div>' +
+                    '    <div class="status_col">' +
+                    '      <div class="status_label">Close<br>Status</div>' +
+                    '      <img class="status_led_img" id="oclampcloses_1" src="/html/img/png_image/LED_Red(32).png">' +
+                    '    </div>' +
+                    '    <div class="status_col">' +
+                    '      <div class="status_label">Limit<br>Status</div>' +
+                    '      <img class="status_led_img" id="oclampopenr_1" src="/html/img/png_image/LED_Disable(32).png">' +
+                    '    </div>' +
+                    '    <div class="status_col">' +
+                    '      <div class="status_label">Temp<br>Status</div>' +
+                    '      <img class="status_led_img" id="oclampcloser_1" src="/html/img/png_image/LED_Disable(32).png">' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>' +
+                    '<div class="card_col card_col_settings">' +
+                    '  <div class="setting_row">' +
+                    '    <div class="setting_info">' +
+                    '      <div class="ctrl_label">Set Temp.</div>' +
+                    '      <div class="temp_value_row">' +
+                    '        <input type="number" step="0.1" class="txt_item_value temp_val_set" id="ocopen_1" disabled>' +
+                    '        <span class="ctrl_unit_c unit_set">℃</span>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '    <div class="stepper_box">' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="ocopenup_1">▲</button>' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="ocopendn_1">▼</button>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <div class="col_divider_h"></div>' +
+                    '  <div class="setting_row">' +
+                    '    <div class="setting_info">' +
+                    '      <div class="ctrl_label">Hysteresis Temp.</div>' +
+                    '      <div class="temp_value_row">' +
+                    '        <input type="number" step="0.1" class="txt_item_value temp_val_set" id="occlose_1" disabled>' +
+                    '        <span class="ctrl_unit_c unit_set">℃</span>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '    <div class="stepper_box">' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="occloseup_1">▲</button>' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="occlosedn_1">▼</button>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>' +
+                    '<div class="card_col card_col_manual">' +
+                    '  <div class="manual_ctrl_title">Manual Control</div>' +
+                    '  <div class="manual_btn_group">' +
+                    '    <button type="button" class="btn_manual btn_manual_open" id="ocmanualup_1">' +
+                    '      <svg class="btn_icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 4l-7 7h4v9h6v-9h4z"/></svg>' +
+                    '      <span>Open</span>' +
+                    '    </button>' +
+                    '    <input type="hidden" id="ocupstate_1" value="1">' +
+                    '    <button type="button" class="btn_manual btn_manual_close" id="ocmanualdn_1">' +
+                    '      <svg class="btn_icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 20l7-7h-4V4h-6v9H5z"/></svg>' +
+                    '      <span>Close</span>' +
+                    '    </button>' +
+                    '    <input type="hidden" id="ocdnstate_1" value="0">' +
+                    '  </div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card_divider_main"></div>' +
+                    '<div class="card_chart_section">' +
+                    '  <div class="chart_header_row">' +
+                    '    <div class="chart_section_title">Recent Temperature Trend</div>' +
+                    '    <div class="chart_legend_box">' +
+                    '      <span class="legend_item"><span class="legend_line legend_line_set"></span>Set Temp.</span>' +
+                    '      <span class="legend_item"><span class="legend_line legend_line_now"></span>Current Temp.</span>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <canvas id="occtrlgauge1" style="display:none;"></canvas>' +
+                    '  <div class="chart_canvas_wrap"><canvas id="occtrlchart1"></canvas></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card_temp_group" style="display:none;">' +
+                    '<div class="txt_tempctrl_name">Temperature Control</div>' +
+                    '<div class="smart_card">' +
+                    '<div class="temp_control_top">' +
+                    '  <div class="temp_col temp_col_current">' +
+                    '    <div class="temp_icon_wrap">' +
+                    '      <svg class="thermometer_svg" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#15803D" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>' +
+                    '    </div>' +
+                    '    <div class="temp_info_box">' +
+                    '      <div class="ctrl_label">Current Temp.</div>' +
+                    '      <div class="temp_value_row">' +
+                    '        <input type="number" step="0.1" class="txt_item_value temp_val_now" id="tempnow_1" disabled>' +
+                    '        <span class="ctrl_unit_c unit_now">℃</span>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <div class="temp_col temp_col_setting">' +
+                    '    <div class="temp_info_box">' +
+                    '      <div class="ctrl_label">Set Temp.</div>' +
+                    '      <div class="temp_value_row">' +
+                    '        <input type="number" step="0.1" class="txt_item_value temp_val_set" id="tempset_1" disabled>' +
+                    '        <span class="ctrl_unit_c unit_set">℃</span>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '    <div class="stepper_box">' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="tempsetup_1">▲</button>' +
+                    '      <button type="button" class="ctrlbutton btn_stepper" id="tempsetdn_1">▼</button>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <div class="temp_col temp_col_mode">' +
+                    '    <div class="mode_item mode_cool">' +
+                    '      <div class="mode_title mode_title_cool">COOL</div>' +
+                    '      <div class="mode_icon mode_icon_cool">' +
+                    '        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#0D652D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/><polyline points="10 4 12 2 14 4"/><polyline points="10 20 12 22 14 20"/><polyline points="4 10 2 12 4 14"/><polyline points="20 10 22 12 20 14"/></svg>' +
+                    '      </div>' +
+                    '      <img class="temp_mode_indicator" id="templampcool_1" src="/html/img/png_image/LED_Blue(32).png">' +
+                    '    </div>' +
+                    '    <div class="mode_item mode_heat">' +
+                    '      <div class="mode_title mode_title_heat">HEAT</div>' +
+                    '      <div class="mode_icon mode_icon_heat">' +
+                    '        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>' +
+                    '      </div>' +
+                    '      <img class="temp_mode_indicator" id="templampheat_1" src="/html/img/png_image/LED_Disable(32).png">' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <div class="temp_col temp_col_output">' +
+                    '    <div class="output_title">Output</div>' +
+                    '    <img class="temp_output_led" id="templampout_1" src="/html/img/png_image/LED_Red(32).png">' +
+                    '    <input type="image" id="tempoutbt_1" style="display:none;" src="/html/img/png_image/off_disable(96).png">' +
+                    '    <input type="hidden" id="tempoutbtstate_1" value="0">' +
+                    '  </div>' +
+                    '</div>' +
+                    '<div class="card_divider_main"></div>' +
+                    '<div class="card_chart_section">' +
+                    '  <div class="chart_header_row">' +
+                    '    <div class="chart_section_title">Temperature Trend</div>' +
+                    '    <div class="chart_legend_box">' +
+                    '      <span class="legend_item"><span class="legend_line legend_line_now"></span>Current Temp.</span>' +
+                    '      <span class="legend_item"><span class="legend_line legend_line_temp_set"></span>Set Temp.</span>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '  <canvas id="tempctrlgauge1" style="display:none;"></canvas>' +
+                    '  <div class="chart_canvas_wrap"><canvas id="tempctrlchart1"></canvas></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                mainDiv.innerHTML = mockHtml;
+
+                // Populate sample values for Item 1: Ventilation
+                var nowEl = document.getElementById('ocnow_1');
+                var openEl = document.getElementById('ocopen_1');
+                var closeEl = document.getElementById('occlose_1');
+                if (nowEl) nowEl.value = "29.4";
+                if (openEl) openEl.value = "35.0";
+                if (closeEl) closeEl.value = "15.1";
+
+                // Populate sample values for Item 2: Temperature Control
+                var tempNowEl = document.getElementById('tempnow_1');
+                var tempSetEl = document.getElementById('tempset_1');
+                if (tempNowEl) tempNowEl.value = "30.9";
+                if (tempSetEl) tempSetEl.value = "20.0";
+
+                // Render 2 charts with Chart.js
+                if (typeof draw_occtrlchart === 'function') {
+                    if (typeof occtrlnum === 'undefined') window.occtrlnum = 1;
+                    if (typeof tempctrlnum === 'undefined') window.tempctrlnum = 1;
+                    if (typeof ctrl_hival === 'undefined') window.ctrl_hival = [];
+                    if (typeof ctrl_lowval === 'undefined') window.ctrl_lowval = [];
+
+                    ctrl_hival[0] = 35.0; // Open temp (upper threshold: light pink band)
+                    ctrl_lowval[0] = 7.0;  // Close temp (lower threshold: light blue band)
+
+                    // Sample 18 data points matching design
+                    var mockData1 = [
+                        ['2026-08-24 09:02:00', 32],
+                        ['2026-08-24 11:42:00', 33],
+                        ['2026-08-24 14:22:00', 37],
+                        ['2026-08-24 17:02:00', 34],
+                        ['2026-08-24 19:42:00', 32],
+                        ['2026-08-24 22:22:00', 30],
+                        ['2026-08-25 01:02:00', 28],
+                        ['2026-08-25 03:42:00', 28],
+                        ['2026-08-25 06:22:00', 27],
+                        ['2026-08-25 09:02:00', 26],
+                        ['2026-08-25 11:50:00', 26],
+                        ['2026-08-25 14:40:00', 28],
+                        ['2026-08-25 17:32:00', 29],
+                        ['2026-08-25 19:00:00', 30],
+                        ['2026-08-25 20:30:00', 30],
+                        ['2026-08-25 22:00:00', 31],
+                        ['2026-08-25 23:30:00', 32],
+                        ['2026-08-26 01:02:00', 31]
+                    ];
+                    draw_occtrlchart(0, 0, mockData1, 1);
+
+                    ctrl_hival[1] = 35.0;
+                    ctrl_lowval[1] = 7.0;
+                    var mockData2 = [
+                        ['2026-08-24 09:02:00', 32],
+                        ['2026-08-24 11:42:00', 33],
+                        ['2026-08-24 14:22:00', 37],
+                        ['2026-08-24 17:02:00', 34],
+                        ['2026-08-24 19:42:00', 32],
+                        ['2026-08-24 22:22:00', 30],
+                        ['2026-08-25 01:02:00', 28],
+                        ['2026-08-25 03:42:00', 28],
+                        ['2026-08-25 06:22:00', 27],
+                        ['2026-08-25 09:02:00', 26],
+                        ['2026-08-25 11:50:00', 26],
+                        ['2026-08-25 14:40:00', 28],
+                        ['2026-08-25 17:32:00', 29],
+                        ['2026-08-25 19:00:00', 30],
+                        ['2026-08-25 20:30:00', 30],
+                        ['2026-08-25 22:00:00', 31],
+                        ['2026-08-25 23:30:00', 32],
+                        ['2026-08-26 01:02:00', 31]
+                    ];
+                    draw_occtrlchart(1, 0, mockData2, 2);
+                }
+
+                // Simulate +/- 0.1 stepper button actions in test mode
+                function setupStepper(upId, dnId, inputId) {
+                    var upBtn = document.getElementById(upId);
+                    var dnBtn = document.getElementById(dnId);
+                    var input = document.getElementById(inputId);
+                    if (!upBtn || !dnBtn || !input) return;
+
+                    upBtn.onclick = function (e) {
+                        e.preventDefault();
+                        input.value = (parseFloat(input.value || 0) + 0.1).toFixed(1);
+                    };
+                    dnBtn.onclick = function (e) {
+                        e.preventDefault();
+                        input.value = (parseFloat(input.value || 0) - 0.1).toFixed(1);
+                    };
+                }
+
+                setupStepper('ocopenup_1', 'ocopendn_1', 'ocopen_1');
+                setupStepper('occloseup_1', 'occlosedn_1', 'occlose_1');
+                setupStepper('tempsetup_1', 'tempsetdn_1', 'tempset_1');
+
+                // Manual Open / Close click feedback in test mode
+                var manualUp = document.getElementById('ocmanualup_1');
+                var manualDn = document.getElementById('ocmanualdn_1');
+                if (manualUp) {
+                    manualUp.onclick = function () {
+                        console.log('Manual Control: OPEN clicked');
+                    };
+                }
+                if (manualDn) {
+                    manualDn.onclick = function () {
+                        console.log('Manual Control: CLOSE clicked');
+                    };
+                }
+            }
+
+            // Automatically upgrade legacy <input type="image"> to styled <button>
+            function upgradeLegacyManualButtons() {
+                var up = document.getElementById('ocmanualup_1');
+                if (up && up.tagName.toLowerCase() === 'input') {
+                    var btnUp = document.createElement('button');
+                    btnUp.type = 'button';
+                    btnUp.className = 'btn_manual btn_manual_open';
+                    btnUp.id = up.id;
+                    btnUp.innerHTML = '<svg class="btn_icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 4l-7 7h4v9h6v-9h4z"/></svg><span>Open</span>';
+                    if (up.onclick) btnUp.onclick = up.onclick;
+                    up.parentNode.replaceChild(btnUp, up);
+                }
+                var dn = document.getElementById('ocmanualdn_1');
+                if (dn && dn.tagName.toLowerCase() === 'input') {
+                    var btnDn = document.createElement('button');
+                    btnDn.type = 'button';
+                    btnDn.className = 'btn_manual btn_manual_close';
+                    btnDn.id = dn.id;
+                    btnDn.innerHTML = '<svg class="btn_icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 20l7-7h-4V4h-6v9H5z"/></svg><span>Close</span>';
+                    if (dn.onclick) btnDn.onclick = dn.onclick;
+                    dn.parentNode.replaceChild(btnDn, dn);
+                }
+            }
+
+            // Current active tab ('vent' or 'temp')
+            var currentActiveTab = 'vent';
+
+            // Switch between Vent Controller (Type 1) and Temperature Controller (Type 2)
+            window.switchControllerTab = function (tabName) {
+                if (tabName) currentActiveTab = tabName;
+                var isVent = (currentActiveTab === 'vent');
+
+                // 1. Update active tab button class
+                var btnVent = document.getElementById('tab_btn_vent');
+                var btnTemp = document.getElementById('tab_btn_temp');
+                if (btnVent) {
+                    if (isVent) btnVent.classList.add('active');
+                    else btnVent.classList.remove('active');
+                }
+                if (btnTemp) {
+                    if (!isVent) btnTemp.classList.add('active');
+                    else btnTemp.classList.remove('active');
+                }
+
+                // 2. Toggle visibility for mock test cards
+                var ventItems = document.querySelectorAll('.card_vent_group');
+                var tempItems = document.querySelectorAll('.card_temp_group');
+                ventItems.forEach(function (el) { el.style.display = isVent ? '' : 'none'; });
+                tempItems.forEach(function (el) { el.style.display = !isVent ? '' : 'none'; });
+
+                // 3. Filter table rows when rendered with portcontrol.js
+                var tblControl = document.querySelector('.tbl_control');
+                if (tblControl) {
+                    // Group 1: Vent Controller (Type 1)
+                    var ocElements = tblControl.querySelectorAll('.card_vent_group, .txt_occtrl_title, .txt_occtrl_name, .tbl_sensor');
+                    ocElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = isVent ? '' : 'none';
+                    });
+
+                    // Group 2: Temperature Controller (Type 2)
+                    var tempElements = tblControl.querySelectorAll('.card_temp_group, .txt_tempctrl_title, .txt_tempctrl_name, .tbl_sensor2');
+                    tempElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = !isVent ? '' : 'none';
+                    });
+
+                    // Hide spacer row between groups
+                    var spacerTd = tblControl.querySelector('td[style*="font-size:10px"]');
+                    if (spacerTd && spacerTd.closest('tr')) {
+                        spacerTd.closest('tr').style.display = 'none';
+                    }
+                }
+
+                // 4. Resize Chart.js charts to full width on tab switch
+                setTimeout(function () {
+                    if (window.chartplot && Array.isArray(window.chartplot)) {
+                        for (var c = 0; c < window.chartplot.length; c++) {
+                            if (window.chartplot[c] && typeof window.chartplot[c].resize === 'function') {
+                                window.chartplot[c].resize();
+                            }
+                        }
+                    }
+                }, 60);
+            };
+
+            // Trigger tab filtering when portcontrol.js renders into #main
+            var mainContainer = document.getElementById('main');
+            if (mainContainer && window.MutationObserver) {
+                var observer = new MutationObserver(function () {
+                    window.switchControllerTab();
+                });
+                observer.observe(mainContainer, { childList: true });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () {
+                    loadMockData();
+                    upgradeLegacyManualButtons();
+                    renderTestToggleBtn();
+                    switchControllerTab('vent');
+                });
+            } else {
+                loadMockData();
+                upgradeLegacyManualButtons();
+                renderTestToggleBtn();
+                switchControllerTab('vent');
+            }
+        })();
+    </script>
 </body>
+
 </html>

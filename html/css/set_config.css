@@ -1,472 +1,1262 @@
-html, body{
-  margin:0;
-  padding:0;
-  height:100vh;
-  /*overflow:auto;*/
+/* ==========================================================================
+   Tab Navigation Header & Page Styling (set_config.html)
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-tr td {
-	border-right-width: 1px;
-	border-right-style: dotted;
-	border-right-color: #DDD;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-	border-bottom-color: #DDD;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-
-.div1 {
-	background-color: #E6E9F2;
-	height: auto;
-	width: 99.6%;
-	border-radius: 10px;
-	/*box-shadow: 2px 10px 2px #F88;*/
-	/*box-shadow: 2px 2px 2px #666;*/
-	/*border: 2px inset #666;*/
-	border: 2px inset #000;
-	
-	font-size: 2em;
-}
-
-
-/* text 박스 스타일 */
-input[type=text] {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-	width: 90%;
-	border-radius:4px;
-	margin:0px 0;
-	text-align: center;
-	outline:none;
-}
-input[type=text] + label {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-}
-input[type=text]:focus {
-	border-color:dodgerBlue;
-	box-shadow:0 0 4px 0 dodgerBlue;
-}
-
-/* number 박스 스타일 */
-input[type=number] {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-	width: 90%;
-	border-radius:4px;
-	margin:0px 0;
-	text-align: center;
-	outline:none;
-}
-input[type=number] + label {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-}
-input[type=number]:focus {
-	border-color:dodgerBlue;
-	box-shadow:0 0 4px 0 dodgerBlue;
-}
-
-/* tel 박스 스타일 */
-input[type=tel] {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-	width: 90%;
-	border-radius:4px;
-	margin:0px 0;
-	text-align: center;
-	outline:none;
-}
-input[type=tel] + label {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-}
-input[type=tel]:focus {
-	border-color:dodgerBlue;
-	box-shadow:0 0 4px 0 dodgerBlue;
-}
-
-/* password 박스 스타일 */
-input[type=password] {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-	width: 90%;
-	border-radius:4px;
-	margin:0px 0;
-	text-align: center;
-	outline:none;
-}
-input[type=password] + label {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1em;
-}
-input[type=password]:focus {
-	border-color:dodgerBlue;
-	box-shadow:0 0 4px 0 dodgerBlue;
-}
-
-
-/* 체크박스 스타일 */
-input[type=checkbox] {  
-	display: none;  
-}
-input[type=checkbox] + label{
-	display: inline-block;  
-	cursor: pointer;  
-	position: relative;  
-	padding-left: 20px; 
-	padding-top: 15px;
-	padding-bottom: 0px;
-	/*padding: 20px 0px 0px 40px;*/
-	font-size: 1.8em;
-}
-input[type=checkbox]+ label:before {     
-	content: "";  
-	display: inline-block;  
-	width: 35px;
-	height: 35px;
-	/*margin-right: 10px;  */
-	/*margin: 0px 0px 0px 0px;*/
-	position: absolute;  
-	left: -7px; 
-	bottom: -8px;
-	background-color: #ccc;  
-	border-radius: 2px; 
-	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
-}
-input[type=checkbox]:checked + label:before { 
-	content: "\2713";  /* 체크모양 */
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
-	font-size: 0.8em; 
-	font-weight:800; 
-	color: #fff;  
-	background:#2f87c1;
-	text-align: center;  
-	line-height: 18px;
-}
-
-table input[type=radio] {
-	display:none;
-}
-table input[type=radio] + label {
-	display:inline-block;
-	margin:5px 15px;
-	padding: 7px 20px;
-	font-size: 1em;
-	/*line-height: 20px;*/
-	color: #333;
-	text-align: center;
-	text-shadow: 0 1px 1px rgba(255,255,255,0.75);
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: #f5f5f5;
-	background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
-	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
-	background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
-	background-image: -o-linear-gradient(top,#fff,#e6e6e6);
-	background-image: linear-gradient(to bottom,#fff,#e6e6e6);
-	background-repeat: repeat-x;
-	border: 1px solid #ccc;
-	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
-	border-bottom-color: #b3b3b3;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-}
-table input[type=radio]:checked + label {
-	background-image: none;
-	outline: 0;
-	-webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-	-moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-	box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-	background-color:#e0e0e0;
-}
-
-/* 버튼 스타일 */
-input[type=button] {
-	border-radius:5px;
-	border:1px solid #222;
-	display:inline-block;
-	cursor:pointer;
-	color:#333;
-	font-family:Arial;
-	font-size:1em;
-	padding:5px 30px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
-
-
-select {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 0.9em;
-	text-align: center;
-	border: 1px solid #999;
-	background-color: #FFF;
-	font-family: inherit;
-	border-radius: 4px;
-	/*padding-top: 1px;*/
-	/*padding-bottom: 1px;*/
-	text-align-last: center;
-}
-select:focus {
-	border-color:dodgerBlue;
-	box-shadow:0 0 8px 0 dodgerBlue;
-}
-
 
 /* 탭 전체 스타일 */
 .tabs {
-  padding-top: 10px;
-  padding-bottom: 0px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /*width: 700px;*/
-  width: 99%;
-  margin: 0 auto;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    box-sizing: border-box !important;
 }
 
-/* 탭 스타일 */
-.tab_item {
-  /*width: calc(100%/4);*/
-  width: calc(100%/4 - 1px);
-  height: 80px;
-  border-bottom: 3px solid #333333;
-  border-right: 1px solid #B3B3B3;
-  background-color: #f8f8f8;
-  line-height: 80px;
-  font-size: 26px;
-  text-align: center;
-  color: #333333;
-  display: block;
-  float: left;
-  text-align: center;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
-.tab_item:hover {
-  opacity: 0.75;
-  cursor: pointer;
-}
-
-/* 라디오 버튼 UI삭제*/
+/* 라디오 버튼 UI 숨김 */
 input[name="tab_item"] {
-  display: none;
+    display: none !important;
+}
+
+/* 탭 항목 스타일 (4개 탭 균등 분할) */
+.tab_item {
+    flex: 1 1 0px !important;
+    width: auto !important;
+    height: 52px !important;
+    line-height: 52px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    float: none !important;
+    background-color: #ffffff !important;
+    color: #475569 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.2px !important;
+    text-align: center !important;
+    border-right: 1px solid #E2E8F0 !important;
+    border-bottom: 3.5px solid transparent !important;
+    border-top: none !important;
+    border-left: none !important;
+    margin-bottom: -1px !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+}
+
+/* Last tab has no right border */
+.tab_item:last-of-type,
+label[for="set_network"] {
+    border-right: none !important;
+}
+
+.tab_item:hover {
+    color: #0F172A !important;
+    background-color: #F8FAFC !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+
+/* Active tab: green text and bottom border */
+.tabs input:checked + .tab_item {
+    background-color: #ffffff !important;
+    color: #0D652D !important;
+    font-weight: 700 !important;
+    border-bottom: 3.5px solid #0D652D !important;
+}
+
+.tabs input:checked + .tab_item:hover {
+    background-color: #ffffff !important;
+    color: #0D652D !important;
 }
 
 /* 탭 컨텐츠 스타일 */
 .tab_content {
-  display: none;
-  padding: 0px 0px;
-  clear: both;
-  overflow: hidden;
+    display: none;
+    width: 100% !important;
+    flex-basis: 100% !important;
+    padding: 16px 10px;
+    clear: both;
+    overflow: hidden;
+    box-sizing: border-box !important;
 }
-
 
 /* 선택 된 탭 콘텐츠를 표시 */
-#set_io:checked ~ #set_io_content,
+#set_io:checked ~ #set_io_content, 
 #set_alarm:checked ~ #set_alarm_content,
 #set_system:checked ~ #set_system_content,
-#set_network:checked ~ #set_network_content{
-/*#set_password:checked ~ #set_password_content,*/
-/*#reboot:checked ~ #reboot_content{*/
-	display: block;
+#set_network:checked ~ #set_network_content {
+    display: block !important;
 }
 
-/* 선택된 탭 스타일 */
-.tabs input:checked + .tab_item {
-  background-color: #333333;
-  color: #fff;
+/* Responsive for smaller screens */
+@media (max-width: 640px) {
+    .tab_item {
+        font-size: 13.5px !important;
+        padding: 0 4px !important;
+        letter-spacing: -0.3px !important;
+        height: 48px !important;
+        line-height: 48px !important;
+    }
 }
 
-
-th {
-	background-color: #D0D0F0;
+@media (max-width: 420px) {
+    .tab_item {
+        font-size: 11.5px !important;
+        padding: 0 2px !important;
+        letter-spacing: -0.4px !important;
+        height: 44px !important;
+        line-height: 44px !important;
+    }
 }
 
-table tr:not(:first-child):hover {
-	background-color: LightGray;
-	cursor:pointer;
+/* ==========================================================================
+   Operation Settings (set_io_content) Modern Card & Table Design
+   ========================================================================== */
+
+.config_page_container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto 60px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
-
-.mnum {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1.8em;
-	font-weight: bold;
-	text-align: left;
-	/*padding-left: 20px;*/
-	padding-top: 15px;
-	vertical-align: middle;
-}
-.txt_modname {
-	font-family: "맑은 고딕", "돋움";
-	font-size: 1.8em;
-	font-weight: bold;
-	text-align: center;
-	padding: 5px 0px 0px 0px;
-	color: #33A;
+.config_section {
+    width: 100%;
+    margin-bottom: 36px;
 }
 
-.tbl_frame {
-	border: 1px solid #000;
-	position: relative;
-	background-color: #F3F3F3;
-	text-align: center;
-	border-radius: 5px;
-	font-family: "맑은 고딕", "돋움";
-	font-size:1em;
-	/*margin-bottom: 10px;*/
+.config_section_header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 2px;
 }
 
-.tbl_frame2 {
-	border: 1px solid #000;
-	position: relative;
-	background-color: #F3F3F3;
-	text-align: left;
-	margin-bottom: 3px;
-	/*padding-left: 0px;*/
-	padding: 0px 0px;
-	border-radius: 3px;
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.4em;
-}
-.tbl_frame2 tr td {
-	padding: 3px 0px;
+.config_section_title {
+    font-size: 17.5px;
+    font-weight: 700;
+    color: #0F172A;
+    letter-spacing: -0.3px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.tbl_list, .tbl_list2 {
-	border: 1px solid #000;
-	position: relative;
-	background-color: #F3F3F3;
-	text-align: center;
-	margin-top: 3px;
-	border-radius: 5px;
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.6em;
-	font-weight:400;
-}
-.tbl_list3 {
-	border-bottom: 1px dotted #000;
-	position: relative;
-	background-color: #F3F3F3;
-	text-align: center;
-	margin: 0;
-	border-radius: 5px;
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.6em;
-	font-weight:400;
-}
-.tbl_list4 {
-	border-bottom: 1px dotted #000;
-	position: relative;
-	background-color: #FDFDFD;
-	text-align: center;
-	margin: 0;
-	border-radius: 5px;
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.6em;
-	font-weight:400;
-	
+.config_count_select {
+    min-width: 70px;
+    height: 36px;
+    padding: 0 28px 0 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0F172A;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.tbl_header {
-	padding: 15px 0px;
+.config_count_select:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
 }
 
-.txt_subject {
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.1em;
-	font-weight: bold;
-	text-align: left;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 0px;
-	color: #33A;
-}
-.txt_item {
-	font-family: "맑은 고딕", "돋움";
-	font-size:1.0em;
-	font-weight: bold;
-	text-align: center;
-	padding-left: 0px;
-	color: #A3A;
+/* Card Table Wrapper */
+.config_table_card {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
 }
 
-.itemname {
-	text-align: center;
+/* Table */
+.config_data_table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-
-.lntag {
-	text-align: center;
-	font-size: 40px;
-	font-weight: bold;
-	margin-bottom: 100px;
-	margin-top: 50px;
-	margin-right: 5px;
-	margin-left: 5px;
+/* Table Header */
+.config_data_table thead th {
+    background-color: #F0FDF4 !important;
+    color: #0D652D !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 14px 16px !important;
+    text-align: center !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    border-right: 1px solid #E2E8F0 !important;
+    letter-spacing: -0.2px !important;
+    white-space: nowrap !important;
 }
 
-#system_reset{
-	width: 40%;
-	height: 80px;
-	text-align: center;
-	font-size: 1.2em;
-	font-weight: bold;
-	/*padding-top: 10px;*/
-	padding: 10px 0px;
-	margin-bottom: 40px;
-	margin-top: 40px;
+.config_data_table thead th:last-child {
+    border-right: none !important;
 }
 
-
-#setio_save, #setalarm_save, #set_password_save {
-	background-color:#44c767;
-	border-radius:40px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:35px;
-	padding:20px 50px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-}
-#setio_save:disabled, #setalarm_save:disabled, #set_password_save:disabled {
-	background-color:#D0D0D0;
-	border-radius:40px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-	color:#B9B9B9;
-	font-family:Arial;
-	font-size:35px;
-	padding:20px 50px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
+/* Table Body Rows */
+.config_data_table tbody tr {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E2E8F0;
+    transition: background-color 0.15s ease;
 }
 
+.config_data_table tbody tr:last-child {
+    border-bottom: none;
+}
 
-/* 로딩 애니메이션 스타일 */
+.config_data_table tbody tr:hover {
+    background-color: #FAFCF9;
+}
+
+.config_data_table tbody td {
+    padding: 10px 14px;
+    vertical-align: middle;
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #E2E8F0;
+    border-bottom: inherit;
+    box-sizing: border-box;
+}
+
+.config_data_table tbody td:last-child {
+    border-right: none;
+}
+
+/* Channel Label (CH1, CH2, CH3) */
+.col_channel_label {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0D652D;
+    white-space: nowrap;
+}
+
+/* Input Fields Inside Table */
+.config_input_text {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 14.5px;
+    color: #1E293B;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.config_input_text:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.config_input_num {
+    width: 100%;
+    height: 38px;
+    padding: 0 8px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1E293B;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.config_input_num:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+/* Mode Select for Timer */
+.config_select_mode {
+    width: 100%;
+    height: 38px;
+    padding: 0 28px 0 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1E293B;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.config_select_mode:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.timer_mode_subpanel {
+    padding: 14px 16px;
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    margin: 6px 0 10px 0;
+    box-sizing: border-box;
+}
+
+.timer_mode_card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.timer_field_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 4px 0;
+}
+
+.timer_field_label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    min-width: 170px;
+}
+
+.timer_time_group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.timer_input_num {
+    width: 68px;
+    height: 36px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1E293B;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.timer_input_num:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.timer_unit_text {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #64748B;
+    margin-right: 6px;
+}
+
+.timer_field_dual {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.timer_subfield {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 240px;
+}
+
+.timer_unit_combo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.timer_select_unit {
+    height: 36px;
+    padding: 0 26px 0 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #1E293B;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition: border-color 0.15s ease;
+}
+
+.timer_select_unit:focus {
+    border-color: #0D652D;
+}
+
+/* 5-Step Extension Mode */
+.timer_mode_card_steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timer_step_item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    flex-wrap: wrap;
+}
+
+.timer_step_badge {
+    padding: 4px 10px;
+    background-color: #F0FDF4;
+    color: #0D652D;
+    border: 1px solid #BBF7D0;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.timer_step_fields {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.timer_step_field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timer_field_minilabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.timer_select_out {
+    height: 36px;
+    padding: 0 28px 0 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #1E293B;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition: border-color 0.15s ease;
+}
+
+.timer_select_out:focus {
+    border-color: #0D652D;
+}
+
+/* Save Settings Button Bar */
+.config_save_bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 36px 0 40px 0;
+}
+
+.btn_config_save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #0D652D;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    padding: 13px 40px;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(13, 101, 45, 0.25);
+    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btn_config_save:hover {
+    background-color: #094B21;
+    box-shadow: 0 4px 10px rgba(13, 101, 45, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn_config_save:active {
+    transform: translateY(0);
+}
+
+.btn_config_save svg {
+    display: block;
+}
+
+/* ==========================================================================
+   Alert Settings (set_alarm_content) Modern Card & Table Design
+   ========================================================================== */
+
+.alarm_panel_card {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
+}
+
+.alarm_panel_title {
+    font-size: 17.5px;
+    font-weight: 700;
+    color: #0F172A;
+    letter-spacing: -0.3px;
+    margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.alarm_data_table {
+    width: 100%;
+}
+
+.alarm_data_table .config_input_num {
+    max-width: 140px;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+/* Custom Green Square Checkbox */
+.col_checkbox_cell {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.custom_check_input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #CBD5E1;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    margin: 0 auto;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.custom_check_input:checked {
+    background-color: #0D652D;
+    border-color: #0D652D;
+}
+
+.custom_check_input:checked::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid #FFFFFF;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+    margin-top: -2px;
+}
+
+.custom_check_input:focus {
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.2);
+}
+
+/* Web Push Alert Subpanels */
+.push_settings_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.push_info_box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background-color: #F0FDF4;
+    border: 1px solid #DCFCE7;
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-sizing: border-box;
+}
+
+.push_bell_icon_wrapper {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    background-color: #DCFCE7;
+    color: #0D652D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.push_info_text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.push_info_main {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1E293B;
+    line-height: 1.5;
+}
+
+.link_webpush {
+    color: #0284C7;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.link_webpush:hover {
+    color: #0369A1;
+}
+
+.push_info_notice {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #EF4444;
+}
+
+.push_action_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.push_label_id {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0D652D;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.push_input_id {
+    flex: 1;
+    min-width: 180px;
+    max-width: 360px;
+    height: 40px;
+    padding: 0 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14.5px;
+    color: #1E293B;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.push_input_id:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.push_input_id::placeholder {
+    color: #94A3B8;
+    font-size: 14px;
+}
+
+.btn_push_test {
+    height: 40px;
+    padding: 0 28px;
+    background-color: #0D652D;
+    color: #FFFFFF;
+    font-size: 14.5px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(13, 101, 45, 0.2);
+    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn_push_test:hover {
+    background-color: #094B21;
+    box-shadow: 0 3px 8px rgba(13, 101, 45, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn_push_test:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+    .alarm_panel_card {
+        padding: 16px 14px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .alarm_panel_title {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+    .push_info_box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+    }
+    .push_action_row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+    }
+    .push_input_id {
+        max-width: 100%;
+        min-width: 100%;
+    }
+    .btn_push_test {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   System Settings (set_system_content) Modern Card & Form Design
+   ========================================================================== */
+
+.system_card_title_row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.system_form_box {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-sizing: border-box;
+}
+
+.system_form_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.system_form_label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1E293B;
+    min-width: 150px;
+    flex-shrink: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.system_form_field {
+    flex: 1;
+    max-width: 460px;
+    position: relative;
+}
+
+.system_input_text {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14.5px;
+    color: #1E293B;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+}
+
+.system_input_text:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.system_input_text::placeholder {
+    color: #94A3B8;
+    font-size: 14px;
+}
+
+.system_input_disabled {
+    background-color: #F1F5F9 !important;
+    color: #64748B !important;
+    border-color: #E2E8F0 !important;
+    cursor: not-allowed;
+}
+
+.password_input_wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.password_input_wrapper .system_input_text {
+    padding-right: 42px;
+}
+
+.btn_toggle_pw {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #64748B;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    transition: color 0.15s ease;
+}
+
+.btn_toggle_pw:hover {
+    color: #1E293B;
+}
+
+.system_save_bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.system_scroll_notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #F0FDF4;
+    border: 1px solid #DCFCE7;
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin: 28px 0;
+    box-sizing: border-box;
+}
+
+.system_notice_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.system_notice_text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #0D652D;
+    letter-spacing: -0.2px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.system_reboot_card {
+    margin-bottom: 40px;
+}
+
+.reboot_message_box {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 18px 24px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1E293B;
+    margin-bottom: 22px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.reboot_action_bar {
+    display: flex;
+    justify-content: center;
+}
+
+.btn_reboot_system {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #FFFFFF;
+    color: #DC2626;
+    border: 1.5px solid #FCA5A5;
+    border-radius: 8px;
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    padding: 12px 36px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(220, 38, 38, 0.05);
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.btn_reboot_system:hover {
+    background-color: #FEF2F2;
+    border-color: #EF4444;
+    color: #B91C1C;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.12);
+    transform: translateY(-1px);
+}
+
+.btn_reboot_system:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+    .system_form_box {
+        padding: 16px 14px;
+        gap: 14px;
+    }
+    .system_form_row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .system_form_label {
+        min-width: unset;
+    }
+    .system_form_field {
+        max-width: 100%;
+        width: 100%;
+    }
+    .btn_reboot_system {
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   Network Settings (set_network_content) Modern Card & Wi-Fi List Design
+   ========================================================================== */
+
+.wifi_card_title_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.wifi_header_left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn_refresh_wifi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: #F8FAFC;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    color: #334155;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.2s ease;
+}
+
+.btn_refresh_wifi:hover {
+    background-color: #F1F5F9;
+    color: #0D652D;
+    border-color: #0D652D;
+    transform: rotate(90deg);
+}
+
+.btn_refresh_wifi:active {
+    transform: rotate(180deg);
+}
+
+.wifi_data_table {
+    width: 100%;
+}
+
+.wifi_data_table thead th {
+    background-color: #F0FDF4 !important;
+    color: #0D652D !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 14px 16px !important;
+    letter-spacing: -0.2px !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    border-right: 1px solid #E2E8F0 !important;
+    white-space: nowrap !important;
+}
+
+.wifi_data_table thead th:last-child {
+    border-right: none !important;
+}
+
+.wifi_data_table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.wifi_data_table tbody tr:hover {
+    background-color: #F8FAFC !important;
+}
+
+.wifi_data_table tbody tr.wifi_row_selected {
+    background-color: #F0FDF4 !important;
+}
+
+.wifi_data_table tbody tr.wifi_row_selected .wifi_ssid_cell {
+    color: #0D652D !important;
+    font-weight: 700 !important;
+}
+
+.wifi_ssid_cell {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1E293B;
+    letter-spacing: -0.2px;
+}
+
+/* 4-Bar Wi-Fi Signal Strength Icon */
+.wifi_signal_bars {
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.signal_bar {
+    width: 4px;
+    border-radius: 1px;
+    background-color: #E2E8F0;
+    transition: background-color 0.15s ease;
+}
+
+.signal_bar.bar-1 { height: 6px; }
+.signal_bar.bar-2 { height: 10px; }
+.signal_bar.bar-3 { height: 14px; }
+.signal_bar.bar-4 { height: 18px; }
+
+/* Active Signal Bars */
+.wifi_signal_bars.bars-1 .bar-1,
+.wifi_signal_bars.bars-2 .bar-1,
+.wifi_signal_bars.bars-2 .bar-2,
+.wifi_signal_bars.bars-3 .bar-1,
+.wifi_signal_bars.bars-3 .bar-2,
+.wifi_signal_bars.bars-3 .bar-3,
+.wifi_signal_bars.bars-4 .bar-1,
+.wifi_signal_bars.bars-4 .bar-2,
+.wifi_signal_bars.bars-4 .bar-3,
+.wifi_signal_bars.bars-4 .bar-4 {
+    background-color: #0D652D;
+}
+
+/* Wi-Fi Connection Settings Panel */
+.wifi_connect_panel {
+    display: flex;
+    align-items: stretch;
+    gap: 18px;
+    margin-top: 14px;
+}
+
+.wifi_connect_fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wifi_connect_row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.wifi_connect_label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E293B;
+    min-width: 85px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.wifi_input_text {
+    flex: 1;
+    height: 42px;
+    padding: 0 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    font-size: 14.5px;
+    color: #1E293B;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+}
+
+.wifi_input_text:focus {
+    border-color: #0D652D;
+    box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+}
+
+.wifi_input_text::placeholder {
+    color: #94A3B8;
+    font-size: 14px;
+}
+
+.btn_wifi_apply {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #0D652D;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    border: none;
+    border-radius: 10px;
+    padding: 0 32px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(13, 101, 45, 0.25);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 96px;
+}
+
+.btn_wifi_apply:hover {
+    background-color: #094B21;
+    box-shadow: 0 4px 10px rgba(13, 101, 45, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn_wifi_apply:active {
+    transform: translateY(0);
+}
+
 .loader {
-	z-index: 1000;
-	border: 8px solid #f3f3f3; /* Light grey */
-	border-top: 8px solid #3498db; /* Blue */
-	border-radius: 50%;
-	width: 50px;
-	height: 50px;
-	animation: spin 1s linear infinite;
-	position: absolute;
-	top: 110px;
-	left: 50%;
-	transform: translate(-50%, -50%);
+    border: 4px solid #F1F5F9;
+    border-top: 4px solid #0D652D;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    animation: spin 0.8s linear infinite;
+    margin: 30px auto;
 }
-/* 애니메이션 키프레임 정의 */
+
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .wifi_connect_panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn_wifi_apply {
+        min-height: 44px;
+        padding: 12px 20px;
+        width: 100%;
+    }
+    .wifi_data_table thead th {
+        font-size: 13.5px !important;
+        padding: 10px 8px !important;
+    }
+    .wifi_ssid_cell {
+        font-size: 13.5px !important;
+        padding-left: 10px !important;
+    }
 }

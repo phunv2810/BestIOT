@@ -102,43 +102,88 @@ input[type=date] {
 }
 
 
-/* 체크박스 스타일 */
+/* ==========================================================================
+   Modern Checkbox Style (CH1 ~ CH8 Channels) & Chart Area Cards
+   ========================================================================== */
+
 input[type=checkbox] {  
-	display: none;  
+	display: none !important;  
 }
-input[type=checkbox] + label{
-	display: inline-block;  
-	cursor: pointer;  
-	position: relative;  
-	padding-left: 20px; 
-	padding-top: 10px;
-	padding-bottom: 0px;
-	/*padding: 20px 0px 0px 40px;*/
-	font-size: 1.8em;
+
+.chart_area_card {
+	background-color: #FFFFFF !important;
+	border: 1px solid #E2E8F0 !important;
+	border-radius: 12px !important;
+	margin: 16px 0 24px 0 !important;
+	padding: 20px 20px 16px 20px !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+	box-sizing: border-box !important;
+	width: 100% !important;
 }
-input[type=checkbox]+ label:before {     
-	content: "";  
-	display: inline-block;  
-	width: 35px;
-	height: 35px;
-	/*margin-right: 10px;  */
-	/*margin: 0px 0px 0px 0px;*/
-	position: absolute;  
-	left: -20px; 
-	bottom: -0px;
-	background-color: #ccc;  
-	border-radius: 2px; 
-	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
+
+.sensor_checkbox_grid {
+	display: grid !important;
+	grid-template-columns: repeat(4, 1fr) !important;
+	row-gap: 16px !important;
+	column-gap: 24px !important;
+	padding: 8px 12px 20px 12px !important;
+	width: 100% !important;
+	box-sizing: border-box !important;
 }
-input[type=checkbox]:checked + label:before { 
-	content: "\2713";  /* 체크모양 */
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  
-	font-size: 1.2em; 
-	font-weight:800; 
-	color: #fff;  
-	background:#2f87c1;
-	text-align: center;  
-	line-height: 26px;
+
+.sensor_check_item {
+	display: flex !important;
+	align-items: center !important;
+}
+
+.sensor_check_label {
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 10px !important;
+	cursor: pointer !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	font-size: 15px !important;
+	font-weight: 500 !important;
+	color: #1E293B !important;
+	line-height: 1 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	user-select: none !important;
+}
+
+/* Square checkbox with 4px border-radius */
+.sensor_check_label::before {
+	content: "" !important;
+	display: inline-block !important;
+	width: 20px !important;
+	height: 20px !important;
+	box-sizing: border-box !important;
+	border: 1.5px solid #CBD5E1 !important;
+	border-radius: 4px !important;
+	background-color: #FFFFFF !important;
+	flex-shrink: 0 !important;
+	transition: all 0.15s ease !important;
+}
+
+.sensor_check_label:hover::before {
+	border-color: #94A3B8 !important;
+}
+
+/* Checked state: dark green background + white checkmark */
+input[type=checkbox]:checked + .sensor_check_label::before {
+	background-color: #0D652D !important;
+	border-color: #0D652D !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3.5 8.5 6.5 11.5 12.5 4.5'/%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: 14px 14px !important;
+}
+
+.chart_plot_wrapper {
+	width: 100% !important;
+	height: 420px !important;
+	position: relative !important;
+	box-sizing: border-box !important;
 }
 
 /* 버튼 스타일 */
@@ -174,70 +219,524 @@ select:focus {
 }
 
 
+/* ==========================================================================
+   Tab Navigation Header (Graph View / Data Download / Push Alert)
+   ========================================================================== */
+
 /* 탭 전체 스타일 */
 .tabs {
-  padding-top: 10px;
-  padding-bottom: 0px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  /*width: 700px;*/
-  width: 99%;
-  margin: 0 auto;
-}
-
-/* 탭 스타일 */
-.tab_item {
-  /*width: calc(100%/4);*/
-  width: calc(100%/3 - 1px);
-  height: 80px;
-  border-bottom: 3px solid #333333;
-  border-right: 1px solid #B3B3B3;
-  background-color: #f8f8f8;
-  line-height: 80px;
-  font-size: 26px;
-  text-align: center;
-  color: #333333;
-  display: block;
-  float: left;
-  text-align: center;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
-.tab_item:hover {
-  opacity: 0.75;
-  cursor: pointer;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  box-sizing: border-box !important;
 }
 
 /* 라디오 버튼 UI삭제*/
 input[name="tab_item"] {
-  display: none;
+  display: none !important;
+}
+
+/* 탭 스타일 */
+.tab_item {
+  flex: 1 1 0px !important;
+  width: auto !important;
+  height: 52px !important;
+  line-height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  float: none !important;
+  background-color: #ffffff !important;
+  color: #334155 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.2px !important;
+  text-align: center !important;
+  border-right: 1px solid #E2E8F0 !important;
+  border-bottom: 3.5px solid transparent !important;
+  border-top: none !important;
+  border-left: none !important;
+  margin-bottom: -1px !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+}
+
+/* Last tab has no right border */
+.tab_item:last-of-type,
+label[for="search_push"] {
+  border-right: none !important;
+}
+
+.tab_item:hover {
+  color: #0F172A !important;
+  background-color: #F8FAFC !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
 }
 
 /* 탭 컨텐츠 스타일 */
 .tab_content {
   display: none;
+  width: 100% !important;
+  flex-basis: 100% !important;
   padding: 0px 0px;
   clear: both;
   overflow: hidden;
+  box-sizing: border-box !important;
 }
-
 
 /* 선택 된 탭 콘텐츠를 표시 */
 #view_graph:checked ~ #view_graph_content, 
 #data_download:checked ~ #data_download_content,
 #search_push:checked ~ #search_push_content
 {
-	display: block;
+	display: block !important;
 }
 
-
-/* 선택된 탭 스타일 */
+/* Active tab: green text and bottom border */
 .tabs input:checked + .tab_item {
-  background-color: #333333;
-  color: #fff;
+  background-color: #ffffff !important;
+  color: #0D652D !important;
+  font-weight: 700 !important;
+  border-bottom: 3.5px solid #0D652D !important;
 }
 
+.tabs input:checked + .tab_item:hover {
+  background-color: #ffffff !important;
+  color: #0D652D !important;
+}
 
+/* ==========================================================================
+   Date & Term Filter Panel (Graph View) - Modern Flexbox Layout
+   ========================================================================== */
+
+.filter_panel_modern {
+  background-color: #FFFFFF !important;
+  padding: 24px 20px 20px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+/* Row 1: Date range controls and Show Graph button */
+.filter_row_primary {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 14px 18px !important;
+}
+
+.filter_label {
+  color: #0D652D !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  user-select: none !important;
+  letter-spacing: -0.2px !important;
+}
+
+.ctrl_date_input {
+  height: 42px !important;
+  min-width: 160px !important;
+  max-width: 180px !important;
+  padding: 6px 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  background-color: #FFFFFF !important;
+  color: #1E293B !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.ctrl_date_input:focus {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12) !important;
+}
+
+.ctrl_date_input::-webkit-calendar-picker-indicator {
+  cursor: pointer !important;
+  opacity: 0.65 !important;
+  transition: opacity 0.15s ease !important;
+}
+
+.ctrl_date_input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1 !important;
+}
+
+.ctrl_date_input:placeholder-shown {
+  color: #94A3B8 !important;
+}
+
+/* Primary action buttons: Show Graph, Download, Search */
+.btn_show_graph,
+#btn_viewgraph.btn_show_graph,
+#btn_datadownload.btn_show_graph,
+#btn_datadownload,
+#btn_pushsearch.btn_show_graph,
+#btn_pushsearch {
+  height: 42px !important;
+  padding: 0 24px !important;
+  background-color: #0D652D !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+  text-shadow: none !important;
+  transition: background-color 0.15s ease, transform 0.05s ease !important;
+}
+
+.btn_show_graph:hover,
+#btn_viewgraph.btn_show_graph:hover,
+#btn_datadownload.btn_show_graph:hover,
+#btn_datadownload:hover,
+#btn_pushsearch.btn_show_graph:hover,
+#btn_pushsearch:hover {
+  background-color: #0A5224 !important;
+}
+
+.btn_show_graph:active,
+#btn_viewgraph.btn_show_graph:active,
+#btn_datadownload.btn_show_graph:active,
+#btn_datadownload:active,
+#btn_pushsearch.btn_show_graph:active,
+#btn_pushsearch:active {
+  transform: scale(0.98) !important;
+}
+
+.btn_show_graph:disabled,
+#btn_viewgraph.btn_show_graph:disabled,
+#btn_datadownload.btn_show_graph:disabled,
+#btn_datadownload:disabled,
+#btn_pushsearch.btn_show_graph:disabled,
+#btn_pushsearch:disabled {
+  background-color: #94A3B8 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   Tab Data Download - Modern UI matching mockup
+   ========================================================================== */
+
+.download_tab_wrapper {
+  width: 100% !important;
+  max-width: 680px !important;
+  margin: 24px auto 36px auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+  box-sizing: border-box !important;
+}
+
+/* Card 1: Set Search Period */
+.download_card {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 26px 28px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  box-sizing: border-box !important;
+}
+
+.download_card_title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin-bottom: 20px !important;
+  letter-spacing: -0.2px !important;
+}
+
+/* Row 1: Date Range Inputs */
+.download_date_row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+  flex-wrap: wrap !important;
+}
+
+.date_picker_group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex: 1 !important;
+  min-width: 230px !important;
+}
+
+.download_field_label {
+  color: #0D652D !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  user-select: none !important;
+}
+
+.download_date_input {
+  height: 42px !important;
+  flex: 1 !important;
+  min-width: 130px !important;
+  padding: 6px 12px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  background-color: #FFFFFF !important;
+  color: #1E293B !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.download_date_input:focus {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12) !important;
+}
+
+.date_range_tilde {
+  color: #475569 !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  user-select: none !important;
+  padding: 0 4px !important;
+}
+
+/* Row 2: 1 Day, 1 Week, 1 Month Pills */
+.download_term_row {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 14px !important;
+  margin-bottom: 22px !important;
+}
+
+.download_term_row input[type="radio"] {
+  display: none !important;
+}
+
+.download_term_pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  padding: 0 16px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  color: #374151 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.download_term_pill:hover {
+  background-color: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+
+.download_term_row input[type="radio"]:checked + .download_term_pill {
+  background-color: #ECFDF5 !important;
+  border: 1.5px solid #86EFAC !important;
+  color: #0D652D !important;
+  font-weight: 600 !important;
+}
+
+/* Divider */
+.download_divider {
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #F1F5F9 !important;
+  border: none !important;
+  margin: 0 0 20px 0 !important;
+}
+
+/* Download button centered */
+.download_action_row {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.btn_download_submit,
+#btn_datadownload.btn_download_submit,
+#btn_datadownload {
+  height: 46px !important;
+  padding: 0 36px !important;
+  background-color: #0D652D !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  text-shadow: none !important;
+  transition: background-color 0.15s ease, transform 0.05s ease !important;
+}
+
+.btn_download_submit:hover,
+#btn_datadownload:hover {
+  background-color: #0A5224 !important;
+}
+
+.btn_download_submit:active,
+#btn_datadownload:active {
+  transform: scale(0.98) !important;
+}
+
+.download_btn_icon {
+  width: 20px !important;
+  height: 20px !important;
+  stroke: #FFFFFF !important;
+  stroke-width: 2.2 !important;
+}
+
+/* Card 2: File Information Card */
+.file_info_card {
+  background-color: #F2F9F5 !important;
+  border: 1px solid #D1FAE5 !important;
+  border-radius: 12px !important;
+  padding: 20px 24px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+}
+
+.excel_badge_icon {
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.file_info_text_content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.file_info_title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #0D652D !important;
+  letter-spacing: -0.2px !important;
+}
+
+.file_info_desc {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 14.5px !important;
+  color: #374151 !important;
+  line-height: 1.4 !important;
+}
+
+.file_info_warning {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 14px !important;
+  color: #EF4444 !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+}
+
+@media (max-width: 600px) {
+  .download_tab_wrapper {
+    margin: 14px auto !important;
+    padding: 0 10px !important;
+  }
+  .download_card {
+    padding: 18px 16px !important;
+  }
+  .download_date_row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .date_range_tilde {
+    display: none !important;
+  }
+  .btn_download_submit {
+    width: 100% !important;
+  }
+}
+
+/* Row 2: Time period selection buttons (1 Day, 1 Week, 1 Month) */
+.filter_term_group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.filter_term_group input[type="radio"] {
+  display: none !important;
+}
+
+.term_pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 38px !important;
+  min-width: 84px !important;
+  padding: 0 18px !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  color: #334155 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.term_pill:hover {
+  background-color: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* Selected state: light green bg, green border and text */
+.filter_term_group input[type="radio"]:checked + .term_pill {
+  background-color: #E8F5E9 !important;
+  border: 1px solid #86EFAC !important;
+  color: #0D652D !important;
+  font-weight: 600 !important;
+}
 
 .div_selectterm {
 	height: auto;
@@ -354,70 +853,361 @@ table input[type=radio]:checked + label {
 	text-shadow:0px 1px 0px #2f6627;
 }
 
-#wrapper1, #wrapper2{
-	width: 99%;
-	margin: 20px auto;
-	/*
-	border-width: 1px;
-	border-style: solid;
-	border-color: #ff9999;
-	*/
-}
-.data-container1, .data-container2{
-	font-family: "Arial", "맑은 고딕", "돋움";
-	font-size: 1.4em;
-	width:100%;
-	margin-top: 0px;
-	margin-bottom: 20px;
-	display: flex;
-	justify-content: center;	
-}
-#pagination-demo1, #pagination-demo2{
-	display: flex;
-	justify-content: center;
+#wrapper1, #wrapper2 {
+	width: 100%;
+	max-width: 1200px;
+	margin: 24px auto 40px auto;
+	box-sizing: border-box;
 }
 
-
-/*
-section table  {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 15px;
-	text-align: center;
-}
-section th {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 15px;
-	text-align: center;
-}
-section tr {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 15px;
-	text-align: center;
-}
-section td {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 15px;
-	text-align: center;
-}
-*/
-
-section table, section th, section tr, section td {
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding: 5px 15px;
-	text-align: center;
+.data-container1, .data-container2 {
+	width: 100%;
+	margin: 0 0 24px 0;
+	padding: 0;
+	display: block;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 14px;
+	box-sizing: border-box;
 }
 
-section table thead th{
-	padding: 13px 15px;
-	background-color: DarkGray;
+/* ==========================================================================
+   Push Alert Table & Pagination Design
+   ========================================================================== */
+
+/* Outer Card Container */
+.alert_table_card {
+	width: 100% !important;
+	background-color: #FFFFFF !important;
+	border: 1px solid #E2E8F0 !important;
+	border-radius: 12px !important;
+	overflow-x: auto !important;
+	overflow-y: hidden !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+	box-sizing: border-box !important;
 }
-section table tbody tr:hover{
-	background-color: LightGray;
+
+/* Alert Data Table */
+.alert_data_table {
+	width: 100% !important;
+	border-collapse: collapse !important;
+	border-spacing: 0 !important;
+	border: none !important;
+	margin: 0 !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.alert_data_table thead {
+	background-color: #F8FAFC !important;
+}
+
+.alert_data_table thead th {
+	background-color: #F8FAFC !important;
+	color: #0F172A !important;
+	font-size: 15px !important;
+	font-weight: 700 !important;
+	padding: 18px 20px !important;
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #E2E8F0 !important;
+	text-align: center !important;
+	letter-spacing: -0.2px !important;
+	white-space: nowrap !important;
+}
+
+.alert_data_table tbody tr {
+	background-color: #FFFFFF !important;
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #E2E8F0 !important;
+	transition: background-color 0.15s ease !important;
+}
+
+.alert_data_table tbody tr:last-child {
+	border-bottom: none !important;
+}
+
+.alert_data_table tbody tr:hover {
+	background-color: #F8FAFC !important;
+}
+
+.alert_data_table tbody td {
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: inherit !important;
+	padding: 20px 24px !important;
+	vertical-align: middle !important;
+	font-size: 14.5px !important;
+	color: #1E293B !important;
+	box-sizing: border-box !important;
+}
+
+/* Datetime Column */
+.alert_data_table .col_datetime {
+	text-align: center !important;
+	font-weight: 500 !important;
+	color: #1E293B !important;
+	line-height: 1.45 !important;
+	white-space: nowrap !important;
+	vertical-align: middle !important;
+	font-size: 14.5px !important;
+}
+
+/* Status Badge Column */
+.alert_data_table .col_status {
+	text-align: center !important;
+	vertical-align: middle !important;
+}
+
+.alert_status_badge {
+	display: inline-block !important;
+	background-color: #FEF2F2 !important;
+	border: 1px solid #FECACA !important;
+	color: #EF4444 !important;
+	font-size: 13.5px !important;
+	font-weight: 600 !important;
+	padding: 6px 14px !important;
+	border-radius: 6px !important;
+	line-height: 1.3 !important;
+	letter-spacing: -0.1px !important;
+	white-space: nowrap !important;
+}
+
+/* Details Column */
+.alert_data_table .col_details {
+	text-align: left !important;
+	font-size: 14px !important;
+	color: #1E293B !important;
+	line-height: 1.55 !important;
+	white-space: pre-line !important;
+	word-break: break-word !important;
+	vertical-align: middle !important;
+	padding: 20px 24px !important;
+}
+
+/* ==========================================================================
+   Pagination Bar Styling
+   ========================================================================== */
+
+#pagination-demo1, #pagination-demo2 {
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	width: 100% !important;
+	margin: 24px 0 40px 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+}
+
+#pagination-demo1 .paginationjs,
+#pagination-demo2 .paginationjs {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-wrap: wrap !important;
+	gap: 12px !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	font-size: 14px !important;
+	line-height: 1.5 !important;
+	box-sizing: border-box !important;
+	float: none !important;
+}
+
+#pagination-demo1 .paginationjs:after,
+#pagination-demo2 .paginationjs:after {
+	display: none !important;
+}
+
+/* 1-3 of 3 items navigator */
+#pagination-demo1 .paginationjs .paginationjs-nav,
+#pagination-demo2 .paginationjs .paginationjs-nav {
+	float: none !important;
+	height: 36px !important;
+	line-height: 36px !important;
+	font-size: 14px !important;
+	color: #1E293B !important;
+	font-weight: 500 !important;
+	margin: 0 8px 0 0 !important;
+	white-space: nowrap !important;
+}
+
+/* Pages list */
+#pagination-demo1 .paginationjs .paginationjs-pages,
+#pagination-demo2 .paginationjs .paginationjs-pages {
+	float: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-pages ul,
+#pagination-demo2 .paginationjs .paginationjs-pages ul {
+	float: none !important;
+	display: flex !important;
+	align-items: center !important;
+	gap: 6px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+}
+
+/* Reset joined borders from default paginationjs */
+#pagination-demo1 .paginationjs .paginationjs-pages li,
+#pagination-demo2 .paginationjs .paginationjs-pages li {
+	float: none !important;
+	border: none !important;
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border-radius: 6px !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-pages li:first-child,
+#pagination-demo1 .paginationjs .paginationjs-pages li:first-child > a,
+#pagination-demo1 .paginationjs .paginationjs-pages li:last-child,
+#pagination-demo1 .paginationjs .paginationjs-pages li:last-child > a,
+#pagination-demo2 .paginationjs .paginationjs-pages li:first-child,
+#pagination-demo2 .paginationjs .paginationjs-pages li:first-child > a,
+#pagination-demo2 .paginationjs .paginationjs-pages li:last-child,
+#pagination-demo2 .paginationjs .paginationjs-pages li:last-child > a {
+	border-radius: 6px !important;
+	border-right: none !important;
+}
+
+/* Regular Page links & prev/next */
+#pagination-demo1 .paginationjs .paginationjs-pages li > a,
+#pagination-demo2 .paginationjs .paginationjs-pages li > a {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 36px !important;
+	height: 36px !important;
+	line-height: 36px !important;
+	padding: 0 10px !important;
+	box-sizing: border-box !important;
+	background-color: #FFFFFF !important;
+	border: 1px solid #E2E8F0 !important;
+	border-radius: 6px !important;
+	color: #64748B !important;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	text-decoration: none !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-pages li > a:hover,
+#pagination-demo2 .paginationjs .paginationjs-pages li > a:hover {
+	background-color: #F8FAFC !important;
+	border-color: #CBD5E1 !important;
+	color: #1E293B !important;
+}
+
+/* Active page button (Forest Green #0D652D) */
+#pagination-demo1 .paginationjs .paginationjs-pages li.active,
+#pagination-demo2 .paginationjs .paginationjs-pages li.active {
+	border: none !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-pages li.active > a,
+#pagination-demo1 .paginationjs .paginationjs-pages li.active > a:hover,
+#pagination-demo2 .paginationjs .paginationjs-pages li.active > a,
+#pagination-demo2 .paginationjs .paginationjs-pages li.active > a:hover {
+	background-color: #0D652D !important;
+	border: 1px solid #0D652D !important;
+	color: #FFFFFF !important;
+	font-weight: 600 !important;
+	cursor: default !important;
+}
+
+/* Disabled prev/next buttons */
+#pagination-demo1 .paginationjs .paginationjs-pages li.disabled > a,
+#pagination-demo1 .paginationjs .paginationjs-pages li.disabled > a:hover,
+#pagination-demo2 .paginationjs .paginationjs-pages li.disabled > a,
+#pagination-demo2 .paginationjs .paginationjs-pages li.disabled > a:hover {
+	background-color: #FFFFFF !important;
+	border-color: #E2E8F0 !important;
+	color: #CBD5E1 !important;
+	opacity: 0.7 !important;
+	cursor: not-allowed !important;
+}
+
+/* Size Changer Dropdown (e.g. 15 / page ⌵) */
+#pagination-demo1 .paginationjs .paginationjs-size-changer,
+#pagination-demo2 .paginationjs .paginationjs-size-changer {
+	float: none !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-size-changer > select,
+#pagination-demo2 .paginationjs .paginationjs-size-changer > select {
+	height: 36px !important;
+	line-height: 34px !important;
+	border: 1px solid #E2E8F0 !important;
+	border-radius: 6px !important;
+	background-color: #FFFFFF !important;
+	color: #1E293B !important;
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	padding: 0 32px 0 14px !important;
+	outline: none !important;
+	cursor: pointer !important;
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+	background-repeat: no-repeat !important;
+	background-position: right 10px center !important;
+	box-sizing: border-box !important;
+	transition: border-color 0.15s ease !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-size-changer > select:focus,
+#pagination-demo2 .paginationjs .paginationjs-size-changer > select:focus {
+	border-color: #0D652D !important;
+}
+
+/* Hide Go Text Input Box */
+#pagination-demo1 .paginationjs .paginationjs-go-input,
+#pagination-demo2 .paginationjs .paginationjs-go-input {
+	display: none !important;
+}
+
+/* Go Button (Forest Green #0D652D) */
+#pagination-demo1 .paginationjs .paginationjs-go-button,
+#pagination-demo2 .paginationjs .paginationjs-go-button {
+	float: none !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-go-button > input[type=button],
+#pagination-demo2 .paginationjs .paginationjs-go-button > input[type=button] {
+	height: 36px !important;
+	min-width: 52px !important;
+	padding: 0 18px !important;
+	background-color: #0D652D !important;
+	border: none !important;
+	border-radius: 6px !important;
+	color: #FFFFFF !important;
+	font-size: 14px !important;
+	font-weight: 600 !important;
+	cursor: pointer !important;
+	transition: background-color 0.15s ease !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-sizing: border-box !important;
+}
+
+#pagination-demo1 .paginationjs .paginationjs-go-button > input[type=button]:hover,
+#pagination-demo2 .paginationjs .paginationjs-go-button > input[type=button]:hover {
+	background-color: #0A4F23 !important;
 }
 
 

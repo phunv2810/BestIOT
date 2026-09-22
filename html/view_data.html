@@ -1,82 +1,189 @@
 <!doctype html>
 <html>
+
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, user-scalable=2">
-<meta name="mobile-web-app-capable" content="yes">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2.0, user-scalable=2">
+    <meta name="mobile-web-app-capable" content="yes">
 
-<input type='hidden' id='session_id' value='admin'/><input type='hidden' id='session_lv' value=''/>
+    <input type='hidden' id='session_id' value='admin' /><input type='hidden' id='session_lv' value='' />
 
-<title>SmartFarm Controller</title>
+    <title>SmartFarm Controller</title>
 
-<script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
-<script src="/js/animsition.js" charset="utf-8"></script>
-<link rel="stylesheet" href="css/animsition.min.css">
+    <script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+    <script src="/js/animsition.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/animsition.min.css">
 
-<script type="text/javascript" src="/js/detect-swipe-event.js"></script>
+    <script type="text/javascript" src="/js/detect-swipe-event.js"></script>
 
-<script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.categoryAxisRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.highlighter.js"></script>
-<script type="text/javascript" src="/jqPlot/plugins/jqplot.cursor.js"></script>	
-<link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
+    <script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.dateAxisRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.categoryAxisRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.enhancedLegendRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.barRenderer.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.highlighter.js"></script>
+    <script type="text/javascript" src="/jqPlot/plugins/jqplot.cursor.js"></script>
+    <link class="include" rel="stylesheet" type="text/css" href="/jqPlot/jquery.jqplot.css" />
 
-<script type="text/javascript" src="/js/pagination.js"></script>
-<link rel="stylesheet" type="text/css"href="css/pagination.css" >
+    <script type="text/javascript" src="/js/pagination.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/pagination.css">
 
-<link rel="stylesheet" href="css/view_data.css"/>
+    <!-- Chart.js Modern Charting Library -->
+    <script type="text/javascript" src="/js/chart.min.js"></script>
+    <script type="text/javascript" src="../js/chart.min.js"></script>
 
-<style type="text/css">
+    <link rel="stylesheet" href="css/view_data.css" />
 
-</style>
+    <style type="text/css">
+        /* ==========================================================================
+           Tab Navigation Header (Graph View / Data Download / Push Alert)
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 탭 전체 스타일 */
+        .tabs {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            width: 100% !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            background-color: #ffffff !important;
+            box-shadow: none !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 라디오 버튼 UI 삭제 */
+        input[name="tab_item"] {
+            display: none !important;
+        }
+
+        /* 탭 항목 스타일 */
+        .tab_item {
+            flex: 1 1 0px !important;
+            width: auto !important;
+            height: 52px !important;
+            line-height: 52px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            float: none !important;
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            letter-spacing: -0.2px !important;
+            text-align: center !important;
+            border-right: 1px solid #E2E8F0 !important;
+            border-bottom: 3.5px solid transparent !important;
+            border-top: none !important;
+            border-left: none !important;
+            margin-bottom: -1px !important;
+            cursor: pointer !important;
+            user-select: none !important;
+            box-sizing: border-box !important;
+            transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+        }
+
+        /* Last tab has no right border */
+        .tab_item:last-of-type,
+        label[for="search_push"] {
+            border-right: none !important;
+        }
+
+        .tab_item:hover {
+            color: #0F172A !important;
+            background-color: #F8FAFC !important;
+            opacity: 1 !important;
+            cursor: pointer !important;
+        }
+
+        /* Active tab: green text and bottom border */
+        .tabs input:checked + .tab_item {
+            background-color: #ffffff !important;
+            color: #0D652D !important;
+            font-weight: 700 !important;
+            border-bottom: 3.5px solid #0D652D !important;
+        }
+
+        .tabs input:checked + .tab_item:hover {
+            background-color: #ffffff !important;
+            color: #0D652D !important;
+        }
+
+        /* 탭 컨텐츠 스타일 */
+        .tab_content {
+            display: none;
+            width: 100% !important;
+            flex-basis: 100% !important;
+            padding: 0px 0px;
+            clear: both;
+            overflow: hidden;
+            box-sizing: border-box !important;
+        }
+
+        /* 선택 된 탭 콘텐츠를 표시 */
+        #view_graph:checked ~ #view_graph_content, 
+        #data_download:checked ~ #data_download_content,
+        #search_push:checked ~ #search_push_content {
+            display: block !important;
+        }
+
+        .chart_plot_wrapper {
+            width: 100% !important;
+            height: 420px !important;
+            position: relative !important;
+            box-sizing: border-box !important;
+        }
+    </style>
 
 
 </head>
 
 <body>
-<div class="animsition">
+    <div class="animsition">
 
-<!-------------- Tab ------------------//-->
-<div class="tabs">
-	<!-- 탭 표시 항목 //-->
-	<input id="view_graph" type="radio" name="tab_item" checked>
-	<label class="tab_item" for="view_graph">그래프 보기</label>
+        <!-------------- Tab ------------------//-->
+        <div class="tabs">
+            <!-- 탭 표시 항목 //-->
+            <input id="view_graph" type="radio" name="tab_item" checked>
+            <label class="tab_item" for="view_graph">Graph View</label>
 
-	<input id="data_download" type="radio" name="tab_item">
-	<label class="tab_item" for="data_download">데이터 다운로드</label>
+            <input id="data_download" type="radio" name="tab_item">
+            <label class="tab_item" for="data_download">Data Download</label>
 
-	<input id="search_push" type="radio" name="tab_item">
-	<label class="tab_item" for="search_push">푸시 알람 검색</label>
-	
-	
-	<!-- 탭 표시 내용 //-->	
-	<div class="tab_content" id="view_graph_content"></div>
+            <input id="search_push" type="radio" name="tab_item">
+            <label class="tab_item" for="search_push">Push Alert</label>
 
-	<div class="tab_content" id="data_download_content"></div>
 
-	<div class="tab_content" id="search_push_content">
-		<div id="push_searchterm"></div>
-		<div id="wrapper1">
-			<section>
-				<div class="data-container1"></div>
-				<div id="pagination-demo1"></div>
-			</section>
-		</div>
-	</div>
-</div>
-<!------------------------------------//-->
+            <!-- 탭 표시 내용 //-->
+            <div class="tab_content" id="view_graph_content"></div>
 
-</div>
+            <div class="tab_content" id="data_download_content"></div>
+
+            <div class="tab_content" id="search_push_content">
+                <div id="push_searchterm"></div>
+                <div id="wrapper1">
+                    <section>
+                        <div class="data-container1"></div>
+                        <div id="pagination-demo1"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------//-->
+
+    </div>
 </body>
 
 <script class="include" type="text/javascript" src="/js/view_data.js"></script>
 
 </html>
-

@@ -19,7 +19,1268 @@
 <link rel="stylesheet" href="css/animsition.min.css">
 
 <style type="text/css">
+    /* ==========================================================================
+       Tab Navigation Header (set_config.html)
+       ========================================================================== */
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
 
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* 탭 전체 스타일 */
+    .tabs {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        background-color: #ffffff !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 라디오 버튼 UI 삭제 */
+    input[name="tab_item"] {
+        display: none !important;
+    }
+
+    /* 탭 항목 스타일 */
+    .tab_item {
+        flex: 1 1 0px !important;
+        width: auto !important;
+        height: 52px !important;
+        line-height: 52px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        float: none !important;
+        background-color: #ffffff !important;
+        color: #475569 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.2px !important;
+        text-align: center !important;
+        border-right: 1px solid #E2E8F0 !important;
+        border-bottom: 3.5px solid transparent !important;
+        border-top: none !important;
+        border-left: none !important;
+        margin-bottom: -1px !important;
+        cursor: pointer !important;
+        user-select: none !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+        transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+    }
+
+    /* Last tab has no right border */
+    .tab_item:last-of-type,
+    label[for="set_network"] {
+        border-right: none !important;
+    }
+
+    .tab_item:hover {
+        color: #0F172A !important;
+        background-color: #F8FAFC !important;
+        opacity: 1 !important;
+        cursor: pointer !important;
+    }
+
+    /* Active tab: green text and bottom border */
+    .tabs input:checked + .tab_item {
+        background-color: #ffffff !important;
+        color: #0D652D !important;
+        font-weight: 700 !important;
+        border-bottom: 3.5px solid #0D652D !important;
+    }
+
+    .tabs input:checked + .tab_item:hover {
+        background-color: #ffffff !important;
+        color: #0D652D !important;
+    }
+
+    /* 탭 컨텐츠 스타일 */
+    .tab_content {
+        display: none;
+        width: 100% !important;
+        flex-basis: 100% !important;
+        padding: 16px 10px;
+        clear: both;
+        overflow: hidden;
+        box-sizing: border-box !important;
+    }
+
+    /* 선택 된 탭 콘텐츠를 표시 */
+    #set_io:checked ~ #set_io_content, 
+    #set_alarm:checked ~ #set_alarm_content,
+    #set_system:checked ~ #set_system_content,
+    #set_network:checked ~ #set_network_content {
+        display: block !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+        .tab_item {
+            font-size: 13.5px !important;
+            padding: 0 4px !important;
+            letter-spacing: -0.3px !important;
+            height: 48px !important;
+            line-height: 48px !important;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .tab_item {
+            font-size: 11.5px !important;
+            padding: 0 2px !important;
+            letter-spacing: -0.4px !important;
+            height: 44px !important;
+            line-height: 44px !important;
+        }
+    }
+
+    /* ==========================================================================
+       Operation Settings (set_io_content) Modern Card & Table Design
+       ========================================================================== */
+
+    .config_page_container {
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto 60px auto;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .config_section {
+        width: 100%;
+        margin-bottom: 36px;
+    }
+
+    .config_section_header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+        padding-bottom: 2px;
+    }
+
+    .config_section_title {
+        font-size: 17.5px;
+        font-weight: 700;
+        color: #0F172A;
+        letter-spacing: -0.3px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .config_count_select {
+        min-width: 70px;
+        height: 36px;
+        padding: 0 28px 0 14px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #0F172A;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .config_count_select:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    /* Card Table Wrapper */
+    .config_table_card {
+        width: 100%;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        box-sizing: border-box;
+    }
+
+    /* Table */
+    .config_data_table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Table Header */
+    .config_data_table thead th {
+        background-color: #F0FDF4 !important;
+        color: #0D652D !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        padding: 14px 16px !important;
+        text-align: center !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        border-right: 1px solid #E2E8F0 !important;
+        letter-spacing: -0.2px !important;
+        white-space: nowrap !important;
+    }
+
+    .config_data_table thead th:last-child {
+        border-right: none !important;
+    }
+
+    /* Table Body Rows */
+    .config_data_table tbody tr {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #E2E8F0;
+        transition: background-color 0.15s ease;
+    }
+
+    .config_data_table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .config_data_table tbody tr:hover {
+        background-color: #FAFCF9;
+    }
+
+    .config_data_table tbody td {
+        padding: 10px 14px;
+        vertical-align: middle;
+        border-top: none;
+        border-left: none;
+        border-right: 1px solid #E2E8F0;
+        border-bottom: inherit;
+        box-sizing: border-box;
+    }
+
+    .config_data_table tbody td:last-child {
+        border-right: none;
+    }
+
+    /* Channel Label (CH1, CH2, CH3) */
+    .col_channel_label {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #0D652D;
+        white-space: nowrap;
+    }
+
+    /* Input Fields Inside Table */
+    .config_input_text {
+        width: 100%;
+        height: 38px;
+        padding: 0 12px;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 6px;
+        font-size: 14.5px;
+        color: #1E293B;
+        font-family: inherit;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .config_input_text:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .config_input_num {
+        width: 100%;
+        height: 38px;
+        padding: 0 8px;
+        text-align: center;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 6px;
+        font-size: 14.5px;
+        font-weight: 500;
+        color: #1E293B;
+        font-family: inherit;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .config_input_num:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    /* Mode Select for Timer */
+    .config_select_mode {
+        width: 100%;
+        height: 38px;
+        padding: 0 28px 0 12px;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #1E293B;
+        font-family: inherit;
+        outline: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .config_select_mode:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .timer_mode_subpanel {
+        padding: 14px 16px;
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        margin: 6px 0 10px 0;
+        box-sizing: border-box;
+    }
+
+    .timer_mode_card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .timer_field_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 4px 0;
+    }
+
+    .timer_field_label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #334155;
+        min-width: 170px;
+    }
+
+    .timer_time_group {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .timer_input_num {
+        width: 68px;
+        height: 36px;
+        text-align: center;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        font-size: 14.5px;
+        font-weight: 500;
+        color: #1E293B;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .timer_input_num:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .timer_unit_text {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #64748B;
+        margin-right: 6px;
+    }
+
+    .timer_field_dual {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .timer_subfield {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        min-width: 240px;
+    }
+
+    .timer_unit_combo {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .timer_select_unit {
+        height: 36px;
+        padding: 0 26px 0 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #1E293B;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        transition: border-color 0.15s ease;
+    }
+
+    .timer_select_unit:focus {
+        border-color: #0D652D;
+    }
+
+    /* 5-Step Extension Mode */
+    .timer_mode_card_steps {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .timer_step_item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 6px;
+        flex-wrap: wrap;
+    }
+
+    .timer_step_badge {
+        padding: 4px 10px;
+        background-color: #F0FDF4;
+        color: #0D652D;
+        border: 1px solid #BBF7D0;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .timer_step_fields {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        flex: 1;
+    }
+
+    .timer_step_field {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .timer_field_minilabel {
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+    }
+
+    .timer_select_out {
+        height: 36px;
+        padding: 0 28px 0 10px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #1E293B;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        transition: border-color 0.15s ease;
+    }
+
+    .timer_select_out:focus {
+        border-color: #0D652D;
+    }
+
+    /* Save Settings Button Bar */
+    .config_save_bar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 36px 0 40px 0;
+    }
+
+    .btn_config_save {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: #0D652D;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        padding: 13px 40px;
+        border: none;
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: 0 3px 6px rgba(13, 101, 45, 0.25);
+        transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn_config_save:hover {
+        background-color: #094B21;
+        box-shadow: 0 4px 10px rgba(13, 101, 45, 0.35);
+        transform: translateY(-1px);
+    }
+
+    .btn_config_save:active {
+        transform: translateY(0);
+    }
+
+    .btn_config_save svg {
+        display: block;
+    }
+
+    /* ==========================================================================
+       Alert Settings (set_alarm_content) Modern Card & Table Design
+       ========================================================================== */
+
+    .alarm_panel_card {
+        width: 100%;
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin-bottom: 28px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        box-sizing: border-box;
+    }
+
+    .alarm_panel_title {
+        font-size: 17.5px;
+        font-weight: 700;
+        color: #0F172A;
+        letter-spacing: -0.3px;
+        margin-bottom: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .alarm_data_table {
+        width: 100%;
+    }
+
+    .alarm_data_table .config_input_num {
+        max-width: 140px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+    }
+
+    /* Custom Green Square Checkbox */
+    .col_checkbox_cell {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+    .custom_check_input {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #CBD5E1;
+        border-radius: 5px;
+        background-color: #FFFFFF;
+        outline: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        vertical-align: middle;
+        margin: 0 auto;
+        box-sizing: border-box;
+        transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .custom_check_input:checked {
+        background-color: #0D652D;
+        border-color: #0D652D;
+    }
+
+    .custom_check_input:checked::after {
+        content: '';
+        display: block;
+        width: 5px;
+        height: 10px;
+        border: solid #FFFFFF;
+        border-width: 0 2.5px 2.5px 0;
+        transform: rotate(45deg);
+        margin-top: -2px;
+    }
+
+    .custom_check_input:focus {
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.2);
+    }
+
+    /* Web Push Alert Subpanels */
+    .push_settings_wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+    }
+
+    .push_info_box {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background-color: #F0FDF4;
+        border: 1px solid #DCFCE7;
+        border-radius: 10px;
+        padding: 16px 20px;
+        box-sizing: border-box;
+    }
+
+    .push_bell_icon_wrapper {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        border-radius: 50%;
+        background-color: #DCFCE7;
+        color: #0D652D;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .push_info_text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .push_info_main {
+        font-size: 14.5px;
+        font-weight: 500;
+        color: #1E293B;
+        line-height: 1.5;
+    }
+
+    .link_webpush {
+        color: #0284C7;
+        font-weight: 600;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color 0.15s ease;
+    }
+
+    .link_webpush:hover {
+        color: #0369A1;
+    }
+
+    .push_info_notice {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #EF4444;
+    }
+
+    .push_action_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        box-sizing: border-box;
+        flex-wrap: wrap;
+    }
+
+    .push_label_id {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0D652D;
+        white-space: nowrap;
+        min-width: 120px;
+    }
+
+    .push_input_id {
+        flex: 1;
+        min-width: 180px;
+        max-width: 360px;
+        height: 40px;
+        padding: 0 14px;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        font-size: 14.5px;
+        color: #1E293B;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .push_input_id:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .push_input_id::placeholder {
+        color: #94A3B8;
+        font-size: 14px;
+    }
+
+    .btn_push_test {
+        height: 40px;
+        padding: 0 28px;
+        background-color: #0D652D;
+        color: #FFFFFF;
+        font-size: 14.5px;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(13, 101, 45, 0.2);
+        transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+        white-space: nowrap;
+    }
+
+    .btn_push_test:hover {
+        background-color: #094B21;
+        box-shadow: 0 3px 8px rgba(13, 101, 45, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .btn_push_test:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+        .alarm_panel_card {
+            padding: 16px 14px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .alarm_panel_title {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .push_info_box {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+        }
+        .push_action_row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            padding: 12px;
+        }
+        .push_input_id {
+            max-width: 100%;
+            min-width: 100%;
+        }
+        .btn_push_test {
+            width: 100%;
+        }
+    }
+
+    /* ==========================================================================
+       System Settings (set_system_content) Modern Card & Form Design
+       ========================================================================== */
+
+    .system_card_title_row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .system_form_box {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 24px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-sizing: border-box;
+    }
+
+    .system_form_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .system_form_label {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1E293B;
+        min-width: 150px;
+        flex-shrink: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .system_form_field {
+        flex: 1;
+        max-width: 460px;
+        position: relative;
+    }
+
+    .system_input_text {
+        width: 100%;
+        height: 42px;
+        padding: 0 14px;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        font-size: 14.5px;
+        color: #1E293B;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        font-family: inherit;
+    }
+
+    .system_input_text:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .system_input_text::placeholder {
+        color: #94A3B8;
+        font-size: 14px;
+    }
+
+    .system_input_disabled {
+        background-color: #F1F5F9 !important;
+        color: #64748B !important;
+        border-color: #E2E8F0 !important;
+        cursor: not-allowed;
+    }
+
+    .password_input_wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .password_input_wrapper .system_input_text {
+        padding-right: 42px;
+    }
+
+    .btn_toggle_pw {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #64748B;
+        cursor: pointer;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        transition: color 0.15s ease;
+    }
+
+    .btn_toggle_pw:hover {
+        color: #1E293B;
+    }
+
+    .system_save_bar {
+        display: flex;
+        justify-content: center;
+        margin-top: 14px;
+    }
+
+    .system_scroll_notice {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background-color: #F0FDF4;
+        border: 1px solid #DCFCE7;
+        border-radius: 8px;
+        padding: 14px 20px;
+        margin: 28px 0;
+        box-sizing: border-box;
+    }
+
+    .system_notice_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .system_notice_text {
+        font-size: 14.5px;
+        font-weight: 600;
+        color: #0D652D;
+        letter-spacing: -0.2px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .system_reboot_card {
+        margin-bottom: 40px;
+    }
+
+    .reboot_message_box {
+        background-color: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        padding: 18px 24px;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 500;
+        color: #1E293B;
+        margin-bottom: 22px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .reboot_action_bar {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn_reboot_system {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: #FFFFFF;
+        color: #DC2626;
+        border: 1.5px solid #FCA5A5;
+        border-radius: 8px;
+        font-size: 15.5px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        padding: 12px 36px;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(220, 38, 38, 0.05);
+        transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .btn_reboot_system:hover {
+        background-color: #FEF2F2;
+        border-color: #EF4444;
+        color: #B91C1C;
+        box-shadow: 0 2px 6px rgba(220, 38, 38, 0.12);
+        transform: translateY(-1px);
+    }
+
+    .btn_reboot_system:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+        .system_form_box {
+            padding: 16px 14px;
+            gap: 14px;
+        }
+        .system_form_row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .system_form_label {
+            min-width: unset;
+        }
+        .system_form_field {
+            max-width: 100%;
+            width: 100%;
+        }
+        .btn_reboot_system {
+            width: 100%;
+        }
+    }
+
+    /* ==========================================================================
+       Network Settings (set_network_content) Modern Card & Wi-Fi List Design
+       ========================================================================== */
+
+    .wifi_card_title_row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .wifi_header_left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn_refresh_wifi {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        background-color: #F8FAFC;
+        border: 1px solid #CBD5E1;
+        border-radius: 8px;
+        color: #334155;
+        cursor: pointer;
+        box-sizing: border-box;
+        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.2s ease;
+    }
+
+    .btn_refresh_wifi:hover {
+        background-color: #F1F5F9;
+        color: #0D652D;
+        border-color: #0D652D;
+        transform: rotate(90deg);
+    }
+
+    .btn_refresh_wifi:active {
+        transform: rotate(180deg);
+    }
+
+    .wifi_data_table {
+        width: 100%;
+    }
+
+    .wifi_data_table thead th {
+        background-color: #F0FDF4 !important;
+        color: #0D652D !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        padding: 14px 16px !important;
+        letter-spacing: -0.2px !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        border-right: 1px solid #E2E8F0 !important;
+        white-space: nowrap !important;
+    }
+
+    .wifi_data_table thead th:last-child {
+        border-right: none !important;
+    }
+
+    .wifi_data_table tbody tr {
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+    }
+
+    .wifi_data_table tbody tr:hover {
+        background-color: #F8FAFC !important;
+    }
+
+    .wifi_data_table tbody tr.wifi_row_selected {
+        background-color: #F0FDF4 !important;
+    }
+
+    .wifi_data_table tbody tr.wifi_row_selected .wifi_ssid_cell {
+        color: #0D652D !important;
+        font-weight: 700 !important;
+    }
+
+    .wifi_ssid_cell {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1E293B;
+        letter-spacing: -0.2px;
+    }
+
+    /* 4-Bar Wi-Fi Signal Strength Icon */
+    .wifi_signal_bars {
+        display: inline-flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 3px;
+        height: 20px;
+        vertical-align: middle;
+    }
+
+    .signal_bar {
+        width: 4px;
+        border-radius: 1px;
+        background-color: #E2E8F0;
+        transition: background-color 0.15s ease;
+    }
+
+    .signal_bar.bar-1 { height: 6px; }
+    .signal_bar.bar-2 { height: 10px; }
+    .signal_bar.bar-3 { height: 14px; }
+    .signal_bar.bar-4 { height: 18px; }
+
+    /* Active Signal Bars */
+    .wifi_signal_bars.bars-1 .bar-1,
+    .wifi_signal_bars.bars-2 .bar-1,
+    .wifi_signal_bars.bars-2 .bar-2,
+    .wifi_signal_bars.bars-3 .bar-1,
+    .wifi_signal_bars.bars-3 .bar-2,
+    .wifi_signal_bars.bars-3 .bar-3,
+    .wifi_signal_bars.bars-4 .bar-1,
+    .wifi_signal_bars.bars-4 .bar-2,
+    .wifi_signal_bars.bars-4 .bar-3,
+    .wifi_signal_bars.bars-4 .bar-4 {
+        background-color: #0D652D;
+    }
+
+    /* Wi-Fi Connection Settings Panel */
+    .wifi_connect_panel {
+        display: flex;
+        align-items: stretch;
+        gap: 18px;
+        margin-top: 14px;
+    }
+
+    .wifi_connect_fields {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .wifi_connect_row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .wifi_connect_label {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1E293B;
+        min-width: 85px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .wifi_input_text {
+        flex: 1;
+        height: 42px;
+        padding: 0 14px;
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        font-size: 14.5px;
+        color: #1E293B;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        font-family: inherit;
+    }
+
+    .wifi_input_text:focus {
+        border-color: #0D652D;
+        box-shadow: 0 0 0 2px rgba(13, 101, 45, 0.12);
+    }
+
+    .wifi_input_text::placeholder {
+        color: #94A3B8;
+        font-size: 14px;
+    }
+
+    .btn_wifi_apply {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background-color: #0D652D;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        border: none;
+        border-radius: 10px;
+        padding: 0 32px;
+        cursor: pointer;
+        transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+        white-space: nowrap;
+        box-shadow: 0 2px 5px rgba(13, 101, 45, 0.25);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        min-height: 96px;
+    }
+
+    .btn_wifi_apply:hover {
+        background-color: #094B21;
+        box-shadow: 0 4px 10px rgba(13, 101, 45, 0.35);
+        transform: translateY(-1px);
+    }
+
+    .btn_wifi_apply:active {
+        transform: translateY(0);
+    }
+
+    .loader {
+        border: 4px solid #F1F5F9;
+        border-top: 4px solid #0D652D;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        animation: spin 0.8s linear infinite;
+        margin: 30px auto;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 640px) {
+        .wifi_connect_panel {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .btn_wifi_apply {
+            min-height: 44px;
+            padding: 12px 20px;
+            width: 100%;
+        }
+        .wifi_data_table thead th {
+            font-size: 13.5px !important;
+            padding: 10px 8px !important;
+        }
+        .wifi_ssid_cell {
+            font-size: 13.5px !important;
+            padding-left: 10px !important;
+        }
+    }
 </style>
 
 
@@ -31,16 +1292,16 @@
 <!-------------- Tab ------------------//-->
 <div class="tabs">
 	<input id="set_io" type="radio" name="tab_item" checked>
-	<label class="tab_item" for="set_io">동작설정</label>
+	<label class="tab_item" for="set_io">Operation Settings</label>
 
 	<input id="set_alarm" type="radio" name="tab_item">
-	<label class="tab_item" for="set_alarm">알림설정</label>
+	<label class="tab_item" for="set_alarm">Alert Settings</label>
 
 	<input id="set_system" type="radio" name="tab_item">
-	<label class="tab_item" for="set_system">시스템설정</label>
+	<label class="tab_item" for="set_system">System Settings</label>
 
 	<input id="set_network" type="radio" name="tab_item">
-	<label class="tab_item" for="set_network">네트워크설정</label>
+	<label class="tab_item" for="set_network">Network Settings</label>
 
 	
 	<div class="tab_content" id="set_io_content"></div>
@@ -48,71 +1309,100 @@
 
 	<!--<div class="tab_content" id="set_password_content">//-->
 	<div class="tab_content" id="set_system_content">
-		<div class="div1">
-		<div class="lntag">신규 암호 입력</div>
-		
-		<table width="100%" border="0">
-			<tr>
-				<td class="itemname" width="35%">아 &nbsp;&nbsp;&nbsp; 이 &nbsp;&nbsp;&nbsp; 디 </td>
-				<td width="auto">				
-					<input name='id' type='text' id='id' value='' disabled>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="itemname">비밀번호 입력</td>
-				<td>
-					<input name='pw' type='password' id='pw'>
-				</td>
-			</tr>
-
-			<tr>
-				<td class="itemname">비밀번호 확인</td>
-				<td>
-					<input name='pw2' type='password' id='pw2'>
-				</td>
-			</tr>
-
-			<tr>
-				<td colspan="2">
-				</td>
-			</tr>
+		<div class="config_page_container">
 			
-			<tr>
-				<td colspan="2" align="center" style="padding-top:70px; padding-bottom:50px">
-					<input type="button" id="set_password_save" value="설 정 저 장">
-				</td>
-			</tr>
-			
-		</table>
-		
-		</div>
-		
-		<div style="text-align:center;font-size:1.6em;color:#AA8888">
-		<p><br>시스템을 재시작하기 위해서는 화면을 아래로 스크롤 하세요.</p>
-		</div>
+			<!-- Card 1: Change Password -->
+			<div class="alarm_panel_card">
+				<div class="system_card_title_row">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color: #0D652D;">
+						<path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+					</svg>
+					<div class="alarm_panel_title" style="margin-bottom: 0;">Change Password</div>
+				</div>
 
-		<div style="display:flex; flex-direction: column; justify-content: flex-end; height: 75vh; text-align:center;">
-		<div class="div1">
-		<br>
-		<span>시스템을 재시작 합니다.</span>
-		<br><br>
-		<table width="100%" border="0">
-			<tr>
-				<td align="center">
-					<input type="button" id="system_reset" value="시스템 재시작">
-				</td>
-			</tr>
-		</table>
+				<div class="system_form_box">
+					<div class="system_form_row">
+						<label class="system_form_label" for="id">User ID</label>
+						<div class="system_form_field">
+							<input name="id" type="text" id="id" value="" disabled class="system_input_text system_input_disabled">
+						</div>
+					</div>
+
+					<div class="system_form_row">
+						<label class="system_form_label" for="pw">New Password</label>
+						<div class="system_form_field">
+							<div class="password_input_wrapper">
+								<input name="pw" type="password" id="pw" placeholder="Enter new password" class="system_input_text">
+								<button type="button" class="btn_toggle_pw" data-target="pw" title="Show/Hide Password">
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="system_form_row">
+						<label class="system_form_label" for="pw2">Confirm Password</label>
+						<div class="system_form_field">
+							<div class="password_input_wrapper">
+								<input name="pw2" type="password" id="pw2" placeholder="Confirm new password" class="system_input_text">
+								<button type="button" class="btn_toggle_pw" data-target="pw2" title="Show/Hide Password">
+									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="system_save_bar">
+						<button type="button" id="set_password_save" class="btn_config_save">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+							<span>Save Settings</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Info Banner -->
+			<div class="system_scroll_notice">
+				<div class="system_notice_icon">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+						<circle cx="12" cy="12" r="10" fill="#0D652D"/>
+						<path d="M12 16V11" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+						<circle cx="12" cy="8" r="1.2" fill="#FFFFFF"/>
+					</svg>
+				</div>
+				<div class="system_notice_text">Please scroll down to reboot the system.</div>
+			</div>
+
+			<!-- Card 2: Reboot System -->
+			<div class="alarm_panel_card system_reboot_card">
+				<div class="system_card_title_row">
+					<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0D652D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-1.19"/>
+					</svg>
+					<div class="alarm_panel_title" style="margin-bottom: 0;">Reboot System</div>
+				</div>
+
+				<div class="reboot_message_box">
+					The system will be restarted.
+				</div>
+
+				<div class="reboot_action_bar">
+					<button type="button" id="system_reset" class="btn_reboot_system">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-1.19"/>
+						</svg>
+						<span>Reboot System</span>
+					</button>
+				</div>
+			</div>
+
 		</div>
-		</div>
-		<br>
 	</div>
 	
 
 	<div class="tab_content" id="set_network_content">
 		<div id="loader" class="loader" style="display:none;"></div>
-		<div id="state_msg" style="font-size:2em;padding:35px 0px 10px 30px;color:#888888">WiFi 검색 중...</div>
+		<div id="state_msg" style="display:none;"></div>
 		<div id="wifi_list"></div>
 	</div>
 	
