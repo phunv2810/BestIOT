@@ -1097,7 +1097,7 @@ function fill_wifilist(data){
 		mtable += "          </div>";
 		mtable += "        </td>";
 		mtable += "        <td class='col_checkbox_cell'>";
-		mtable += "          <input type='checkbox' class='custom_check_input' " + (inUse ? "checked" : "") + " tabindex='-1'>";
+		mtable += "           <input type='checkbox' class='custom_check_input' " + (inUse ? "checked" : "") + " tabindex='-1' onclick='return false;' style='pointer-events:none;'>";
 		mtable += "        </td>";
 		mtable += "      </tr>";
 	}
