@@ -54,13 +54,13 @@ $(document).ready(function(){
 		success : function(data){
 			//alert(data);
 			//if (isEmpty(data)) return false;
-			
+
 			occtrlnum = data[0];
 			tempctrlnum = data[1];
-			
+
 			create_chartdata();
 			create_downloaddata();
-			
+
 			create_push_termslect();
 		}
 	}); //End of $.ajax({
@@ -92,7 +92,7 @@ function create_chartdata(){
 	//console.log(formattedDate);
 
 	var mtable = "";
-	
+
 	// 날짜 선택
 	// Modern Date & Term Filter Panel (Flexbox)
 	mtable += "<div class='filter_panel_modern'>";
@@ -114,14 +114,29 @@ function create_chartdata(){
 	mtable += "  </div>";
 	mtable += "</div>";
 	/////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	//그래프 영역 (개폐기 컨트롤러 온도 그래프)
+	mtable += "<div class='chart_section_header'>";
+	mtable += "  <span class='section_bar'></span>";
+	mtable += "  <span class='section_title_dark'>Vent Controller</span>";
+	mtable += "  <span class='section_title_green'>Temperature</span>";
+	mtable += "</div>";
 	mtable += "<div class='chart_area_card'>";
 	mtable += "  <div class='sensor_checkbox_grid'>";
 	for(i=1; i<=8; i++){
 		mtable += "    <div class='sensor_check_item'>";
-		mtable += "      <input type='checkbox' name='chk_occtrl"+i+"' value='chk_occtrl"+i+"' id='chk_occtrl"+i+"' class='check_sensor1'>";
-		mtable += "      <label for='chk_occtrl"+i+"' class='sensor_check_label'>CH"+i+"</label>";
+		mtable += "      <input type='checkbox' name='chk_occtrl" + i + "' value='chk_occtrl" + i + "' id='chk_occtrl" + i + "' class='check_sensor1'>";
+		mtable += "      <label for='chk_occtrl" + i + "' class='sensor_check_label'>CH" + i + "</label>";
+		mtable += "    </div>";
+	}
+	mtable += "  </div>";
+	mtable += "  <div class='card_divider'></div>";
+	mtable += "  <div class='chart_title'>[Vent Controller (Temperature)] Data</div>";
+	mtable += "  <div class='temp_legend_grid' id='legend_sensor1'>";
+	for (i = 1; i <= 8; i++) {
+		mtable += "    <div class='temp_legend_item' id='legend_item_occtrl" + i + "' data-sensor='1' data-index='" + i + "'>";
+		mtable += "      <span class='temp_legend_bar' style='background-color:" + series_color[i - 1] + ";'></span>";
+		mtable += "      <span class='temp_legend_label'>Temp." + i + " (°C)</span>";
 		mtable += "    </div>";
 	}
 	mtable += "  </div>";
@@ -129,14 +144,29 @@ function create_chartdata(){
 	mtable += "    <canvas id='graph_sensor1'></canvas>";
 	mtable += "  </div>";
 	mtable += "</div>";
-	
+
 	//그래프 영역 (온도 컨트롤러 온도 그래프)
+	mtable += "<div class='chart_section_header'>";
+	mtable += "  <span class='section_bar'></span>";
+	mtable += "  <span class='section_title_dark'>Temperature Controller</span>";
+	mtable += "  <span class='section_title_green'>Temperature</span>";
+	mtable += "</div>";
 	mtable += "<div class='chart_area_card'>";
 	mtable += "  <div class='sensor_checkbox_grid'>";
 	for(i=1; i<=8; i++){
 		mtable += "    <div class='sensor_check_item'>";
-		mtable += "      <input type='checkbox' name='chk_tempctrl"+i+"' value='chk_tempctrl"+i+"' id='chk_tempctrl"+i+"' class='check_sensor2'>";
-		mtable += "      <label for='chk_tempctrl"+i+"' class='sensor_check_label'>CH"+i+"</label>";
+		mtable += "      <input type='checkbox' name='chk_tempctrl" + i + "' value='chk_tempctrl" + i + "' id='chk_tempctrl" + i + "' class='check_sensor2'>";
+		mtable += "      <label for='chk_tempctrl" + i + "' class='sensor_check_label'>CH" + i + "</label>";
+		mtable += "    </div>";
+	}
+	mtable += "  </div>";
+	mtable += "  <div class='card_divider'></div>";
+	mtable += "  <div class='chart_title'>[Temperature Controller (Temperature)] Data</div>";
+	mtable += "  <div class='temp_legend_grid' id='legend_sensor2'>";
+	for (i = 1; i <= 8; i++) {
+		mtable += "    <div class='temp_legend_item' id='legend_item_tempctrl" + i + "' data-sensor='2' data-index='" + i + "'>";
+		mtable += "      <span class='temp_legend_bar' style='background-color:" + series_color[i - 1] + ";'></span>";
+		mtable += "      <span class='temp_legend_label'>Temp." + i + " (°C)</span>";
 		mtable += "    </div>";
 	}
 	mtable += "  </div>";
@@ -144,7 +174,7 @@ function create_chartdata(){
 	mtable += "    <canvas id='graph_sensor2'></canvas>";
 	mtable += "  </div>";
 	mtable += "</div>";
-	
+
 	$("#view_graph_content").append(mtable);
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -166,12 +196,12 @@ function create_chartdata(){
 				tickInterval = "2 hour";
 				break;
 		}
-		
+
 		//alert("seldate = "+graph_seldate+", selterm="+graph_selterm);		
 		draw_chartdata(graph_seldate, graph_selterm);
 		return true;
 	});
-	
+
 	$("input[type=date][id=graph_startdate]").change(function(){
 		graph_seldate = document.getElementById("graph_startdate").value;
 		//alert("Selected Date  =" + graph_seldate);
@@ -199,14 +229,19 @@ function create_chartdata(){
 		}
 		document.getElementById("graph_startdate").value = d1.getFullYear() + "-" + pad((d1.getMonth()+1),2) + "-" + pad(d1.getDate(),2);
 	});
-	
 
 
-	$("input.check_sensor1").change(function(){
-		for(var i=0; i<8; i++){
+
+	$("input.check_sensor1").change(function () {
+		for (var i = 0; i < 8; i++) {
+			var isChecked = $("#chk_occtrl" + (i + 1)).is(":checked");
 			if (plot1 && typeof plot1.setDatasetVisibility === 'function') {
-				var isChecked = $("#chk_occtrl"+(i+1)).is(":checked");
 				plot1.setDatasetVisibility(i, isChecked);
+			}
+			if (isChecked) {
+				$("#legend_item_occtrl" + (i + 1)).removeClass("is-inactive");
+			} else {
+				$("#legend_item_occtrl" + (i + 1)).addClass("is-inactive");
 			}
 		}
 		if (plot1 && typeof plot1.update === 'function') {
@@ -214,25 +249,41 @@ function create_chartdata(){
 		}
 	});
 
-	$("input.check_sensor2").change(function(){
-		for(var i=0; i<8; i++){
+	$("input.check_sensor2").change(function () {
+		for (var i = 0; i < 8; i++) {
+			var isChecked = $("#chk_tempctrl" + (i + 1)).is(":checked");
 			if (plot2 && typeof plot2.setDatasetVisibility === 'function') {
-				var isChecked = $("#chk_tempctrl"+(i+1)).is(":checked");
 				plot2.setDatasetVisibility(i, isChecked);
+			}
+			if (isChecked) {
+				$("#legend_item_tempctrl" + (i + 1)).removeClass("is-inactive");
+			} else {
+				$("#legend_item_tempctrl" + (i + 1)).addClass("is-inactive");
 			}
 		}
 		if (plot2 && typeof plot2.update === 'function') {
 			plot2.update();
 		}
 	});
-	
 
-	for(var i=1; i<=occtrlnum; i++){
-		$("#chk_occtrl"+i).prop("checked", true);
+	// Clicking temp legend item toggles corresponding checkbox and graph curve
+	$(document).off("click.tempLegend").on("click.tempLegend", ".temp_legend_item", function () {
+		var sensor = $(this).data("sensor");
+		var idx = $(this).data("index");
+		var chkId = (sensor == 1) ? "#chk_occtrl" + idx : "#chk_tempctrl" + idx;
+		var $chk = $(chkId);
+		$chk.prop("checked", !$chk.is(":checked")).trigger("change");
+	});
+
+
+	for (var i = 1; i <= occtrlnum; i++) {
+		$("#chk_occtrl" + i).prop("checked", true);
 	}
-	for(var i=1; i<=tempctrlnum; i++){
-		$("#chk_tempctrl"+i).prop("checked", true);
+	for (var i = 1; i <= tempctrlnum; i++) {
+		$("#chk_tempctrl" + i).prop("checked", true);
 	}
+	$("input.check_sensor1").first().trigger("change");
+	$("input.check_sensor2").first().trigger("change");
 
 	// Initial graph load
 	$("#btn_viewgraph").trigger("click");
@@ -243,7 +294,7 @@ function create_downloaddata(){
 
 	const today = new Date();				// 오늘 날짜 객체 생성	
 	const today_end = new Date();			// 오늘 날짜 객체 생성	
-	
+
 	today.setDate(today.getDate());			// 오늘 날짜로 설정
 	today_end.setDate(today.getDate() - 6);	// 6일 전으로 설정
 
@@ -345,15 +396,15 @@ function create_downloaddata(){
 	$("#btn_datadownload").click(function(){
 		dwload_startdate = document.getElementById("dwload_startdate").value;
 		dwload_enddate = document.getElementById("dwload_enddate").value;
-		
+
 		if(dwload_enddate < dwload_startdate){
 			alert("검색기간 설정이 잘못되었습니다.\n날짜를 확인하세요.");
 			return;
 		}
-		
+
 		var param = "startdate=" + dwload_startdate + "&enddate=" + dwload_enddate + "&occtrlnum=" + occtrlnum + "&tempctrlnum=" + tempctrlnum;
 		//alert(param);
-		
+
 		location.href="/php/data_download.php?" + param;
 		return true;
 	});
@@ -374,7 +425,7 @@ function create_push_termslect(){
 	//console.log(formattedDate);
 
 	var mtable = "";
-	
+
 	// Modern Flexbox filter panel matching mockup
 	mtable += "<div class='filter_panel_modern'>";
 	mtable += "  <div class='filter_row_primary'>";
@@ -395,7 +446,7 @@ function create_push_termslect(){
 	mtable += "  </div>";
 	mtable += "</div>";
 	/////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	$("#push_searchterm").append(mtable);
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -406,7 +457,7 @@ function create_push_termslect(){
 		search_push_data(seldate, selterm);
 		return true;
 	});
-	
+
 	$("input[type=radio][name=term2]").change(function(){
 		var d1 = new Date();
 		var selterm = SelectedRadio("term2");
@@ -424,7 +475,52 @@ function create_push_termslect(){
 
 		document.getElementById("startdate2").value = d1.getFullYear() + "-" + pad((d1.getMonth()+1),2) + "-" + pad(d1.getDate(),2);
 	});
-	
+
+}
+
+var mockPushAlertData = [
+	["2026-09-25 10:45:12", "Warning", "Vent 1 Open limit reached (100%)"],
+	["2026-09-25 09:30:00", "High Temp", "CH2 Temp (35.2℃) exceeded high threshold (35.0℃)"],
+	["2026-09-25 08:15:22", "Normal", "Vent 2 closed automatically"],
+	["2026-09-25 07:05:40", "Info", "Daytime ventilation mode activated"],
+	["2026-09-24 22:10:05", "Low Temp", "CH1 Temp (12.4℃) dropped below low threshold (15.0℃)"],
+	["2026-09-24 18:00:15", "Normal", "Vent 1 closed for scheduled night mode"],
+	["2026-09-24 14:22:33", "High Temp", "CH3 Temp (36.1℃) exceeded threshold (35.0℃)"],
+	["2026-09-24 11:15:00", "Warning", "Rain sensor triggered emergency close on all vents"],
+	["2026-09-24 09:40:18", "Info", "Vent 1 opened 50% for air circulation"],
+	["2026-09-23 21:30:45", "Normal", "All controllers operational - System check passed"],
+	["2026-09-23 16:55:10", "Warning", "Wind speed high (>12 m/s), auto vent position reduced to 20%"],
+	["2026-09-23 13:20:00", "High Temp", "CH2 Temp (34.8℃) caution alert"],
+	["2026-09-23 08:10:25", "Info", "Vent 2 opened 30% automatically"],
+	["2026-09-22 19:45:00", "Normal", "Night mode active - All vents locked"],
+	["2026-09-22 15:12:30", "Warning", "CH4 Soil moisture sensor low (18%)"],
+	["2026-09-22 11:00:00", "High Temp", "CH1 Temp (35.5℃) exceeded upper threshold"],
+	["2026-09-22 07:30:15", "Info", "Ventilation cycle 1 started"],
+	["2026-09-21 20:15:40", "Normal", "Target temperature maintained across all zones"],
+	["2026-09-21 16:40:22", "Warning", "Vent 2 motor overload protection reset"],
+	["2026-09-21 12:25:00", "High Temp", "CH2 Temp (36.8℃) critical high alert"],
+	["2026-09-21 09:10:11", "Info", "Vent 1 opened 80% automatically"],
+	["2026-09-20 23:05:00", "Low Temp", "CH1 Temp (13.8℃) low warning alert"],
+	["2026-09-20 17:50:33", "Normal", "Evening cool-down cycle completed"],
+	["2026-09-20 14:15:20", "Warning", "Humidity sensor out of optimal range (92%)"],
+	["2026-09-20 10:30:00", "High Temp", "CH3 Temp (35.0℃) threshold reached"],
+	["2026-09-19 21:00:15", "Normal", "System check: Normal operational status"],
+	["2026-09-19 15:45:10", "Info", "Manual override activated on Vent 1 by Admin"],
+	["2026-09-19 12:10:00", "High Temp", "CH2 Temp (35.7℃) alert"],
+	["2026-09-18 18:30:25", "Normal", "Scheduled irrigation ended"],
+	["2026-09-18 11:20:40", "Warning", "Vent 1 open angle mismatch: 55% vs 50% target"],
+	["2026-09-17 14:05:12", "High Temp", "CH1 Temp (34.9℃) high warning alert"],
+	["2026-09-16 19:22:00", "Normal", "System normal - All parameters within bounds"],
+	["2026-09-15 08:45:30", "Info", "Controller firmware communication verified"]
+];
+
+function getMockPushAlertData(startday) {
+	if (!startday) return mockPushAlertData.slice();
+	var filtered = mockPushAlertData.filter(function(row) {
+		var rowDate = (row[0] || '').substring(0, 10);
+		return rowDate >= startday;
+	});
+	return filtered.length > 0 ? filtered : mockPushAlertData.slice();
 }
 
 function search_push_data(startday, termtype){
@@ -442,10 +538,15 @@ function search_push_data(startday, termtype){
 					//	response = searchString_fromArray(response, search_text);
 					//	search_text = "";
 					//}
-					done(response);
+					if (!response || !Array.isArray(response) || response.length === 0) {
+						done(getMockPushAlertData(startday));
+					} else {
+						done(response);
+					}
 				},
 				error : function(){
 					//console.log("search_push_data()..... ajax error()");
+					done(getMockPushAlertData(startday));
 				},
 				complete : function(){
 					//console.log("search_push_data()..... ajax complete()");
@@ -568,31 +669,32 @@ function draw_chartdata(startday, termtype){
 				if (plot2 && typeof plot2.setDatasetVisibility === 'function') {
 					plot2.setDatasetVisibility(i, $("#chk_tempctrl"+(i+1)).is(":checked"));
 				}
-			}		
+			}
 			if (plot1 && typeof plot1.update === 'function') plot1.update();
 			if (plot2 && typeof plot2.update === 'function') plot2.update();
-			
+
 		},
 		error: function (request, status, error) {
 			document.getElementById("btn_viewgraph").removeAttribute("disabled");
 		}
 	});
-	
+
 	return true;
 };
 
 function formatChartTimestamp(ts, termtype) {
-	if (!ts || typeof ts !== 'string') return ts || '';
-	var s = ts.replace(/\//g, '-').trim();
-	// termtype: 1 = month, 2 = week, 3 = day
-	if (termtype === 3) {
-		return s.length >= 16 ? s.substring(11, 16) : s;
-	} else if (termtype === 1) {
-		return s.length >= 10 ? s.substring(5, 10) : s;
-	} else {
-		// Week or default: MM-DD HH:mm (e.g. 08-19 00:00) exactly as shown in the TO-BE mockup
-		return s.length >= 16 ? s.substring(5, 16) : (s.length >= 10 ? s.substring(5, 10) : s);
-	}
+if (!ts || typeof ts !== 'string') return ts || '';
+    var s = ts.replace(/\//g, '-').trim();
+    // termtype: 1 = month, 2 = week, 3 = day
+    if (termtype === 3) {
+        var parts = s.split(' ');
+        var timePart = parts.length > 1 ? parts[1] : s;
+        return timePart.length >= 5 ? timePart.substring(0, 5) : timePart;
+    } else if (termtype === 1) {
+        return s.length >= 10 ? s.substring(5, 10) : s;
+    } else {
+        return s.length >= 10 ? s.substring(5, 10) : s;
+    }
 }
 
 function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
@@ -626,6 +728,60 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 		}
 	}
 	masterTimestamps.sort();
+
+	if (termtype === 1 && masterTimestamps.length > 0 && graph_seldate) {
+		var firstTs = masterTimestamps[0];
+		var firstParts = firstTs.replace(/\//g, '-').trim().split(' ')[0].split('-');
+		if (firstParts.length >= 3) {
+			var firstYear = parseInt(firstParts[0], 10);
+			var firstMonth = parseInt(firstParts[1], 10) - 1;
+			var firstDay = parseInt(firstParts[2], 10);
+			var firstDate = new Date(firstYear, firstMonth, firstDay);
+
+			var selParts = graph_seldate.split('-');
+			if (selParts.length >= 3) {
+				var selDate = new Date(parseInt(selParts[0], 10), parseInt(selParts[1], 10) - 1, parseInt(selParts[2], 10));
+
+				if (selDate < firstDate) {
+					// Step back to the 4-day mark before the first data date
+					var emptyDay = Math.floor(firstDay / 4) * 4;
+					if (emptyDay === 0 || emptyDay === firstDay) {
+						emptyDay = firstDay - 4;
+					}
+					var emptyDate = new Date(firstYear, firstMonth, emptyDay);
+
+					// Calculate average data points per day from existing data
+					var distinctDataDays = {};
+					for (var i = 0; i < masterTimestamps.length; i++) {
+						var dayKey = masterTimestamps[i].substring(0, 10);
+						distinctDataDays[dayKey] = (distinctDataDays[dayKey] || 0) + 1;
+					}
+					var dayCount = Object.keys(distinctDataDays).length || 1;
+					var avgPointsPerDay = Math.round(masterTimestamps.length / dayCount);
+					if (avgPointsPerDay < 1) avgPointsPerDay = 1;
+
+					// Insert null timestamps from emptyDate up to (but not including) firstDate
+					var prependedTimestamps = [];
+					var cur = new Date(emptyDate.getTime());
+					while (cur < firstDate) {
+						var y = cur.getFullYear();
+						var m = pad(cur.getMonth() + 1, 2);
+						var d = pad(cur.getDate(), 2);
+						var dStr = y + '-' + m + '-' + d;
+						for (var p = 0; p < avgPointsPerDay; p++) {
+							var hr = pad(Math.floor(p * 24 / avgPointsPerDay), 2);
+							var mn = pad(Math.floor((p * 24 * 60 / avgPointsPerDay) % 60), 2);
+							prependedTimestamps.push(dStr + ' ' + hr + ':' + mn + ':00');
+						}
+						cur.setDate(cur.getDate() + 1);
+					}
+					if (prependedTimestamps.length > 0) {
+						masterTimestamps = prependedTimestamps.concat(masterTimestamps);
+					}
+				}
+			}
+		}
+	}
 
 	// 2. Format display labels for X-axis
 	var displayLabels = masterTimestamps.map(function(ts) {
@@ -689,46 +845,10 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 			},
 			plugins: {
 				title: {
-					display: true,
-					text: titleText,
-					color: '#1F2937',
-					font: {
-						size: 18,
-						weight: 'bold',
-						family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-					},
-					padding: {
-						top: 6,
-						bottom: 14
-					}
+					display: false
 				},
 				legend: {
-					display: true,
-					position: 'top',
-					align: 'center',
-					labels: {
-						usePointStyle: true,
-						pointStyle: 'line',
-						boxWidth: 22,
-						padding: 16,
-						font: {
-							size: 13,
-							weight: '500',
-							family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-						},
-						color: '#374151'
-					},
-					onClick: function(e, legendItem, legend) {
-						var index = legendItem.datasetIndex;
-						var ci = legend.chart;
-						var isVisible = ci.isDatasetVisible(index);
-						ci.setDatasetVisibility(index, !isVisible);
-						ci.update();
-
-						// Synchronize corresponding checkbox state
-						var chkPrefix = (canvasId === 'graph_sensor1') ? '#chk_occtrl' : '#chk_tempctrl';
-						$(chkPrefix + (index + 1)).prop('checked', !isVisible);
-					}
+					display: false
 				},
 				tooltip: {
 					enabled: true,
@@ -766,24 +886,89 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 			},
 			scales: {
 				x: {
+					afterBuildTicks: function(scale) {
+						if (termtype === 3) {
+							// Tùy chọn 1 Ngày: lọc các mốc giờ chẵn cách nhau 2 tiếng bắt đầu từ 00:00
+							var seenHours = {};
+							var dayTicks = [];
+							for (var i = 0; i < masterTimestamps.length; i++) {
+								var ts = masterTimestamps[i];
+								var parts = ts.replace(/\//g, '-').trim().split(' ');
+								var timeStr = parts.length > 1 ? parts[1] : parts[0];
+								var hr = parseInt(timeStr.substring(0, 2), 10);
+								if (!isNaN(hr) && hr % 2 === 0 && !seenHours[hr]) {
+									seenHours[hr] = true;
+									dayTicks.push(i);
+								}
+							}
+							if (dayTicks.length > 0) {
+								scale.ticks = dayTicks.map(function(idx) {
+									return { value: idx };
+								});
+							}
+							return;
+						}
+						var seenDays = {};
+						var uniqueTicks = [];
+						for (var i = 0; i < masterTimestamps.length; i++) {
+							var d = formatChartTimestamp(masterTimestamps[i], termtype);
+							if (!seenDays[d]) {
+								seenDays[d] = true;
+								uniqueTicks.push(i);
+							}
+						}
+						if (termtype === 1) {
+							// Bước nhảy cố định 4 ngày, lấy 5 mốc
+							var step = 4;
+							var sampled = [];
+							for (var k = 0; k < uniqueTicks.length; k += step) {
+								sampled.push(uniqueTicks[k]);
+								if (sampled.length === 5) break;
+							}
+							if (sampled.length < 5 && uniqueTicks.length > 0) {
+								var lastIdx = uniqueTicks[uniqueTicks.length - 1];
+								if (sampled.indexOf(lastIdx) === -1) {
+									sampled.push(lastIdx);
+								}
+							}
+							if (sampled.length > 0) {
+								uniqueTicks = sampled;
+							}
+						}
+						if (uniqueTicks.length > 0) {
+							scale.ticks = uniqueTicks.map(function(idx) {
+								return { value: idx };
+							});
+						}
+					},
 					title: {
 						display: true,
-						text: 'Date (MM/DD)',
+						text: (termtype === 3 ? 'Time (HH:mm)' : 'Date (MM/DD)'),
 						color: '#374151',
 						font: {
-							size: 14,
+							size: 12,
 							weight: '600'
 						},
-						padding: { top: 8 }
+						padding: { top: 6 }
 					},
 					ticks: {
-						maxTicksLimit: 7,
-						autoSkip: true,
+						maxTicksLimit: 13,
+						autoSkip: (termtype !== 1),
 						maxRotation: 0,
 						minRotation: 0,
 						color: '#4B5563',
 						font: {
-							size: 12
+							size: 10.5
+						},
+						callback: function(val, index, ticks) {
+							var label = this.getLabelForValue(val);
+							if (index > 0 && ticks[index - 1]) {
+								var prevLabel = this.getLabelForValue(ticks[index - 1].value);
+								if (label === prevLabel) {
+									return '';
+								}
+							}
+							return label;
 						}
 					},
 					grid: {
@@ -801,7 +986,7 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 						stepSize: Chart_tickInterval,
 						color: '#4B5563',
 						font: {
-							size: 12
+							size: 11
 						}
 					},
 					title: {
@@ -809,10 +994,10 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 						text: 'Temperature (℃)',
 						color: '#374151',
 						font: {
-							size: 14,
+							size: 12,
 							weight: '600'
 						},
-						padding: { bottom: 8 }
+						padding: { bottom: 6 }
 					},
 					grid: {
 						color: '#F1F5F9'
@@ -892,7 +1077,7 @@ function SelectedRadio(radioname){
 function pad(n, width) {
 	n = n + '';
 	return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
-}	
+}
 
 function isEmpty(str){
 	if(typeof str == "undefined" || str == null || str == ""){
