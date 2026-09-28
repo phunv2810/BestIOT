@@ -434,6 +434,7 @@ label[for="search_push"] {
 
 #view_graph_content .filter_panel_modern {
 	margin: 0 -16px 14px -16px !important;
+	padding: 18px 30px 16px 30px !important;
 	width: calc(100% + 32px) !important;
 }
 
