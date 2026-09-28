@@ -394,10 +394,11 @@ label[for="search_push"] {
 	clear: both;
 	overflow: hidden;
 	box-sizing: border-box !important;
+	margin-top: 1px;
 }
 
 #search_push_content {
-	padding: 0 10px ;
+	padding: 0 16px;
 }
 
 /* 선택 된 탭 콘텐츠를 표시 */
@@ -408,7 +409,7 @@ label[for="search_push"] {
 	display: block !important;
 }
 
-/* Active tab: green text and bottom border */
+/* Active tab: green text + green underline */
 .tabs input:checked + .tab_item {
 	background-color: #ffffff !important;
 	color: #0D652D !important;
@@ -438,13 +439,18 @@ label[for="search_push"] {
 
 .filter_panel_modern {
 	background-color: #FFFFFF !important;
-	padding: 18px 78px 16px 78px !important;
+	padding: 18px 16px 16px 16px !important;
 	display: flex !important;
 	flex-direction: column !important;
 	gap: 12px !important;
 	box-sizing: border-box !important;
 	width: 100% !important;
 	border-bottom: 1px solid #E5E7EB !important;
+}
+
+/*For filter at PushAlert only*/
+#push_searchterm .filter_panel_modern {
+	padding: 18px 0px 16px 0px !important;
 }
 
 /* Row 1: Date range controls and Show Graph button */
@@ -584,8 +590,8 @@ label[for="search_push"] {
 
 .download_tab_wrapper {
 	width: 100% !important;
-	max-width: 700px !important;
 	margin: 24px auto 36px auto !important;
+	padding: 0 16px !important;
 	display: flex !important;
 	flex-direction: column !important;
 	gap: 22px !important;
@@ -818,7 +824,6 @@ label[for="search_push"] {
 @media (max-width: 600px) {
 	.download_tab_wrapper {
 		margin: 14px auto !important;
-		padding: 0 10px !important;
 	}
 	.download_card {
 		padding: 18px 16px !important;
