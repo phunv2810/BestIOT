@@ -78,6 +78,27 @@ $(window).resize(function(){
 });
 
 
+// Calculate endDate = startDate + selected term, clamped to today
+function updateEndDate(startId, endId, termName) {
+	var startVal = document.getElementById(startId).value;
+	if (!startVal) return;
+	var parts = startVal.split('-');
+	var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+	var termVal = $("input[name=" + termName + "]:checked").val();
+	if (termVal === 'month') {
+		d.setMonth(d.getMonth() + 1);
+	} else if (termVal === 'week') {
+		d.setDate(d.getDate() + 6);
+	}
+	// if calculated endDate is in the future, use today instead
+	var today = new Date();
+	today.setHours(0, 0, 0, 0);
+	if (d > today) d = today;
+
+	document.getElementById(endId).value =
+		d.getFullYear() + "-" + pad((d.getMonth() + 1), 2) + "-" + pad(d.getDate(), 2);
+}
+
 function create_chartdata(){
 	const today = new Date();			// 오늘 날짜 객체 생성
 	today.setDate(today.getDate() - 6);	// 6일 전으로 설정
@@ -178,6 +199,9 @@ function create_chartdata(){
 	$("#view_graph_content").append(mtable);
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// Set initial enddate based on default startdate + default term
+	updateEndDate("graph_startdate", "graph_enddate", "graph_term");
+
 	// 이벤트 등록
 	$("#btn_viewgraph").click(function(){
 		graph_seldate = document.getElementById("graph_startdate").value;
@@ -205,6 +229,7 @@ function create_chartdata(){
 	$("input[type=date][id=graph_startdate]").change(function(){
 		graph_seldate = document.getElementById("graph_startdate").value;
 		//alert("Selected Date  =" + graph_seldate);
+		updateEndDate("graph_startdate", "graph_enddate", "graph_term");
 	});
 
 	// Block keyboard + picker on graph_enddate — icon visible but field is disabled
@@ -231,6 +256,7 @@ function create_chartdata(){
 				break;
 		}
 		document.getElementById("graph_startdate").value = d1.getFullYear() + "-" + pad((d1.getMonth()+1),2) + "-" + pad(d1.getDate(),2);
+		updateEndDate("graph_startdate", "graph_enddate", "graph_term");
 	});
 
 
@@ -453,6 +479,9 @@ function create_push_termslect(){
 	$("#push_searchterm").append(mtable);
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// Set initial enddate2 based on default startdate2 + default term
+	updateEndDate("startdate2", "enddate2", "term2");
+
 	// 이벤트 등록
 	$("#btn_pushsearch").click(function(){
 		var seldate = document.getElementById("startdate2").value;
@@ -463,6 +492,11 @@ function create_push_termslect(){
 
 	// Block keyboard input on enddate2 — icon visible but picker is disabled
 	$(document).on("keydown keypress click mousedown", "#enddate2", function(e){ e.preventDefault(); return false; });
+
+	// Update enddate2 when startdate2 changes
+	$("#startdate2").change(function(){
+		updateEndDate("startdate2", "enddate2", "term2");
+	});
 
 	$("input[type=radio][name=term2]").change(function(){
 		var d1 = new Date();
@@ -480,6 +514,7 @@ function create_push_termslect(){
 		}
 
 		document.getElementById("startdate2").value = d1.getFullYear() + "-" + pad((d1.getMonth()+1),2) + "-" + pad(d1.getDate(),2);
+		updateEndDate("startdate2", "enddate2", "term2");
 	});
 
 }
