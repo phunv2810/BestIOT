@@ -1028,7 +1028,7 @@ table input[type=radio]:checked+label {
 	padding: 18px 20px !important;
 	border-top: none !important;
 	border-left: none !important;
-	border-right: none !important;
+	border-right: 1px solid #E2E8F0 !important;
 	border-bottom: 1px solid #E2E8F0 !important;
 	text-align: center !important;
 	letter-spacing: -0.2px !important;
@@ -1055,7 +1055,7 @@ table input[type=radio]:checked+label {
 .alert_data_table tbody td {
 	border-top: none !important;
 	border-left: none !important;
-	border-right: none !important;
+	border-right: 1px solid #E2E8F0 !important;
 	border-bottom: inherit !important;
 	padding: 20px 24px !important;
 	vertical-align: middle !important;
