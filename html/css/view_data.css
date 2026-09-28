@@ -501,6 +501,29 @@ label[for="search_push"] {
 	color: #94A3B8 !important;
 }
 
+/* Visually disabled date input — keeps calendar picker icon visible */
+.ctrl_date_readonly {
+	color: #94A3B8 !important;
+	cursor: default !important;
+	/* Do NOT use pointer-events:none — it hides the calendar icon */
+}
+
+/* Prevent keyboard input by intercepting keydown via JS; 
+   visually dim the text area but keep the icon bright */
+.ctrl_date_readonly::-webkit-datetime-edit {
+	opacity: 0.45 !important;
+	pointer-events: none !important;
+	user-select: none !important;
+}
+
+/* Calendar picker icon — visible but picker popup is disabled */
+.ctrl_date_readonly::-webkit-calendar-picker-indicator {
+	cursor: not-allowed !important;
+	opacity: 0.4 !important;
+	filter: grayscale(60%) !important;
+	pointer-events: none !important;
+}
+
 /* Primary action buttons: Show Graph, Download, Search */
 .btn_show_graph,
 #btn_viewgraph.btn_show_graph,

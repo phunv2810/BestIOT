@@ -100,7 +100,7 @@ function create_chartdata(){
 	mtable += "    <span class='filter_label'>Date</span>";
 	mtable += "    <input type='date' id='graph_startdate' class='ctrl_date_input' value='" + formattedDate + "'>";
 	mtable += "    <span class='filter_label'>From</span>";
-	mtable += "    <input type='date' id='graph_enddate' class='ctrl_date_input' placeholder='YYYY-MM-DD'>";
+	mtable += "    <input type='date' id='graph_enddate' class='ctrl_date_input ctrl_date_readonly' placeholder='YYYY-MM-DD'>";
 	mtable += "    <span class='filter_label'>To</span>";
 	mtable += "    <input type='button' id='btn_viewgraph' class='btn_show_graph' value='Show Graph'>";
 	mtable += "  </div>";
@@ -206,6 +206,9 @@ function create_chartdata(){
 		graph_seldate = document.getElementById("graph_startdate").value;
 		//alert("Selected Date  =" + graph_seldate);
 	});
+
+	// Block keyboard + picker on graph_enddate — icon visible but field is disabled
+	$(document).on("keydown keypress click mousedown", "#graph_enddate", function(e){ e.preventDefault(); return false; });
 
 	$("input[type=radio][name=graph_term]").change(function(){
 		var d1 = new Date();
@@ -432,7 +435,7 @@ function create_push_termslect(){
 	mtable += "    <span class='filter_label'>Date</span>";
 	mtable += "    <input type='date' id='startdate2' class='ctrl_date_input' value='" + formattedDate + "'>";
 	mtable += "    <span class='filter_label'>From ~</span>";
-	mtable += "    <input type='date' id='enddate2' class='ctrl_date_input' placeholder='YYYY-MM-DD'>";
+	mtable += "    <input type='date' id='enddate2' class='ctrl_date_input ctrl_date_readonly' placeholder='YYYY-MM-DD'>";
 	mtable += "    <span class='filter_label'>To</span>";
 	mtable += "    <input type='button' id='btn_pushsearch' class='btn_show_graph' value='Search Alerts'>";
 	mtable += "  </div>";
@@ -457,6 +460,9 @@ function create_push_termslect(){
 		search_push_data(seldate, selterm);
 		return true;
 	});
+
+	// Block keyboard input on enddate2 — icon visible but picker is disabled
+	$(document).on("keydown keypress click mousedown", "#enddate2", function(e){ e.preventDefault(); return false; });
 
 	$("input[type=radio][name=term2]").change(function(){
 		var d1 = new Date();
