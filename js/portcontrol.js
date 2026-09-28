@@ -3,9 +3,9 @@
    ==========================================================================
    KEY UPDATES:
    1. Converted 24h history charts from jqPlot to Chart.js v4:
-      - Single canvas per card instead of nested divs for better performance.
-      - Spline smoothing (tension 0.28), distinct data points and tooltips.
-      - Added threshold indicator bands for Open / Close temperatures.
+	  - Single canvas per card instead of nested divs for better performance.
+	  - Spline smoothing (tension 0.28), distinct data points and tooltips.
+	  - Added threshold indicator bands for Open / Close temperatures.
    2. Full-width responsive layout for chart cards.
    3. Responsive window resize handling with Chart.js resize().
    ========================================================================== */
@@ -218,6 +218,18 @@ function tmrbutton_clink(event) {
 }
 
 
+function setManualBtnState(btnId, type, isEnabled) {
+	var $el = $("#" + btnId);
+	if (!$el.length) return;
+	if (isEnabled) {
+		$el.addClass("is_active active");
+	} else {
+		$el.removeClass("is_active active");
+	}
+	var imgName = (type === "up" ? "up_" : "down_") + (isEnabled ? "enable(96).png" : "disable(96).png");
+	$el.attr('src', "/html/img/png_image/" + imgName);
+}
+
 function openclose_click(event) {
 	//if( (Date.now() - lastclicktime)< 50 ) return;
 
@@ -233,10 +245,10 @@ function openclose_click(event) {
 	if (ctrl_name == "up") {
 		if (now_state == 1) {
 			ctrl_cmd = 1;
-			$("#ocmanualup_" + ctrl_num).attr('src', "/html/img/png_image/up_enable(96).png");
+			setManualBtnState("ocmanualup_" + ctrl_num, "up", true);
 		} else if (now_state == 0) {
 			ctrl_cmd = 2;
-			$("#ocmanualup_" + ctrl_num).attr('src', "/html/img/png_image/up_disable(96).png");
+			setManualBtnState("ocmanualup_" + ctrl_num, "up", false);
 		}
 		$("#ocmanualup_" + ctrl_num).prop('disabled', true);
 		upclicktime[ctrl_num - 1] = Date.now();
@@ -244,10 +256,10 @@ function openclose_click(event) {
 	} else if (ctrl_name == "dn") {
 		if (now_state == 1) {
 			ctrl_cmd = 3;
-			$("#ocmanualdn_" + ctrl_num).attr('src', "/html/img/png_image/down_enable(96).png");
+			setManualBtnState("ocmanualdn_" + ctrl_num, "dn", true);
 		} else if (now_state == 0) {
 			ctrl_cmd = 4;
-			$("#ocmanualdn_" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
+			setManualBtnState("ocmanualdn_" + ctrl_num, "dn", false);
 		}
 		$("#ocmanualdn_" + ctrl_num).prop('disabled', true);
 		dnclicktime[ctrl_num - 1] = Date.now();
@@ -354,15 +366,15 @@ function display_status(ctrl_name, ctrl_num, ctrl_cmd, result) {
 	//console.log(result.length + ", " + result[0] + ", " + result[1]);
 	if (ctrl_name == "up") {
 		if (ctrl_cmd == 1) {
-			$("#ocmanualup_" + ctrl_num).attr('src', "/html/img/png_image/up_enable(96).png");
+			setManualBtnState("ocmanualup_" + ctrl_num, "up", true);
 		} else if (ctrl_cmd == 2) {
-			$("#ocmanualup_" + ctrl_num).attr('src', "/html/img/png_image/up_disable(96).png");
+			setManualBtnState("ocmanualup_" + ctrl_num, "up", false);
 		}
 	} else if (ctrl_name == "dn") {
 		if (ctrl_cmd == 3) {
-			$("#ocmanualdn_" + ctrl_num).attr('src', "/html/img/png_image/down_enable(96).png");
+			setManualBtnState("ocmanualdn_" + ctrl_num, "dn", true);
 		} else if (ctrl_cmd == 4) {
-			$("#ocmanualdn_" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
+			setManualBtnState("ocmanualdn_" + ctrl_num, "dn", false);
 		}
 	}
 }
@@ -401,7 +413,7 @@ function create_mainscreen(data) {
 		mtable += "<div class='card_col card_col_current'>";
 		mtable += "  <div class='temp_main_row'>";
 		mtable += "    <div class='temp_icon_wrap'>";
-		mtable += "      <svg class='thermometer_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#15803D' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z'/></svg>";
+		mtable += "      <svg class='thermometer_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#0B7347' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11.5 14.5V4a2.5 2.5 0 0 0-5 0v10.5a4.5 4.5 0 1 0 5 0z'/><path d='M9 10v5.5 M15.5 9.5h3 M15.5 12.5h3 M15.5 15.5h3'/><circle cx='9' cy='17.5' r='2.3' fill='#0B7347' stroke='none'/></svg>";
 		mtable += "    </div>";
 		mtable += "    <div class='temp_info_box'>";
 		mtable += "      <div class='ctrl_label'>Current Temp.</div>";
@@ -473,12 +485,12 @@ function create_mainscreen(data) {
 		mtable += "      <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 4l-7 7h4v9h6v-9h4z'/></svg>";
 		mtable += "      <span>Open</span>";
 		mtable += "    </button>";
-		mtable += "    <input type='hidden' id='ocupstate_" + (i + 1) + "'>";
+		mtable += "    <input type='hidden' id='ocupstate_" + (i + 1) + "' value='1'>";
 		mtable += "    <button type='button' class='btn_manual btn_manual_close' id='ocmanualdn_" + (i + 1) + "'>";
 		mtable += "      <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 20l7-7h-4V4h-6v9H5z'/></svg>";
 		mtable += "      <span>Close</span>";
 		mtable += "    </button>";
-		mtable += "    <input type='hidden' id='ocdnstate_" + (i + 1) + "'>";
+		mtable += "    <input type='hidden' id='ocdnstate_" + (i + 1) + "' value='1'>";
 		mtable += "  </div>";
 		mtable += "</div>"; // end .card_col_manual
 
@@ -530,7 +542,7 @@ function create_mainscreen(data) {
 		// COLUMN 1: CURRENT TEMPERATURE (Current Temp.)
 		mtable += "<div class='temp_col temp_col_current'>";
 		mtable += "  <div class='temp_icon_wrap'>";
-		mtable += "    <svg class='thermometer_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#15803D' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'><path d='M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z'/></svg>";
+		mtable += "    <svg class='thermometer_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#0B7347' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11.5 14.5V4a2.5 2.5 0 0 0-5 0v10.5a4.5 4.5 0 1 0 5 0z'/><path d='M9 10v5.5 M15.5 9.5h3 M15.5 12.5h3 M15.5 15.5h3'/><circle cx='9' cy='17.5' r='2.3' fill='#0B7347' stroke='none'/></svg>";
 		mtable += "  </div>";
 		mtable += "  <div class='temp_info_box'>";
 		mtable += "    <div class='ctrl_label'>Current Temp.</div>";
@@ -559,18 +571,18 @@ function create_mainscreen(data) {
 		// COLUMN 3: OPERATION MODE SECTION (COOL & HEAT)
 		mtable += "<div class='temp_col temp_col_mode'>";
 		// Sub-item COOL
-		mtable += "  <div class='mode_item mode_cool'>";
+		mtable += "  <div class='mode_item mode_cool' id='tempmodecool_" + (i + 1) + "'>";
 		mtable += "    <div class='mode_title mode_title_cool'>COOL</div>";
 		mtable += "    <div class='mode_icon mode_icon_cool'>";
-		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='#0D652D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='2' x2='12' y2='22'/><line x1='2' y1='12' x2='22' y2='12'/><line x1='4.93' y1='4.93' x2='19.07' y2='19.07'/><line x1='19.07' y1='4.93' x2='4.93' y2='19.07'/><polyline points='10 4 12 2 14 4'/><polyline points='10 20 12 22 14 20'/><polyline points='4 10 2 12 4 14'/><polyline points='20 10 22 12 20 14'/></svg>";
+		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='2' x2='12' y2='22'/><line x1='2' y1='12' x2='22' y2='12'/><line x1='4.93' y1='4.93' x2='19.07' y2='19.07'/><line x1='19.07' y1='4.93' x2='4.93' y2='19.07'/><polyline points='10 4 12 2 14 4'/><polyline points='10 20 12 22 14 20'/><polyline points='4 10 2 12 4 14'/><polyline points='20 10 22 12 20 14'/></svg>";
 		mtable += "    </div>";
-		mtable += "    <img class='temp_mode_indicator' id='templampcool_" + (i + 1) + "' src='/html/img/png_image/LED_Blue(32).png'>";
+		mtable += "    <img class='temp_mode_indicator' id='templampcool_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
 		mtable += "  </div>";
 		// Sub-item HEAT
-		mtable += "  <div class='mode_item mode_heat'>";
+		mtable += "  <div class='mode_item mode_heat' id='tempmodeheat_" + (i + 1) + "'>";
 		mtable += "    <div class='mode_title mode_title_heat'>HEAT</div>";
 		mtable += "    <div class='mode_icon mode_icon_heat'>";
-		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='#64748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z'/></svg>";
+		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z'/></svg>";
 		mtable += "    </div>";
 		mtable += "    <img class='temp_mode_indicator' id='templampheat_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
 		mtable += "  </div>";
@@ -579,7 +591,7 @@ function create_mainscreen(data) {
 		// COLUMN 4: OUTPUT
 		mtable += "<div class='temp_col temp_col_output'>";
 		mtable += "  <div class='output_title'>Output</div>";
-		mtable += "  <img class='temp_output_led' id='templampout_" + (i + 1) + "' src='/html/img/png_image/LED_Red(32).png'>";
+		mtable += "  <img class='temp_output_led' id='templampout_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
 		// Preserve hidden inputs for tempoutbt to keep event listener and state logic
 		mtable += "  <input type='image' id='tempoutbt_" + (i + 1) + "' style='display:none;' src='/html/img/png_image/off_disable(96).png'>";
 		mtable += "  <input type='hidden' id='tempoutbtstate_" + (i + 1) + "' value='0'>";
@@ -610,16 +622,16 @@ function create_mainscreen(data) {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	mtable += "<tr><td style='font-size:10px;'>&nbsp;</td></tr>";	//중간 여백
+	mtable += "<tr style='display:none;'><td style='font-size:10px;'>&nbsp;</td></tr>";	//중간 여백
 
 	//타이머 컨트롤러 화면구성
-	mtable += "<tr><td class='txt_timectrl_title'>TIMER 제어기</td></tr>";
+	mtable += "<tr style='display:none;'><td class='txt_timectrl_title'>TIMER 제어기</td></tr>";
 	for (var i = 0; i < timectrlnum; i++) {
 		ctrl_name[Number(occtrlnum) + i] = data[i + 19];
 		ctrl_mode[i] = data[i * 29 + 124];
 
-		mtable += "<tr><td class='txt_timectrl_name'>" + data[i + 19] + "</td></tr>";
-		mtable += "<tr><td>";
+		mtable += "<tr style='display:none;'><td class='txt_timectrl_name'>" + data[i + 19] + "</td></tr>";
+		mtable += "<tr style='display:none;'><td>";
 
 		//set_timechannel 시작 index = 123 (29개 col데이터)
 		//	(chno,모드,시간단위,시작시간(시),시작시간(분),종료시간(시),종료시간(분),동작시간,멈춤시간,
@@ -630,7 +642,7 @@ function create_mainscreen(data) {
 		//		ex5_시작시간(시),ex5_시작시간(분),ex5_동작시간(초),ex5_출력)*timectrlnum
 		if (data[i * 29 + 124] == 10) {
 			//출력지속 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2'>";
+			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
 			mtable += "<tr>";
 			mtable += "<td width='15%' align='right' style='padding-top:10px;'>열림시간</td>";
 			//mtable += "<td width='35%' align='left' style='padding-top:10px;padding-left:10px;'>";
@@ -663,7 +675,7 @@ function create_mainscreen(data) {
 			mtable += "</table>";
 		} else if (data[i * 29 + 124] == 11) {
 			//플리커 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2'>";
+			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
 			mtable += "<tr>";
 			mtable += "<td width='15%' align='right' style='padding-top:10px;'>시작시간</td>";
 			//mtable += "<td colspan='2' width='35%' align='left' style='padding-left:10px;'>";
@@ -695,7 +707,7 @@ function create_mainscreen(data) {
 			mtable += "</table>";
 		} else if (data[i * 29 + 124] == 12) {
 			//5단 확장 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2'>";
+			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
 			mtable += "<tr>";
 			mtable += "<td width='7%' align='right' style='padding-top:10px;'>1단</td>";
 			mtable += "<td width='14%' style='padding-top:10px;'>시작시간</td>";
@@ -897,31 +909,33 @@ function display_nowdata(data) {
 		$("#occlose_" + (i + 1)).prop("value", getTemperatureValue(data[idx + 2]).toFixed(1));	//닫힘온도 표시
 
 		//수동열림 검사
+		var isUpDisabled = isBitSet(data[idx + 3], 4);
 		if (upclickok[i] == 1) {
 			let elapsedTime = (Date.now() - upclicktime[i]) / 1000;		// 초 단위
 			if (elapsedTime >= 5) {
-				$("#ocmanualup_" + (i + 1)).attr('src', "/html/img/png_image/up_" + (isBitSet(data[idx + 3], 4) ? "dis" : "en") + "able(96).png");
-				$("#ocupstate_" + (i + 1)).prop("value", isBitSet(data[idx + 3], 4) ? "1" : "0");
+				setManualBtnState("ocmanualup_" + (i + 1), "up", !isUpDisabled);
+				$("#ocupstate_" + (i + 1)).prop("value", isUpDisabled ? "1" : "0");
 				$("#ocmanualup_" + (i + 1)).prop('disabled', false);
 				upclickok[i] = 0;
 			}
 		} else {
-			$("#ocmanualup_" + (i + 1)).attr('src', "/html/img/png_image/up_" + (isBitSet(data[idx + 3], 4) ? "dis" : "en") + "able(96).png");
-			$("#ocupstate_" + (i + 1)).prop("value", isBitSet(data[idx + 3], 4) ? "1" : "0");
+			setManualBtnState("ocmanualup_" + (i + 1), "up", !isUpDisabled);
+			$("#ocupstate_" + (i + 1)).prop("value", isUpDisabled ? "1" : "0");
 		}
 
 		//수동닫힘 검사
+		var isDnDisabled = isBitSet(data[idx + 3], 5);
 		if (dnclickok[i] == 1) {
 			let elapsedTime = (Date.now() - dnclicktime[i]) / 1000;		// 초 단위
 			if (elapsedTime >= 5) {
-				$("#ocmanualdn_" + (i + 1)).attr('src', "/html/img/png_image/down_" + (isBitSet(data[idx + 3], 5) ? "dis" : "en") + "able(96).png");
-				$("#ocdnstate_" + (i + 1)).prop("value", isBitSet(data[idx + 3], 5) ? "1" : "0");
+				setManualBtnState("ocmanualdn_" + (i + 1), "dn", !isDnDisabled);
+				$("#ocdnstate_" + (i + 1)).prop("value", isDnDisabled ? "1" : "0");
 				$("#ocmanualdn_" + (i + 1)).prop('disabled', false);
 				dnclickok[i] = 0;
 			}
 		} else {
-			$("#ocmanualdn_" + (i + 1)).attr('src', "/html/img/png_image/down_" + (isBitSet(data[idx + 3], 5) ? "dis" : "en") + "able(96).png");
-			$("#ocdnstate_" + (i + 1)).prop("value", isBitSet(data[idx + 3], 5) ? "1" : "0");
+			setManualBtnState("ocmanualdn_" + (i + 1), "dn", !isDnDisabled);
+			$("#ocdnstate_" + (i + 1)).prop("value", isDnDisabled ? "1" : "0");
 		}
 
 		//열림상태 검사
@@ -955,10 +969,14 @@ function display_nowdata(data) {
 			//HEAT
 			$("#templampcool_" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
 			$("#templampheat_" + (i + 1)).attr('src', '/html/img/png_image/LED_Red(32).png');
+			$("#tempmodecool_" + (i + 1)).removeClass('is_active active');
+			$("#tempmodeheat_" + (i + 1)).addClass('is_active active');
 		} else {
 			//COOL
 			$("#templampcool_" + (i + 1)).attr('src', '/html/img/png_image/LED_Blue(32).png');
 			$("#templampheat_" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
+			$("#tempmodecool_" + (i + 1)).addClass('is_active active');
+			$("#tempmodeheat_" + (i + 1)).removeClass('is_active active');
 		}
 
 		if (isBitSet(data[idx + 3], 1)) {
