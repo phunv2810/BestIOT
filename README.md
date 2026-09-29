@@ -2,6 +2,15 @@
 
 ## 1. Project Overview
 * **UI Enhancement Only**: This project is strictly about enhancing the new UI to replace the old one.
+
+Old UI:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+New UI:
+
+<img width="385" height="676" alt="Screenshot 2026-09-29 at 10 21 49" src="https://github.com/user-attachments/assets/ed3705fd-4866-4856-ae66-fc0826d4af36" />&nbsp;&nbsp;
+<img width="379" height="674" alt="Screenshot 2026-09-29 at 10 19 40" src="https://github.com/user-attachments/assets/eed7e490-8739-4dc5-9152-15cbead947cf" />
+
+
+
 * **Based on Public Source**: All source code is only HTML, CSS, Javascript extracted from the live site (`bestiot.net:41030`), not entire source.
 
 ---
