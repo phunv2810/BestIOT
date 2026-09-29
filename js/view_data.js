@@ -519,51 +519,6 @@ function create_push_termslect(){
 
 }
 
-var mockPushAlertData = [
-	["2026-09-25 10:45:12", "Warning", "Vent 1 Open limit reached (100%)"],
-	["2026-09-25 09:30:00", "High Temp", "CH2 Temp (35.2℃) exceeded high threshold (35.0℃)"],
-	["2026-09-25 08:15:22", "Normal", "Vent 2 closed automatically"],
-	["2026-09-25 07:05:40", "Info", "Daytime ventilation mode activated"],
-	["2026-09-24 22:10:05", "Low Temp", "CH1 Temp (12.4℃) dropped below low threshold (15.0℃)"],
-	["2026-09-24 18:00:15", "Normal", "Vent 1 closed for scheduled night mode"],
-	["2026-09-24 14:22:33", "High Temp", "CH3 Temp (36.1℃) exceeded threshold (35.0℃)"],
-	["2026-09-24 11:15:00", "Warning", "Rain sensor triggered emergency close on all vents"],
-	["2026-09-24 09:40:18", "Info", "Vent 1 opened 50% for air circulation"],
-	["2026-09-23 21:30:45", "Normal", "All controllers operational - System check passed"],
-	["2026-09-23 16:55:10", "Warning", "Wind speed high (>12 m/s), auto vent position reduced to 20%"],
-	["2026-09-23 13:20:00", "High Temp", "CH2 Temp (34.8℃) caution alert"],
-	["2026-09-23 08:10:25", "Info", "Vent 2 opened 30% automatically"],
-	["2026-09-22 19:45:00", "Normal", "Night mode active - All vents locked"],
-	["2026-09-22 15:12:30", "Warning", "CH4 Soil moisture sensor low (18%)"],
-	["2026-09-22 11:00:00", "High Temp", "CH1 Temp (35.5℃) exceeded upper threshold"],
-	["2026-09-22 07:30:15", "Info", "Ventilation cycle 1 started"],
-	["2026-09-21 20:15:40", "Normal", "Target temperature maintained across all zones"],
-	["2026-09-21 16:40:22", "Warning", "Vent 2 motor overload protection reset"],
-	["2026-09-21 12:25:00", "High Temp", "CH2 Temp (36.8℃) critical high alert"],
-	["2026-09-21 09:10:11", "Info", "Vent 1 opened 80% automatically"],
-	["2026-09-20 23:05:00", "Low Temp", "CH1 Temp (13.8℃) low warning alert"],
-	["2026-09-20 17:50:33", "Normal", "Evening cool-down cycle completed"],
-	["2026-09-20 14:15:20", "Warning", "Humidity sensor out of optimal range (92%)"],
-	["2026-09-20 10:30:00", "High Temp", "CH3 Temp (35.0℃) threshold reached"],
-	["2026-09-19 21:00:15", "Normal", "System check: Normal operational status"],
-	["2026-09-19 15:45:10", "Info", "Manual override activated on Vent 1 by Admin"],
-	["2026-09-19 12:10:00", "High Temp", "CH2 Temp (35.7℃) alert"],
-	["2026-09-18 18:30:25", "Normal", "Scheduled irrigation ended"],
-	["2026-09-18 11:20:40", "Warning", "Vent 1 open angle mismatch: 55% vs 50% target"],
-	["2026-09-17 14:05:12", "High Temp", "CH1 Temp (34.9℃) high warning alert"],
-	["2026-09-16 19:22:00", "Normal", "System normal - All parameters within bounds"],
-	["2026-09-15 08:45:30", "Info", "Controller firmware communication verified"]
-];
-
-function getMockPushAlertData(startday) {
-	if (!startday) return mockPushAlertData.slice();
-	var filtered = mockPushAlertData.filter(function(row) {
-		var rowDate = (row[0] || '').substring(0, 10);
-		return rowDate >= startday;
-	});
-	return filtered.length > 0 ? filtered : mockPushAlertData.slice();
-}
-
 function search_push_data(startday, termtype){
 	container1 = $('#pagination-demo1');
 	var options = {
@@ -579,15 +534,10 @@ function search_push_data(startday, termtype){
 					//	response = searchString_fromArray(response, search_text);
 					//	search_text = "";
 					//}
-					if (!response || !Array.isArray(response) || response.length === 0) {
-						done(getMockPushAlertData(startday));
-					} else {
-						done(response);
-					}
+					done(response);
 				},
 				error : function(){
 					//console.log("search_push_data()..... ajax error()");
-					done(getMockPushAlertData(startday));
 				},
 				complete : function(){
 					//console.log("search_push_data()..... ajax complete()");
