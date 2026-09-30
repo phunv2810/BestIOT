@@ -33,9 +33,7 @@
     <link rel="stylesheet" type="text/css" href="css/pagination.css">
 
     <!-- Chart.js Modern Charting Library -->
-    <script type="text/javascript" src="/js/chart.min.js"></script>
-    <script type="text/javascript" src="../js/chart.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/view_data.css" />
 
     <style type="text/css">
@@ -107,7 +105,7 @@
         }
 
         /* Active tab: defined in view_data.css */
-        .tabs input:checked + .tab_item:hover {
+        .tabs input:checked+.tab_item:hover {
             background-color: #ffffff !important;
             color: #0D652D !important;
         }
@@ -127,9 +125,9 @@
         }
 
         /* 선택 된 탭 콘텐츠를 표시 */
-        #view_graph:checked ~ #view_graph_content, 
-        #data_download:checked ~ #data_download_content,
-        #search_push:checked ~ #search_push_content {
+        #view_graph:checked~#view_graph_content,
+        #data_download:checked~#data_download_content,
+        #search_push:checked~#search_push_content {
             display: block !important;
             /* height: 100%; */
         }
