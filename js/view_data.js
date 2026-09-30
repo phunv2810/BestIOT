@@ -879,7 +879,6 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 				x: {
 					afterBuildTicks: function(scale) {
 						if (termtype === 3) {
-							// Tùy chọn 1 Ngày: lọc các mốc giờ chẵn cách nhau 2 tiếng bắt đầu từ 00:00
 							var seenHours = {};
 							var dayTicks = [];
 							for (var i = 0; i < masterTimestamps.length; i++) {
@@ -909,7 +908,6 @@ function buildSensorChart(canvasId, titleText, seriesArrays, termtype) {
 							}
 						}
 						if (termtype === 1) {
-							// Bước nhảy cố định 4 ngày, lấy 5 mốc
 							var step = 4;
 							var sampled = [];
 							for (var k = 0; k < uniqueTicks.length; k += step) {
