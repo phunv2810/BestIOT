@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">//-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<!--<link rel="shotcut icon" href="./img/shotcut_icon2.ico" type="image/x-icon">//-->
+	<link rel="shotcut icon" href="./img/shotcut_icon.ico" type="image/x-icon">
+
+	<script type="text/javascript" src="/js/jQuery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
+	
+	<!--<link rel="icon" href="./img/shotcut_icon.ico" type="image/x-icon">//-->
+	
+	<title>신바람</title>
+
+    <link rel="stylesheet" href="./css/login.css?v=1.00">
+	<script class="include" type="text/javascript" src="/js/login.js?v=1.00"></script>
+
+
+	<style type="text/css">
+	</style>
+
+</head>
+
+
+<body>
+<div class="bgscreen">
+
+	<div class="wrapper">
+		<div class="form-box">
+			<form class="form">
+				<span class="title">로 그 인</span>
+				
+				<div class="form-container">
+					<input type="text" class="input" placeholder="아이디" id="input_id" >
+					<input type="password" class="input" placeholder="암 호" id="input_pw" >
+				</div>
+				<label for="save_id"><input type="checkbox" name="save_id" id="save_id" value="save_id" />아이디 저장</label>
+
+				<button id="connect" >접 속</button>
+
+				<div class="connection_info">
+					당신의IP &nbsp; <input name='ipaddr' type='text' id='ipaddr' value='' disabled><br>
+					접속회수 &nbsp; <input name='con_count' type='text' id='con_count' value='' disabled><br>
+					접속오류 &nbsp; <input name='con_error' type='text' id='con_error' value='' disabled><br>
+					<span style='color:blue;'>(5회 초과 접속실패 시 접속 제한)</span>
+				</div>
+			</form>
+
+			<div class="form-section">
+				<p>아이디가 없으세요? &nbsp;&nbsp;&nbsp;<a href="join.html" style="pointer-events: none">회원가입</a> </p>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+var fail_count;
+
+$(document).ready(function() {
+	$.ajax({
+		type : 'POST',
+		url : '/php/connection_check.php',
+		//data :  {"id":id, "pw":pw},
+		data : '',
+		dataType : 'json',
+		success : function(data){
+			//alert(data);
+			//console.log("data=" + data);
+			//console.log("data length =" + data.length);
+			
+			$('#ipaddr').val(data[0]);
+			//$('#con_count').val(data[1]);
+			//$('#con_error').val(data[2]);
+			if (data[1] === null || data[1] === undefined || data[1] === '') {
+				$('#con_count').val(0);
+			}else{
+				$('#con_count').val(data[1]);
+			}
+			if (data[2] === null || data[2] === undefined || data[2] === '') {
+				$('#con_error').val(0);
+				fail_count = 0;
+			}else{
+				$('#con_error').val(data[2]);
+				fail_count = data[2];
+			}				
+			//fail_count = data[2];
+		},
+		error : function(){
+		},
+		complete : function(){
+		}
+	})
+	
+	let expiration_date = new Date();
+	expiration_date.setDate(expiration_date.getDate() + 7);
+	//console.log(expiration_date);
+	//console.log(expiration_date.getFullYear()+"-"+(expiration_date.getMonth()+1)+"-"+expiration_date.getDate()+
+	//		" "+expiration_date.getHours()+":"+expiration_date.getMinutes()+":"+expiration_date.getSeconds());
+			
+	// 아이디저장/암호저장 쿠키 불러오기
+	let save_id = $.cookie('save_id');
+	//console.log("save_id : " + save_id);
+	if(typeof save_id == 'undefined'){
+		$('#input_id').val('');
+		$('#input_pw').val('');
+		$('#save_id').prop('checked', false);
+	}else{
+		if(save_id === "false") {
+			$('#input_id').val('');
+			$('#input_pw').val('');
+			$('#save_id').prop('checked', false);
+		} else {
+			$('#save_id').prop('checked', true);
+
+			let remember_id = $.cookie('remember_id');
+			//console.log("cookie remeber_id : " + remember_id);
+			if(remember_id == ''){
+				$('#input_id').val('');
+			}else{
+				$('#input_id').val(remember_id);
+			}
+
+			let remember_pw = $.cookie('remember_pw');
+			//console.log("cookie remeber_pw : " + remember_pw);
+			if(remember_pw == ''){
+				$('#input_pw').val('');
+			}else{
+				$('#input_pw').val(remember_pw);
+			}
+		}
+	}
+
+	// 페이지 전체에서 엔터키 감지
+	$(document).keydown(function(e) {
+		if (e.key === "Enter") {
+			//alert("페이지에서 Enter키가 눌렸음");
+			$("#connect").click();	// 접속 버튼 클릭 실행
+		}
+	});
+	// Enter 키 눌렀을 때 로그인 버튼 클릭
+	$("#input_id, #input_pw").on("keydown", function(e) {
+		if (e.key === "Enter") {
+			//alert("아이디/암호 입력하는 곳에서 Enter키가 눌렸음");
+			$("#connect").click();	// 접속 버튼 클릭 실행
+		}
+	});
+
+	$("#connect").click(function(e) {
+		var id=$("#input_id").val();
+		var pw=$("#input_pw").val();
+		//console.log("connect click !!!!  id="+id+" , pw="+pw);
+				
+		if(id == ''){
+			alert("아이디를 입력하세요.");
+			return;
+		}
+		if(pw == ''){
+			alert("암호를 입력하세요.");
+			return;
+		}
+		// cookie에 아이디/암호 저장
+		if($('#save_id').is(':checked')) {
+			$.cookie('save_id', true, { expires:expiration_date });						//7일 뒤에 만료
+			$.cookie('remember_id', $('#input_id').val(), { expires:expiration_date });	//7일 뒤에 만료
+			$.cookie('remember_pw', $('#input_pw').val(), { expires:expiration_date });	//7일 뒤에 만료
+			//console.log("set cookie save_id=true");
+		} else {
+			$.cookie('save_id', false, {expires:expiration_date});		//7일 뒤에 만료
+			$.cookie('remember_id', '', { expires:expiration_date });	//7일 뒤에 만료
+			$.cookie('remember_pw', '', { expires:expiration_date });	//7일 뒤에 만료
+			//console.log("set cookie save_id=false");
+		}
+
+		//alert("connect....\nid="+id+" , pw="+pw);				
+		$.ajax({
+			type : 'POST',
+			url : '/php/login_check.php',
+			data :  {"id":id, "pw":pw, "fail":fail_count},
+			dataType : 'json',
+			success : function(data){
+				sleep(100);
+				if(data == "Login Success"){
+					//alert(data);
+					//location.href = 'main_screen.html';
+					location.href = 'main_frame.html';
+				}else{
+					alert(data);
+
+					$.cookie('save_id', false, {expires:expiration_date});		//7일 뒤에 만료
+					$.cookie('remember_id', '', { expires:expiration_date });	//7일 뒤에 만료
+					$.cookie('remember_pw', '', { expires:expiration_date });	//7일 뒤에 만료
+					//console.log("set cookie save_id=false");
+				}
+			},
+			error : function(){
+				console.log("request ./php/login_check.php..... ajax error()");
+			},
+			complete : function(){
+				console.log("request ./php/login_check.php..... ajax complete()");
+			}
+		})
+		//.done(function(data, textStatus, xhr) { alert("$.ajax().done()"); })
+		//.fail(function(xhr, textStatus, errorThrown) { alert("$.ajax().fail()"); })
+		//.always(function() { alert("$.ajax().always()"); })
+		//.then(function() { alert("$.ajax().then()"); });
+		
+		//////////////////////////////////////////////////////////////////////////////////
+		//	약간의 시간지연을 주지 않으면 바로 빠져나가서 
+		//	  location.href = 'main_screen.html' 가 실행되지 않는 문제가 발생하여
+		//	  빠져 나가지 전에 약간의 시간지연을 주어야 한다.
+		//	  비동기 방식의 setTimeout 을 사용한 delay() 함수를 사용하면 동일한 문제가 발생한다.
+		//	  함수를 빠져나가지 못하게 잡고 있어야 문제가 해결된다. (원인 불명)
+		//////////////////////////////////////////////////////////////////////////////////
+		
+		sleep(200);
+		//delay(200);
+	});	//End of $("#connect").click(function(e)
+
+});
+
+/*
+$(window).resize(function(){
+	setScreenSize();
+});
+
+function setScreenSize() {
+	let vh = (window.innerHeight) * 0.01;			
+	document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+*/
+
+function sleep(ms) {
+	//동기 방식의 시간지연
+	const wakeUpTime = Date.now() + ms;
+	while (Date.now() < wakeUpTime) {}
+}
+function delay(ms) {
+	//비동기 방식의 시간지연
+	return new Promise( (resolve) => setTimeout(resolve, ms) );
+	//사용 await delay(1000);	//1000ms delay
+}
