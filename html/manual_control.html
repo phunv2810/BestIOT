@@ -948,6 +948,64 @@
             background-color: #09633C !important;
             border-color: #09633C !important;
         }
+
+        @media (max-width: 768px) {
+            .ctrl_tab_bar {
+                gap: 8px !important;
+            }
+
+            .ctrl_tab_btn {
+                font-size: 0.95rem !important;
+                height: 44px !important;
+                padding: 0 6px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ctrl_tab_btn {
+                font-size: 0.85rem !important;
+                height: 42px !important;
+                padding: 0 4px !important;
+            }
+        }
+
+        /* ==========================================================================
+           12. TIMER CONTROLLER STYLES (.tbl_channel2)
+           ========================================================================== */
+        .tbl_channel2 {
+            padding: 16px 20px !important;
+            border-collapse: separate !important;
+            box-sizing: border-box !important;
+            font-size: 15px !important;
+            color: #334155 !important;
+        }
+
+        .tbl_channel2 td {
+            vertical-align: middle !important;
+        }
+
+        .tbl_channel2 .txt_item_value2 {
+            height: 38px !important;
+            background-color: #F8FAFC !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 6px !important;
+            padding: 4px 10px !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #1E293B !important;
+            text-align: center !important;
+            outline: none !important;
+            box-sizing: border-box !important;
+        }
+
+        .tbl_channel2 input[type="image"] {
+            cursor: pointer;
+            transition: transform 0.1s ease, opacity 0.15s ease;
+        }
+
+        .tbl_channel2 input[type="image"]:active {
+            transform: scale(0.96);
+        }
     </style>
 
 </head>
@@ -955,15 +1013,18 @@
 <body>
     <div class="animsition">
 
-        <!-- TAB BAR: VENT CONTROLLER / TEMPERATURE CONTROLLER -->
+        <!-- TAB BAR: VENT CONTROLLER / TEMPERATURE CONTROLLER / TIMER CONTROLLER -->
         <div class="ctrl_tab_bar_wrap">
             <div class="ctrl_tab_bar">
                 <button type="button" class="ctrl_tab_btn active" id="tab_btn_vent"
                     onclick="switchControllerTab('vent')">
-                    Vent Controller
+                    Vent
                 </button>
                 <button type="button" class="ctrl_tab_btn" id="tab_btn_temp" onclick="switchControllerTab('temp')">
-                    Temperature Controller
+                    Temperature
+                </button>
+                <button type="button" class="ctrl_tab_btn" id="tab_btn_timer" onclick="switchControllerTab('timer')">
+                    Timer
                 </button>
             </div>
         </div>
@@ -982,31 +1043,40 @@
     <script type="text/javascript">
         (function () {
 
-            // Current active tab ('vent' or 'temp')
+            // Current active tab ('vent', 'temp', or 'timer')
             var currentActiveTab = 'vent';
 
-            // Switch between Vent Controller (Type 1) and Temperature Controller (Type 2)
+            // Switch between Vent Controller (Type 1), Temperature Controller (Type 2), and Timer Controller (Type 3)
             window.switchControllerTab = function (tabName) {
                 if (tabName) currentActiveTab = tabName;
                 var isVent = (currentActiveTab === 'vent');
+                var isTemp = (currentActiveTab === 'temp');
+                var isTimer = (currentActiveTab === 'timer');
 
                 // 1. Update active tab button class
                 var btnVent = document.getElementById('tab_btn_vent');
                 var btnTemp = document.getElementById('tab_btn_temp');
+                var btnTimer = document.getElementById('tab_btn_timer');
                 if (btnVent) {
                     if (isVent) btnVent.classList.add('active');
                     else btnVent.classList.remove('active');
                 }
                 if (btnTemp) {
-                    if (!isVent) btnTemp.classList.add('active');
+                    if (isTemp) btnTemp.classList.add('active');
                     else btnTemp.classList.remove('active');
+                }
+                if (btnTimer) {
+                    if (isTimer) btnTimer.classList.add('active');
+                    else btnTimer.classList.remove('active');
                 }
 
                 // 2. Toggle visibility for controller cards
                 var ventItems = document.querySelectorAll('.card_vent_group');
                 var tempItems = document.querySelectorAll('.card_temp_group');
+                var timerItems = document.querySelectorAll('.card_timer_group');
                 ventItems.forEach(function (el) { el.style.display = isVent ? '' : 'none'; });
-                tempItems.forEach(function (el) { el.style.display = !isVent ? '' : 'none'; });
+                tempItems.forEach(function (el) { el.style.display = isTemp ? '' : 'none'; });
+                timerItems.forEach(function (el) { el.style.display = isTimer ? '' : 'none'; });
 
                 // 3. Filter table rows when rendered with portcontrol.js
                 var tblControl = document.querySelector('.tbl_control');
@@ -1022,14 +1092,22 @@
                     var tempElements = tblControl.querySelectorAll('.card_temp_group, .txt_tempctrl_title, .txt_tempctrl_name, .tbl_sensor2');
                     tempElements.forEach(function (el) {
                         var tr = el.closest('tr');
-                        if (tr) tr.style.display = !isVent ? '' : 'none';
+                        if (tr) tr.style.display = isTemp ? '' : 'none';
                     });
 
-                    // Hide spacer row between groups
-                    var spacerTd = tblControl.querySelector('td[style*="font-size:10px"]');
-                    if (spacerTd && spacerTd.closest('tr')) {
-                        spacerTd.closest('tr').style.display = 'none';
-                    }
+                    // Group 3: Timer Controller (Type 3)
+                    var timerElements = tblControl.querySelectorAll('.card_timer_group, .txt_timectrl_title, .txt_timectrl_name, .tbl_channel2');
+                    timerElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = isTimer ? '' : 'none';
+                    });
+
+                    // Hide spacer rows between groups
+                    var spacerTds = tblControl.querySelectorAll('td[style*="font-size:10px"]');
+                    spacerTds.forEach(function (spacerTd) {
+                        var tr = spacerTd.closest('tr');
+                        if (tr) tr.style.display = 'none';
+                    });
                 }
 
                 // 4. Resize Chart.js charts to full width on tab switch

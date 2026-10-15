@@ -622,16 +622,16 @@ function create_mainscreen(data) {
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	mtable += "<tr style='display:none;'><td style='font-size:10px;'>&nbsp;</td></tr>";	//중간 여백
+	mtable += "<tr><td style='font-size:10px;'>&nbsp;</td></tr>";	//중간 여백
 
 	//타이머 컨트롤러 화면구성
-	mtable += "<tr style='display:none;'><td class='txt_timectrl_title'>TIMER 제어기</td></tr>";
+	mtable += "<tr class='card_timer_group'><td class='txt_timectrl_title'>TIMER 제어기</td></tr>";
 	for (var i = 0; i < timectrlnum; i++) {
 		ctrl_name[Number(occtrlnum) + i] = data[i + 19];
 		ctrl_mode[i] = data[i * 29 + 124];
 
-		mtable += "<tr style='display:none;'><td class='txt_timectrl_name'>" + data[i + 19] + "</td></tr>";
-		mtable += "<tr style='display:none;'><td>";
+		mtable += "<tr class='card_timer_group'><td class='txt_timectrl_name'>" + data[i + 19] + "</td></tr>";
+		mtable += "<tr class='card_timer_group'><td>";
 
 		//set_timechannel 시작 index = 123 (29개 col데이터)
 		//	(chno,모드,시간단위,시작시간(시),시작시간(분),종료시간(시),종료시간(분),동작시간,멈춤시간,
@@ -642,7 +642,7 @@ function create_mainscreen(data) {
 		//		ex5_시작시간(시),ex5_시작시간(분),ex5_동작시간(초),ex5_출력)*timectrlnum
 		if (data[i * 29 + 124] == 10) {
 			//출력지속 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
+			mtable += "<table width='100%' class='tbl_channel2'>";
 			mtable += "<tr>";
 			mtable += "<td width='15%' align='right' style='padding-top:10px;'>열림시간</td>";
 			//mtable += "<td width='35%' align='left' style='padding-top:10px;padding-left:10px;'>";
@@ -675,7 +675,7 @@ function create_mainscreen(data) {
 			mtable += "</table>";
 		} else if (data[i * 29 + 124] == 11) {
 			//플리커 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
+			mtable += "<table width='100%' class='tbl_channel2'>";
 			mtable += "<tr>";
 			mtable += "<td width='15%' align='right' style='padding-top:10px;'>시작시간</td>";
 			//mtable += "<td colspan='2' width='35%' align='left' style='padding-left:10px;'>";
@@ -707,7 +707,7 @@ function create_mainscreen(data) {
 			mtable += "</table>";
 		} else if (data[i * 29 + 124] == 12) {
 			//5단 확장 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2' style='display:none;'>";
+			mtable += "<table width='100%' class='tbl_channel2'>";
 			mtable += "<tr>";
 			mtable += "<td width='7%' align='right' style='padding-top:10px;'>1단</td>";
 			mtable += "<td width='14%' style='padding-top:10px;'>시작시간</td>";
