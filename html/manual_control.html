@@ -1174,8 +1174,102 @@
             font-size: 16px !important;
         }
 
+        /* ==========================================================================
+           14. TIMER CONTROLLER TYPE 2 (FLICKER MODE) SMART CARD
+           ========================================================================== */
+        .timer2_card_content {
+            display: flex !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            min-height: 190px !important;
+        }
+
+        .timer2_col_times,
+        .timer2_col_duration {
+            flex: 1.25 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            padding: 22px 24px !important;
+            box-sizing: border-box !important;
+        }
+
+        .timer_val_black {
+            color: #0F172A !important;
+        }
+
+        .timer_unit_text {
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            color: #64748B !important;
+            margin-left: 2px !important;
+        }
+
+        .timer2_col_control {
+            width: 170px !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-evenly !important;
+            align-items: center !important;
+            padding: 16px 12px !important;
+            box-sizing: border-box !important;
+        }
+
+        .timer2_ctrl_item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .btn_power_toggle {
+            width: 52px !important;
+            height: 52px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            outline: none !important;
+            background-color: #94A3B8 !important; /* OFF State: Metallic Gray */
+            color: #FFFFFF !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+            padding: 0 !important;
+            user-select: none !important;
+        }
+
+        .btn_power_toggle:hover {
+            background-color: #64748B !important;
+            transform: scale(1.03) !important;
+        }
+
+        .btn_power_toggle:active {
+            transform: scale(0.96) !important;
+        }
+
+        .btn_power_toggle.is_active,
+        .btn_power_toggle.active {
+            background-color: #0B7347 !important; /* ON State: Rich Green */
+            box-shadow: 0 2px 10px rgba(11, 115, 71, 0.38) !important;
+        }
+
+        .btn_power_toggle.is_active:hover,
+        .btn_power_toggle.active:hover {
+            background-color: #09633C !important;
+        }
+
+        .btn_power_toggle svg {
+            display: block !important;
+            pointer-events: none !important;
+        }
+
         @media (max-width: 768px) {
-            .timer_card_content {
+            .timer_card_content,
+            .timer2_card_content {
                 flex-direction: column !important;
             }
 
@@ -1185,7 +1279,8 @@
                 margin: 0 !important;
             }
 
-            .timer_col_status {
+            .timer_col_status,
+            .timer2_col_control {
                 width: 100% !important;
                 flex-direction: row !important;
                 justify-content: space-around !important;
