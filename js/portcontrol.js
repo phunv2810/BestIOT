@@ -13,20 +13,20 @@
 var tmrId;
 
 
-const Gauge_Width = 290;
-const Gauge_Ticks = ["-15", "0", "15", "30", "45", "60"];
-const Min_Temperature = -15;
-const Max_Temperature = 60;
-const Chart_tickInterval = 15;
+var Gauge_Width = 290;
+var Gauge_Ticks = ["-15", "0", "15", "30", "45", "60"];
+var Min_Temperature = -15;
+var Max_Temperature = 60;
+var Chart_tickInterval = 15;
 
-const lowTempColor = 'rgba(50,50,255,0.8)';
-const hiTempColor = 'rgba(255,80,80,0.8)';
-const lowTempColor2 = 'rgba(50,50,255,0.4)';
-const hiTempColor2 = 'rgba(255,80,80,0.4)';
+var lowTempColor = 'rgba(50,50,255,0.8)';
+var hiTempColor = 'rgba(255,80,80,0.8)';
+var lowTempColor2 = 'rgba(50,50,255,0.4)';
+var hiTempColor2 = 'rgba(255,80,80,0.4)';
 
-let occtrlnum = 0;
-let tempctrlnum = 0;
-let timectrlnum = 0;
+var occtrlnum = 0;
+var tempctrlnum = 0;
+var timectrlnum = 0;
 
 var temp_gauge = new Array();
 var chartplot = new Array();
@@ -36,13 +36,13 @@ var ctrl_lowval = new Array();
 var ctrl_hival = new Array();
 var ctrl_mode = new Array();
 
-let upclicktime = new Array(8);
-let dnclicktime = new Array(8);
-let upclickok = new Array(24).fill(0);
-let dnclickok = new Array(24).fill(0);
+var upclicktime = new Array(8);
+var dnclicktime = new Array(8);
+var upclickok = new Array(24).fill(0);
+var dnclickok = new Array(24).fill(0);
 
 $(document).ready(function () {
-	$('.animsition').animsition();
+	if ($.fn && $.fn.animsition) $('.animsition').animsition();
 
 	var user_id = $("#session_id").prop("value");
 	var user_level = $("#session_lv").prop("value");
@@ -83,10 +83,14 @@ $(window).resize(function () {
 	}
 });
 
-window.detectSwipeEvent(window, function (element, direction) {
-	//var parent = window.parent.document;	//video_screen.html
-	window.parent.swipe_func(direction);
-})
+if (typeof window.detectSwipeEvent === 'function') {
+	window.detectSwipeEvent(window, function (element, direction) {
+		//var parent = window.parent.document;	//video_screen.html
+		if (window.parent && typeof window.parent.swipe_func === 'function') {
+			window.parent.swipe_func(direction);
+		}
+	});
+}
 
 function creat_clickevent() {
 	for (var i = 0; i < occtrlnum; i++) {
@@ -169,13 +173,16 @@ function tmrbutton_clink(event) {
 	//console.log("ctrl_name="+ctrl_name+" , now_state="+now_state);
 	if (ctrl_name == "up") {
 		if (now_state == 1) {
+			setManualBtnState("tmr_up" + ctrl_num, "up", false);
 			$("#tmr_up" + ctrl_num).attr('src', "/html/img/png_image/up_disable(96).png");
 			$("#tmr_upstate" + ctrl_num).prop("value", 0);
 			ctrl_cmd = 0;
 		} else if (now_state == 0) {
+			setManualBtnState("tmr_up" + ctrl_num, "up", true);
 			$("#tmr_up" + ctrl_num).attr('src', "/html/img/png_image/up_enable(96).png");
 			$("#tmr_upstate" + ctrl_num).prop("value", 1);
 			if (ctrl_mode[ctrl_num - 1] != 11) {
+				setManualBtnState("tmr_dn" + ctrl_num, "dn", false);
 				$("#tmr_dn" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
 				$("#tmr_dnstate" + ctrl_num).prop("value", 0);
 			}
@@ -186,13 +193,16 @@ function tmrbutton_clink(event) {
 		upclickok[16 + ctrl_num - 1] = 1;
 	} else if (ctrl_name == "dn") {
 		if (now_state == 1) {
+			setManualBtnState("tmr_dn" + ctrl_num, "dn", false);
 			$("#tmr_dn" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
 			$("#tmr_dnstate" + ctrl_num).prop("value", 0);
 			ctrl_cmd = 0;
 		} else if (now_state == 0) {
+			setManualBtnState("tmr_dn" + ctrl_num, "dn", true);
 			$("#tmr_dn" + ctrl_num).attr('src', "/html/img/png_image/down_enable(96).png");
 			$("#tmr_dnstate" + ctrl_num).prop("value", 1);
 			if (ctrl_mode[ctrl_num - 1] != 11) {
+				setManualBtnState("tmr_up" + ctrl_num, "up", false);
 				$("#tmr_up" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
 				$("#tmr_upstate" + ctrl_num).prop("value", 0);
 			}
@@ -631,7 +641,7 @@ function create_mainscreen(data) {
 		ctrl_mode[i] = data[i * 29 + 124];
 
 		mtable += "<tr class='card_timer_group'><td class='txt_timectrl_name'>" + data[i + 19] + "</td></tr>";
-		mtable += "<tr class='card_timer_group'><td>";
+		mtable += "<tr class='card_timer_group'><td class='card_wrapper_td'>";
 
 		//set_timechannel 시작 index = 123 (29개 col데이터)
 		//	(chno,모드,시간단위,시작시간(시),시작시간(분),종료시간(시),종료시간(분),동작시간,멈춤시간,
@@ -641,38 +651,64 @@ function create_mainscreen(data) {
 		//		ex4_시작시간(시),ex4_시작시간(분),ex4_동작시간(초),ex4_출력,
 		//		ex5_시작시간(시),ex5_시작시간(분),ex5_동작시간(초),ex5_출력)*timectrlnum
 		if (data[i * 29 + 124] == 10) {
-			//출력지속 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2'>";
-			mtable += "<tr>";
-			mtable += "<td width='15%' align='right' style='padding-top:10px;'>열림시간</td>";
-			//mtable += "<td width='35%' align='left' style='padding-top:10px;padding-left:10px;'>";
-			mtable += "<td width='35%' align='left' style='padding:10px 0px 0px 10px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:85%;' id='tmr_opentime" + (i + 1) + "' value='09:00' disabled></td>";
-			mtable += "<td width='8%' align='right' style='padding-top:10px;'>열림</td>";
-			//mtable += "<td width='10%' align='left' style='padding-left:10px;'>";
-			mtable += "<td width='10%' align='left' style='padding:10px 0px 0px 10px;'>";
-			mtable += "<input type='image' width='32' height='32' id='tmr_openout" + (i + 1) + "' ";			//출력지속모드 열림상태 LED
-			mtable += "src='/html/img/png_image/LED_Disable(32).png'></td>";
-			mtable += "<td rowspan=2>수동열림<br>";
-			mtable += "<input type='image' width='112' height='112' id='tmr_up" + (i + 1) + "' ";				//출력지속모드 수동 열림 버튼
-			mtable += "src='/html/img/png_image/up_disable(96).png'>&nbsp;</td>";
-			mtable += "<input type='hidden' id='tmr_upstate" + (i + 1) + "' value='0'>";						//출력지속모드 수동 열림상태 저장
-			mtable += "<td rowspan=2>수동닫힘<br>";
-			mtable += "<input type='image' width='112' height='112' id='tmr_dn" + (i + 1) + "' ";				//출력지속모드 수동 닫힘 버튼
-			mtable += "src='/html/img/png_image/down_disable(96).png'></td>";
-			mtable += "<input type='hidden' id='tmr_dnstate" + (i + 1) + "' value='0'>";							//출력지속모드 수동 닫힘상태 저장
-			mtable += "</tr>";
-			mtable += "<tr>";
-			mtable += "<td align='right' style='padding-bottom:10px;'>닫힘시간</td>";
-			//mtable += "<td align='left' style='padding-left:10px;'>";
-			mtable += "<td align='left' style='padding:0px 0px 10px 10px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:85%;' id='tmr_closetime" + (i + 1) + "' value='18:00' disabled></td>";
-			mtable += "<td align='right' style='padding-bottom:10px;'>닫힘</td>";
-			mtable += "<td align='left' style='padding-left:10px;'>";
-			mtable += "<input type='image' width='32' height='32' id='tmr_closeout" + (i + 1) + "' ";			//출력지속모드 닫힘상태 LED
-			mtable += "src='/html/img/png_image/LED_Disable(32).png'></td>";
-			mtable += "</tr>";
-			mtable += "</table>";
+			//출력지속 모드 인 경우 (Curtain Timer)
+			mtable += "<div class='smart_card timer_smart_card'>";
+			mtable += "  <div class='timer_card_content'>";
+
+			// 1. LEFT COLUMN: OPEN TIME & CLOSE TIME
+			mtable += "    <div class='timer_col timer_col_times'>";
+			mtable += "      <div class='timer_field_group'>";
+			mtable += "        <div class='timer_field_label'>Open Time</div>";
+			mtable += "        <div class='timer_time_box'>";
+			mtable += "          <input type='text' class='timer_time_val' id='tmr_opentime" + (i + 1) + "' value='09:00' disabled>";
+			mtable += "        </div>";
+			mtable += "      </div>";
+			mtable += "      <div class='timer_field_group' style='margin-bottom:0;'>";
+			mtable += "        <div class='timer_field_label'>Close Time</div>";
+			mtable += "        <div class='timer_time_box'>";
+			mtable += "          <input type='text' class='timer_time_val' id='tmr_closetime" + (i + 1) + "' value='18:00' disabled>";
+			mtable += "        </div>";
+			mtable += "      </div>";
+			mtable += "    </div>";
+
+			// VERTICAL DIVIDER 1
+			mtable += "    <div class='timer_col_divider_v'></div>";
+
+			// 2. CENTER COLUMN: OPEN / CLOSE STATUS LAMPS
+			mtable += "    <div class='timer_col timer_col_status'>";
+			mtable += "      <div class='timer_status_item'>";
+			mtable += "        <div class='timer_status_label'>Open</div>";
+			mtable += "        <img class='timer_status_led' id='tmr_openout" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png' width='28' height='28'>";
+			mtable += "      </div>";
+			mtable += "      <div class='timer_status_divider'></div>";
+			mtable += "      <div class='timer_status_item'>";
+			mtable += "        <div class='timer_status_label'>Close</div>";
+			mtable += "        <img class='timer_status_led' id='tmr_closeout" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png' width='28' height='28'>";
+			mtable += "      </div>";
+			mtable += "    </div>";
+
+			// VERTICAL DIVIDER 2
+			mtable += "    <div class='timer_col_divider_v'></div>";
+
+			// 3. RIGHT COLUMN: MANUAL CONTROL BUTTONS
+			mtable += "    <div class='timer_col timer_col_manual'>";
+			mtable += "      <div class='manual_ctrl_title'>Manual Control</div>";
+			mtable += "      <div class='manual_btn_group' style='padding:0;'>";
+			mtable += "        <button type='button' class='btn_manual btn_manual_open' id='tmr_up" + (i + 1) + "'>";
+			mtable += "          <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 4l-7 7h4v9h6v-9h4z'/></svg>";
+			mtable += "          <span>Open</span>";
+			mtable += "        </button>";
+			mtable += "        <input type='hidden' id='tmr_upstate" + (i + 1) + "' value='0'>";
+			mtable += "        <button type='button' class='btn_manual btn_manual_close' id='tmr_dn" + (i + 1) + "'>";
+			mtable += "          <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 20l7-7h-4V4h-6v9H5z'/></svg>";
+			mtable += "          <span>Close</span>";
+			mtable += "        </button>";
+			mtable += "        <input type='hidden' id='tmr_dnstate" + (i + 1) + "' value='0'>";
+			mtable += "      </div>";
+			mtable += "    </div>";
+
+			mtable += "  </div>"; // end .timer_card_content
+			mtable += "</div>"; // end .timer_smart_card
 		} else if (data[i * 29 + 124] == 11) {
 			//플리커 모드 인 경우
 			mtable += "<table width='100%' class='tbl_channel2'>";
@@ -901,7 +937,7 @@ function display_nowdata(data) {
 	var idx;
 	for (var i = 0; i < occtrlnum; i++) {
 		idx = i * 4;
-		temp_gauge[i].value = getTemperatureValue(data[idx]).toFixed(1);
+		if (temp_gauge && temp_gauge[i]) temp_gauge[i].value = getTemperatureValue(data[idx]).toFixed(1);
 
 
 		$("#ocnow_" + (i + 1)).prop("value", getTemperatureValue(data[idx]).toFixed(1));		//현재온도 표시
@@ -950,7 +986,7 @@ function display_nowdata(data) {
 	}
 	for (var i = 0; i < tempctrlnum; i++) {
 		idx = 32 + i * 4;
-		temp_gauge[Number(occtrlnum) + i].value = getTemperatureValue(data[idx]).toFixed(1);
+		if (temp_gauge && temp_gauge[Number(occtrlnum) + i]) temp_gauge[Number(occtrlnum) + i].value = getTemperatureValue(data[idx]).toFixed(1);
 
 		$("#tempnow_" + (i + 1)).prop("value", getTemperatureValue(data[idx]).toFixed(1));		//현재온도 표시
 		$("#tempset_" + (i + 1)).prop("value", getTemperatureValue(data[idx + 1]).toFixed(1));	//설정온도 표시
@@ -1035,6 +1071,25 @@ function display_nowdata(data) {
 				}
 			}
 
+			if (upclickok[16 + i] == 0 && dnclickok[16 + i] == 0) {
+				if (Number(data[idx + 1]) == 0) {
+					setManualBtnState("tmr_up" + (i + 1), "up", false);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", false);
+					$("#tmr_upstate" + (i + 1)).prop("value", "0");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "0");
+				} else if (Number(data[idx + 1]) == 1) {
+					setManualBtnState("tmr_up" + (i + 1), "up", true);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", false);
+					$("#tmr_upstate" + (i + 1)).prop("value", "1");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "0");
+				} else if (Number(data[idx + 1]) == 2) {
+					setManualBtnState("tmr_up" + (i + 1), "up", false);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", true);
+					$("#tmr_upstate" + (i + 1)).prop("value", "0");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "1");
+				}
+			}
+
 			if (Number(data[idx + 1]) == 0) {
 				//정지
 				$("#tmr_openout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
@@ -1046,7 +1101,7 @@ function display_nowdata(data) {
 			} else if (Number(data[idx + 1]) == 2) {
 				//닫힘
 				$("#tmr_openout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
-				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Blue(32).png');
+				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Red(32).png');
 			}
 		} else if (ctrl_mode[i] == 11) {
 			//플리커 모드

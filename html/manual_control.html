@@ -14,6 +14,7 @@
     <!--<script type="text/javascript" src="/js/jQuery.min.js"></script>//-->
     <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>//-->
     <script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
+    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>')</script>
     <script src="/js/animsition.js" charset="utf-8"></script>
     <link rel="stylesheet" href="css/animsition.min.css">
 
@@ -36,7 +37,6 @@
     <!-- Chart.js Modern Charting Library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script class="include" type="text/javascript" src="../js/portcontrol.js"></script>
     <script class="include" type="text/javascript" src="/js/portcontrol.js"></script>
 
     <style type="text/css">
@@ -1006,6 +1006,201 @@
         .tbl_channel2 input[type="image"]:active {
             transform: scale(0.96);
         }
+
+        /* ==========================================================================
+           13. TIMER CONTROLLER (CURTAIN TIMER) SMART CARD
+           ========================================================================== */
+        .timer_smart_card {
+            background: #FFFFFF !important;
+            border: 1px solid #E2E8F0 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+            padding: 0 !important;
+            margin-top: 8px !important;
+            margin-bottom: 20px !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+            overflow: hidden !important;
+        }
+
+        .timer_card_content {
+            display: flex !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            min-height: 190px !important;
+        }
+
+        /* Column 1: Times (Open Time & Close Time) */
+        .timer_col_times {
+            flex: 1.25 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            padding: 22px 26px !important;
+            box-sizing: border-box !important;
+        }
+
+        .timer_field_group {
+            margin-bottom: 14px !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .timer_field_label {
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #1E293B !important;
+            margin-bottom: 8px !important;
+            line-height: 1.2 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        }
+
+        .timer_time_box {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #FFFFFF !important;
+            border: 1.5px solid #CBD5E1 !important;
+            border-radius: 8px !important;
+            padding: 4px 16px !important;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+            box-sizing: border-box !important;
+            height: 54px !important;
+            max-width: 320px !important;
+            width: 100% !important;
+        }
+
+        .timer_time_val {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 32px !important;
+            font-weight: 800 !important;
+            color: #FF0000 !important;
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            pointer-events: none !important;
+            user-select: none !important;
+            letter-spacing: 0.5px !important;
+            line-height: 1 !important;
+        }
+
+        /* Vertical divider between columns */
+        .timer_col_divider_v {
+            width: 1px !important;
+            background-color: #E2E8F0 !important;
+            flex-shrink: 0 !important;
+            align-self: stretch !important;
+            margin: 16px 0 !important;
+        }
+
+        /* Column 2: Status LEDs (Open & Close indicator lamps) */
+        .timer_col_status {
+            width: 160px !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-evenly !important;
+            align-items: center !important;
+            padding: 16px 12px !important;
+            box-sizing: border-box !important;
+        }
+
+        .timer_status_item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .timer_status_label {
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #1E293B !important;
+            margin-bottom: 8px !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            text-align: center !important;
+        }
+
+        .timer_status_led {
+            width: 28px !important;
+            height: 28px !important;
+            border-radius: 50% !important;
+            display: block !important;
+            object-fit: contain !important;
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* Glowing Red LED for Timer Active Status */
+        img.timer_status_led[src*="Red"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cdefs%3E%3CradialGradient id='redLed' cx='35%25' cy='35%25' r='65%25' fx='30%25' fy='30%25'%3E%3Cstop offset='0%25' stop-color='%23FF8888'/%3E%3Cstop offset='35%25' stop-color='%23EE0000'/%3E%3Cstop offset='85%25' stop-color='%23990000'/%3E%3Cstop offset='100%25' stop-color='%23550000'/%3E%3C/radialGradient%3E%3ClinearGradient id='rim' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23E2E8F0'/%3E%3Cstop offset='100%25' stop-color='%2394A3B8'/%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='1.5' stdDeviation='1.5' flood-color='rgba(238,0,0,0.35)'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23rim)'/%3E%3Ccircle cx='16' cy='16' r='12' fill='url(%23redLed)' filter='url(%23glow)'/%3E%3Cellipse cx='12' cy='11' rx='4.5' ry='2.5' transform='rotate(-30 12 11)' fill='rgba(255,255,255,0.75)'/%3E%3C/svg%3E") !important;
+        }
+
+        /* Metallic Gray LED for Timer Inactive/Disabled Status */
+        img.timer_status_led[src*="Disable"] {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32'%3E%3Cdefs%3E%3CradialGradient id='grayLed' cx='35%25' cy='35%25' r='65%25' fx='30%25' fy='30%25'%3E%3Cstop offset='0%25' stop-color='%23CBD5E1'/%3E%3Cstop offset='35%25' stop-color='%2394A3B8'/%3E%3Cstop offset='85%25' stop-color='%2364748B'/%3E%3Cstop offset='100%25' stop-color='%23475569'/%3E%3C/radialGradient%3E%3ClinearGradient id='rim' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23E2E8F0'/%3E%3Cstop offset='100%25' stop-color='%2394A3B8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23rim)'/%3E%3Ccircle cx='16' cy='16' r='12' fill='url(%23grayLed)'/%3E%3Cellipse cx='12' cy='11' rx='4.5' ry='2.5' transform='rotate(-30 12 11)' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E") !important;
+        }
+
+        .timer_status_divider {
+            width: 65% !important;
+            height: 1px !important;
+            background-color: #E2E8F0 !important;
+            margin: 6px 0 !important;
+        }
+
+        /* Column 3: Manual Control Buttons */
+        .timer_col_manual {
+            flex: 1.15 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            padding: 22px 26px !important;
+            box-sizing: border-box !important;
+        }
+
+        .timer_col_manual .manual_ctrl_title {
+            margin-bottom: 12px !important;
+        }
+
+        .timer_col_manual .btn_manual {
+            max-width: 280px !important;
+            height: 48px !important;
+            font-size: 16px !important;
+        }
+
+        @media (max-width: 768px) {
+            .timer_card_content {
+                flex-direction: column !important;
+            }
+
+            .timer_col_divider_v {
+                width: 100% !important;
+                height: 1px !important;
+                margin: 0 !important;
+            }
+
+            .timer_col_status {
+                width: 100% !important;
+                flex-direction: row !important;
+                justify-content: space-around !important;
+                padding: 16px 20px !important;
+            }
+
+            .timer_status_divider {
+                display: none !important;
+            }
+
+            .timer_time_box,
+            .timer_col_manual .btn_manual {
+                max-width: 100% !important;
+            }
+        }
     </style>
 
 </head>
@@ -1096,7 +1291,7 @@
                     });
 
                     // Group 3: Timer Controller (Type 3)
-                    var timerElements = tblControl.querySelectorAll('.card_timer_group, .txt_timectrl_title, .txt_timectrl_name, .tbl_channel2');
+                    var timerElements = tblControl.querySelectorAll('.card_timer_group, .txt_timectrl_title, .txt_timectrl_name, .tbl_channel2, .timer_smart_card');
                     timerElements.forEach(function (el) {
                         var tr = el.closest('tr');
                         if (tr) tr.style.display = isTimer ? '' : 'none';
