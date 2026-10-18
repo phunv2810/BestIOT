@@ -179,6 +179,9 @@ function tmrbutton_clink(event) {
 			if (ctrl_mode[ctrl_num - 1] == 11) {
 				$("#tmr_openout" + ctrl_num).attr('src', '/html/img/png_image/LED_Disable(32).png');
 			}
+			if (ctrl_mode[ctrl_num - 1] == 12) {
+				$("#tmr_exopenout" + ctrl_num).attr('src', '/html/img/png_image/LED_Disable(32).png');
+			}
 			ctrl_cmd = 0;
 		} else if (now_state == 0) {
 			setManualBtnState("tmr_up" + ctrl_num, "up", true);
@@ -186,6 +189,10 @@ function tmrbutton_clink(event) {
 			$("#tmr_upstate" + ctrl_num).prop("value", 1);
 			if (ctrl_mode[ctrl_num - 1] == 11) {
 				$("#tmr_openout" + ctrl_num).attr('src', '/html/img/png_image/LED_Red(32).png');
+			}
+			if (ctrl_mode[ctrl_num - 1] == 12) {
+				$("#tmr_exopenout" + ctrl_num).attr('src', '/html/img/png_image/LED_Red(32).png');
+				$("#tmr_excloseout" + ctrl_num).attr('src', '/html/img/png_image/LED_Disable(32).png');
 			}
 			if (ctrl_mode[ctrl_num - 1] != 11) {
 				setManualBtnState("tmr_dn" + ctrl_num, "dn", false);
@@ -202,11 +209,18 @@ function tmrbutton_clink(event) {
 			setManualBtnState("tmr_dn" + ctrl_num, "dn", false);
 			$("#tmr_dn" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
 			$("#tmr_dnstate" + ctrl_num).prop("value", 0);
+			if (ctrl_mode[ctrl_num - 1] == 12) {
+				$("#tmr_excloseout" + ctrl_num).attr('src', '/html/img/png_image/LED_Disable(32).png');
+			}
 			ctrl_cmd = 0;
 		} else if (now_state == 0) {
 			setManualBtnState("tmr_dn" + ctrl_num, "dn", true);
 			$("#tmr_dn" + ctrl_num).attr('src', "/html/img/png_image/down_enable(96).png");
 			$("#tmr_dnstate" + ctrl_num).prop("value", 1);
+			if (ctrl_mode[ctrl_num - 1] == 12) {
+				$("#tmr_excloseout" + ctrl_num).attr('src', '/html/img/png_image/LED_Red(32).png');
+				$("#tmr_exopenout" + ctrl_num).attr('src', '/html/img/png_image/LED_Disable(32).png');
+			}
 			if (ctrl_mode[ctrl_num - 1] != 11) {
 				setManualBtnState("tmr_up" + ctrl_num, "up", false);
 				$("#tmr_up" + ctrl_num).attr('src', "/html/img/png_image/down_disable(96).png");
@@ -773,96 +787,102 @@ function create_mainscreen(data) {
 			mtable += "  </div>"; // end .timer2_card_content
 			mtable += "</div>"; // end .timer2_smart_card
 		} else if (data[i * 29 + 124] == 12) {
-			//5단 확장 모드 인 경우
-			mtable += "<table width='100%' class='tbl_channel2'>";
-			mtable += "<tr>";
-			mtable += "<td width='7%' align='right' style='padding-top:10px;'>1단</td>";
-			mtable += "<td width='14%' style='padding-top:10px;'>시작시간</td>";
-			mtable += "<td width='22%' colspan='2' align='left' style='padding:10px 0px 0px 5px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:100%;' id='tmr_ex1starttime" + (i + 1) + "' value='09:00' disabled></td>";
-			mtable += "<td width='18%' align='right' style='padding-top:10px;'>동작시간</td>";
-			mtable += "<td width='15%' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='number' step='1' class='txt_item_value2' id='tmr_ex1runtime" + (i + 1) + "' value='120' disabled></td>";
-			mtable += "<td width='5%' style='padding-top:10px;'>(초)</td>";
-			mtable += "<td width='10%' align='right' style='padding-top:10px;'>출력</td>";
-			mtable += "<td align='left' style='padding:10px 0px 0px 10px;font-weight:bold;'><div id='tmr_ex1output" + (i + 1) + "'>열림</div></td>";
-			mtable += "</tr>";
+			//5단 확장 모드 인 경우 (Time Controller - Type 3)
+			mtable += "<div class='smart_card timer_smart_card timer3_smart_card'>";
+			mtable += "  <div class='timer3_card_inner'>";
 
-			mtable += "<tr>";
-			mtable += "<td width='7%' align='right'>2단</td>";
-			mtable += "<td width='14%'>시작시간</td>";
-			mtable += "<td width='22%' colspan='2' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:100%;' id='tmr_ex2starttime" + (i + 1) + "' value='10:00' disabled></td>";
-			mtable += "<td width='18%' align='right'>동작시간</td>";
-			mtable += "<td width='15%' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='number' step='1' class='txt_item_value2' id='tmr_ex2runtime" + (i + 1) + "' value='120' disabled></td>";
-			mtable += "<td width='5%'>(초)</td>";
-			mtable += "<td width='10%' align='right'>출력</td>";
-			mtable += "<td align='left' style='padding-left:10px;font-weight:bold;'><div id='tmr_ex2output" + (i + 1) + "'>닫힘</div></td>";
-			mtable += "</tr>";
+			// 1. TOP SECTION: 5-STAGE TABLE
+			mtable += "    <table class='timer3_table'>";
+			mtable += "      <thead>";
+			mtable += "        <tr>";
+			mtable += "          <th style='width:12%;'>No.</th>";
+			mtable += "          <th style='width:32%;'>Start Time</th>";
+			mtable += "          <th style='width:36%;'>Operation Time (sec)</th>";
+			mtable += "          <th style='width:20%;'>Output</th>";
+			mtable += "        </tr>";
+			mtable += "      </thead>";
+			mtable += "      <tbody>";
 
-			mtable += "<tr>";
-			mtable += "<td width='7%' align='right'>3단</td>";
-			mtable += "<td width='14%'>시작시간</td>";
-			mtable += "<td width='22%' colspan='2' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:100%;' id='tmr_ex3starttime" + (i + 1) + "' value='11:00' disabled></td>";
-			mtable += "<td width='18%' align='right'>동작시간</td>";
-			mtable += "<td width='15%' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='number' step='1' class='txt_item_value2' id='tmr_ex3runtime" + (i + 1) + "' value='120' disabled></td>";
-			mtable += "<td width='5%'>(초)</td>";
-			mtable += "<td width='10%' align='right'>출력</td>";
-			mtable += "<td align='left' style='padding-left:10px;font-weight:bold;'><div id='tmr_ex3output" + (i + 1) + "'>닫힘</div></td>";
-			mtable += "</tr>";
+			// Row 1
+			mtable += "        <tr>";
+			mtable += "          <td class='timer3_col_no'>1</td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex1starttime" + (i + 1) + "' value='08:00' disabled></td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex1runtime" + (i + 1) + "' value='20' disabled></td>";
+			mtable += "          <td><div id='tmr_ex1output" + (i + 1) + "' class='timer3_output_val'><span class='txt_output_open'>Open</span></div></td>";
+			mtable += "        </tr>";
 
-			mtable += "<tr>";
-			mtable += "<td width='7%' align='right'>4단</td>";
-			mtable += "<td width='14%'>시작시간</td>";
-			mtable += "<td width='22%' colspan='2' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:100%;' id='tmr_ex4starttime" + (i + 1) + "' value='12:00' disabled></td>";
-			mtable += "<td width='18%' align='right'>동작시간</td>";
-			mtable += "<td width='15%' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='number' step='1' class='txt_item_value2' id='tmr_ex4runtime" + (i + 1) + "' value='120' disabled></td>";
-			mtable += "<td width='5%'>(초)</td>";
-			mtable += "<td width='10%' align='right'>출력</td>";
-			mtable += "<td align='left' style='padding-left:10px;font-weight:bold;'><div id='tmr_ex4output" + (i + 1) + "'>닫힘</div></td>";
-			mtable += "</tr>";
+			// Row 2
+			mtable += "        <tr>";
+			mtable += "          <td class='timer3_col_no'>2</td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex2starttime" + (i + 1) + "' value='10:00' disabled></td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex2runtime" + (i + 1) + "' value='20' disabled></td>";
+			mtable += "          <td><div id='tmr_ex2output" + (i + 1) + "' class='timer3_output_val'><span class='txt_output_open'>Open</span></div></td>";
+			mtable += "        </tr>";
 
-			mtable += "<tr>";
-			mtable += "<td width='7%' align='right'>5단</td>";
-			mtable += "<td width='14%'>시작시간</td>";
-			mtable += "<td width='22%' colspan='2' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='text' class='txt_item_value2' style='width:100%;' id='tmr_ex5starttime" + (i + 1) + "' value='13:00' disabled></td>";
-			mtable += "<td width='18%' align='right'>동작시간</td>";
-			mtable += "<td width='15%' align='left' style='padding-left:5px;'>";
-			mtable += "<input type='number' step='1' class='txt_item_value2' id='tmr_ex5runtime" + (i + 1) + "' value='120' disabled></td>";
-			mtable += "<td width='5%'>(초)</td>";
-			mtable += "<td width='10%' align='right'>출력</td>";
-			mtable += "<td align='left' style='padding-left:10px;font-weight:bold;'><div id='tmr_ex5output" + (i + 1) + "'>열림</div></td>";
-			mtable += "</tr>";
+			// Row 3
+			mtable += "        <tr>";
+			mtable += "          <td class='timer3_col_no'>3</td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex3starttime" + (i + 1) + "' value='12:00' disabled></td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex3runtime" + (i + 1) + "' value='20' disabled></td>";
+			mtable += "          <td><div id='tmr_ex3output" + (i + 1) + "' class='timer3_output_val'><span class='txt_output_open'>Open</span></div></td>";
+			mtable += "        </tr>";
 
-			mtable += "<tr>";
-			mtable += "<td colspan='2' rowspan='2' align='right'>출력상태</td>";
-			mtable += "<td width='11%' style='padding:10px 0px 0px 0px;'>열림</td>";
-			mtable += "<td style='padding:10px 0px 0px 0px;'>닫힘</td>";
-			mtable += "<td colspan='3' rowspan='2' style='padding:10px 0px;'>";
-			mtable += "<input type='image' width='112' height='112' id='tmr_up" + (i + 1) + "' ";			//확장모드 수동 열림 버튼
-			mtable += "src='/html/img/png_image/up_disable(96).png'></td>";
-			mtable += "<input type='hidden' id='tmr_upstate" + (i + 1) + "' value='0'>";					//확장모드 수동 열림상태 저장
-			mtable += "<td colspan='2' rowspan='2' style='padding:10px 0px;'>";
-			mtable += "<input type='image' width='112' height='112' id='tmr_dn" + (i + 1) + "' ";			//확장모드 수동 닫힘 버튼
-			mtable += "src='/html/img/png_image/down_disable(96).png'></td>";
-			mtable += "<input type='hidden' id='tmr_dnstate" + (i + 1) + "' value='0'>";					//확장모드 수동 닫힘상태 저장
-			mtable += "</tr>";
-			mtable += "<tr>";
-			mtable += "<td style='padding-bottom:15px;'>";
-			mtable += "<input type='image' width='32' height='32' style='margin-top:-20px;' id='tmr_exopenout" + (i + 1) + "' ";	//확장모드 출력상태 LED
-			mtable += "src='/html/img/png_image/LED_Disable(32).png'></td>";
-			mtable += "<td style='padding-bottom:15px;'>";
-			mtable += "<input type='image' width='32' height='32' style='margin-top:-20px;' id='tmr_excloseout" + (i + 1) + "' ";	//확장모드 출력상태 LED
-			mtable += "src='/html/img/png_image/LED_Disable(32).png'></td>";
-			mtable += "</tr>";
+			// Row 4
+			mtable += "        <tr>";
+			mtable += "          <td class='timer3_col_no'>4</td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex4starttime" + (i + 1) + "' value='16:00' disabled></td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex4runtime" + (i + 1) + "' value='20' disabled></td>";
+			mtable += "          <td><div id='tmr_ex4output" + (i + 1) + "' class='timer3_output_val'><span class='txt_output_close'>Close</span></div></td>";
+			mtable += "        </tr>";
 
-			mtable += "</table>";
+			// Row 5
+			mtable += "        <tr>";
+			mtable += "          <td class='timer3_col_no'>5</td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex5starttime" + (i + 1) + "' value='17:00' disabled></td>";
+			mtable += "          <td><input type='text' class='timer3_time_input' id='tmr_ex5runtime" + (i + 1) + "' value='50' disabled></td>";
+			mtable += "          <td><div id='tmr_ex5output" + (i + 1) + "' class='timer3_output_val'><span class='txt_output_close'>Close</span></div></td>";
+			mtable += "        </tr>";
+
+			mtable += "      </tbody>";
+			mtable += "    </table>";
+
+			// 2. HORIZONTAL DIVIDER
+			mtable += "    <div class='timer3_divider_h'></div>";
+
+			// 3. BOTTOM SECTION: STATUS LAMPS (LEFT) + MANUAL CONTROL (RIGHT)
+			mtable += "    <div class='timer3_bottom_section'>";
+			mtable += "      <div class='timer3_bottom_status'>";
+			mtable += "        <div class='timer_status_item'>";
+			mtable += "          <div class='timer_status_label'>Open</div>";
+			mtable += "          <img class='timer_status_led' id='tmr_exopenout" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png' width='28' height='28'>";
+			mtable += "        </div>";
+			mtable += "        <div class='timer_status_item'>";
+			mtable += "          <div class='timer_status_label'>Close</div>";
+			mtable += "          <img class='timer_status_led' id='tmr_excloseout" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png' width='28' height='28'>";
+			mtable += "        </div>";
+			mtable += "      </div>";
+
+			mtable += "      <div class='timer_col_divider_v'></div>";
+
+			mtable += "      <div class='timer3_bottom_manual'>";
+			mtable += "        <div class='manual_ctrl_title' style='text-align:left; margin-bottom:10px;'>Manual Control</div>";
+			mtable += "        <div class='manual_btn_row'>";
+			mtable += "          <button type='button' class='btn_manual btn_manual_open' id='tmr_up" + (i + 1) + "'>";
+			mtable += "            <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 4l-7 7h4v9h6v-9h4z'/></svg>";
+			mtable += "            <span>Open</span>";
+			mtable += "          </button>";
+			mtable += "          <input type='hidden' id='tmr_upstate" + (i + 1) + "' value='0'>";
+			mtable += "          <button type='button' class='btn_manual btn_manual_close' id='tmr_dn" + (i + 1) + "'>";
+			mtable += "            <svg class='btn_icon' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 20l7-7h-4V4h-6v9H5z'/></svg>";
+			mtable += "            <span>Close</span>";
+			mtable += "          </button>";
+			mtable += "          <input type='hidden' id='tmr_dnstate" + (i + 1) + "' value='0'>";
+			mtable += "        </div>";
+			mtable += "      </div>";
+			mtable += "    </div>";
+
+			mtable += "  </div>"; // end .timer3_card_inner
+			mtable += "</div>"; // end .timer3_smart_card
 		}
 
 		mtable += "</td></tr>";
@@ -1198,37 +1218,37 @@ function display_nowdata(data) {
 			$("#tmr_ex1starttime" + (i + 1)).prop("value", formatTime(data[idx + 10], data[idx + 11]));		//1단 시작시간
 			$("#tmr_ex1runtime" + (i + 1)).prop("value", data[idx + 12]);									//1단 동작시간
 			if (Number(data[idx + 13]) == 0) {
-				$("#tmr_ex1output" + (i + 1)).html("열림");												//1단 열림 혹은 닫힘
+				$("#tmr_ex1output" + (i + 1)).html("<span class='txt_output_open'>Open</span>");												//1단 열림 혹은 닫힘
 			} else if (Number(data[idx + 13]) == 1) {
-				$("#tmr_ex1output" + (i + 1)).html("닫힘");
+				$("#tmr_ex1output" + (i + 1)).html("<span class='txt_output_close'>Close</span>");
 			}
 			$("#tmr_ex2starttime" + (i + 1)).prop("value", formatTime(data[idx + 14], data[idx + 15]));		//2단 시작시간
 			$("#tmr_ex2runtime" + (i + 1)).prop("value", data[idx + 16]);									//2단 동작시간
 			if (Number(data[idx + 17]) == 0) {
-				$("#tmr_ex2output" + (i + 1)).html("열림");												//2단 열림 혹은 닫힘
+				$("#tmr_ex2output" + (i + 1)).html("<span class='txt_output_open'>Open</span>");												//2단 열림 혹은 닫힘
 			} else if (Number(data[idx + 17]) == 1) {
-				$("#tmr_ex2output" + (i + 1)).html("닫힘");
+				$("#tmr_ex2output" + (i + 1)).html("<span class='txt_output_close'>Close</span>");
 			}
 			$("#tmr_ex3starttime" + (i + 1)).prop("value", formatTime(data[idx + 18], data[idx + 19]));		//3단 시작시간
 			$("#tmr_ex3runtime" + (i + 1)).prop("value", data[idx + 20]);									//3단 동작시간
 			if (Number(data[idx + 21]) == 0) {
-				$("#tmr_ex3output" + (i + 1)).html("열림");												//3단 열림 혹은 닫힘
+				$("#tmr_ex3output" + (i + 1)).html("<span class='txt_output_open'>Open</span>");												//3단 열림 혹은 닫힘
 			} else if (Number(data[idx + 21]) == 1) {
-				$("#tmr_ex3output" + (i + 1)).html("닫힘");
+				$("#tmr_ex3output" + (i + 1)).html("<span class='txt_output_close'>Close</span>");
 			}
 			$("#tmr_ex4starttime" + (i + 1)).prop("value", formatTime(data[idx + 22], data[idx + 23]));		//4단 시작시간
 			$("#tmr_ex4runtime" + (i + 1)).prop("value", data[idx + 24]);									//4단 동작시간
 			if (Number(data[idx + 25]) == 0) {
-				$("#tmr_ex4output" + (i + 1)).html("열림");												//4단 열림 혹은 닫힘
+				$("#tmr_ex4output" + (i + 1)).html("<span class='txt_output_open'>Open</span>");												//4단 열림 혹은 닫힘
 			} else if (Number(data[idx + 25]) == 1) {
-				$("#tmr_ex4output" + (i + 1)).html("닫힘");
+				$("#tmr_ex4output" + (i + 1)).html("<span class='txt_output_close'>Close</span>");
 			}
 			$("#tmr_ex5starttime" + (i + 1)).prop("value", formatTime(data[idx + 26], data[idx + 27]));		//5단 시작시간
 			$("#tmr_ex5runtime" + (i + 1)).prop("value", data[idx + 28]);									//5단 동작시간
 			if (Number(data[idx + 29]) == 0) {
-				$("#tmr_ex5output" + (i + 1)).html("열림");												//5단 열림 혹은 닫힘
+				$("#tmr_ex5output" + (i + 1)).html("<span class='txt_output_open'>Open</span>");												//5단 열림 혹은 닫힘
 			} else if (Number(data[idx + 29]) == 1) {
-				$("#tmr_ex5output" + (i + 1)).html("닫힘");
+				$("#tmr_ex5output" + (i + 1)).html("<span class='txt_output_close'>Close</span>");
 			}
 
 			/*
@@ -1249,6 +1269,24 @@ function display_nowdata(data) {
 				$("#tmr_dnstate"+(i+1)).prop("value", "1");
 			}
 			*/
+			if (upclickok[16 + i] == 0 && dnclickok[16 + i] == 0) {
+				if (Number(data[idx + 1]) == 0) {
+					setManualBtnState("tmr_up" + (i + 1), "up", false);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", false);
+					$("#tmr_upstate" + (i + 1)).prop("value", "0");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "0");
+				} else if (Number(data[idx + 1]) == 1) {
+					setManualBtnState("tmr_up" + (i + 1), "up", true);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", false);
+					$("#tmr_upstate" + (i + 1)).prop("value", "1");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "0");
+				} else if (Number(data[idx + 1]) == 2) {
+					setManualBtnState("tmr_up" + (i + 1), "up", false);
+					setManualBtnState("tmr_dn" + (i + 1), "dn", true);
+					$("#tmr_upstate" + (i + 1)).prop("value", "0");
+					$("#tmr_dnstate" + (i + 1)).prop("value", "1");
+				}
+			}
 			if (upclickok[16 + i] == 1) {
 				let elapsedTime = (Date.now() - upclicktime[16 + i]) / 1000;		// 초 단위
 				if (elapsedTime >= 2) {
@@ -1283,6 +1321,7 @@ function display_nowdata(data) {
 
 function draw_ctrlgauge(gauge_index, temp_index, ctrl_type) {
 	//ctrl_type : 1(개폐기 컨트롤러), 2(온도 컨트롤러)
+	if (typeof RadialGauge === 'undefined') return;
 	var idx = (ctrl_type == 1) ? temp_index : (Number(occtrlnum) + temp_index);
 	temp_gauge[gauge_index] = new RadialGauge({
 		renderTo: (ctrl_type == 1) ? 'occtrlgauge' + (temp_index + 1) : 'tempctrlgauge' + (temp_index + 1),
