@@ -132,11 +132,11 @@ function tempoutbutton_clink(event) {
 
 	//console.log("ctrl_name="+ctrl_name+" , now_state="+now_state);
 	if (Number(now_state) == 0) {
-		$("#tempoutbt_" + ctrl_num).attr('src', "/html/img/png_image/on_enable(96).png");
+		$("#tempoutbt_" + ctrl_num).attr('src', "/html/img/png_image/on_enable(96).png").addClass("is_active active").attr("data-state", "1");
 		$("#tempoutbtstate_" + ctrl_num).prop("value", 1);
 		ctrl_cmd = 1;
 	} else {
-		$("#tempoutbt_" + ctrl_num).attr('src', "/html/img/png_image/off_disable(96).png");
+		$("#tempoutbt_" + ctrl_num).attr('src', "/html/img/png_image/off_disable(96).png").removeClass("is_active active").attr("data-state", "0");
 		$("#tempoutbtstate_" + ctrl_num).prop("value", 0);
 		ctrl_cmd = 0;
 	}
@@ -566,68 +566,92 @@ function create_mainscreen(data) {
 		// 2. White card container wrapping controls and chart
 		mtable += "<div class='smart_card'>";
 
-		// --- TOP SECTION: 4-COLUMN LAYOUT (CURRENT TEMP / SET TEMP / COOL & HEAT / OUTPUT) ---
-		mtable += "<div class='temp_control_top'>";
+		// --- TOP SECTION: 2-COLUMN LAYOUT (LEFT: READINGS & STATUS, RIGHT: MANUAL CONTROL) ---
+		mtable += "<div class='temp_card_content temp_control_top'>";
 
-		// COLUMN 1: CURRENT TEMPERATURE (Current Temp.)
-		mtable += "<div class='temp_col temp_col_current'>";
-		mtable += "  <div class='temp_icon_wrap'>";
-		mtable += "    <svg class='thermometer_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#0B7347' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11.5 14.5V4a2.5 2.5 0 0 0-5 0v10.5a4.5 4.5 0 1 0 5 0z'/><path d='M9 10v5.5 M15.5 9.5h3 M15.5 12.5h3 M15.5 15.5h3'/><circle cx='9' cy='17.5' r='2.3' fill='#0B7347' stroke='none'/></svg>";
-		mtable += "  </div>";
-		mtable += "  <div class='temp_info_box'>";
-		mtable += "    <div class='ctrl_label'>Current Temp.</div>";
-		mtable += "    <div class='temp_value_row'>";
-		mtable += "      <input type='number' step='0.1' class='txt_item_value temp_val_now' id='tempnow_" + (i + 1) + "' disabled>";
-		mtable += "      <span class='ctrl_unit_c unit_now'>℃</span>";
+		// LEFT SECTION (READINGS TOP + STATUS BOTTOM)
+		mtable += "  <div class='temp_col_main'>";
+
+		// Top Sub-row: Current Temp + Set Temp + Stepper
+		mtable += "    <div class='temp_main_top'>";
+		// Current Temp
+		mtable += "      <div class='temp_item_current'>";
+		mtable += "        <div class='temp_icon_wrap'>";
+		mtable += "          <svg class='thermometer_svg' viewBox='0 0 24 24' width='32' height='32' fill='none' stroke='#0B7347' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11.5 14.5V4a2.5 2.5 0 0 0-5 0v10.5a4.5 4.5 0 1 0 5 0z'/><path d='M9 10v5.5 M15.5 9.5h3 M15.5 12.5h3 M15.5 15.5h3'/><circle cx='9' cy='17.5' r='2.3' fill='#0B7347' stroke='none'/></svg>";
+		mtable += "        </div>";
+		mtable += "        <div class='temp_info_box'>";
+		mtable += "          <div class='ctrl_label'>Current Temp.</div>";
+		mtable += "          <div class='temp_value_row'>";
+		mtable += "            <input type='number' step='0.1' class='txt_item_value temp_val_now' id='tempnow_" + (i + 1) + "' disabled>";
+		mtable += "            <span class='ctrl_unit_c unit_now'>℃</span>";
+		mtable += "          </div>";
+		mtable += "        </div>";
+		mtable += "      </div>"; // end .temp_item_current
+
+		// Vertical divider between Current Temp and Set Temp
+		mtable += "      <div class='temp_item_divider_v'></div>";
+
+		// Set Temp + Steppers
+		mtable += "      <div class='temp_item_set'>";
+		mtable += "        <div class='temp_info_box'>";
+		mtable += "          <div class='ctrl_label'>Set Temp.</div>";
+		mtable += "          <div class='temp_value_row'>";
+		mtable += "            <input type='number' step='0.1' class='txt_item_value temp_val_set' id='tempset_" + (i + 1) + "' disabled>";
+		mtable += "            <span class='ctrl_unit_c unit_set'>℃</span>";
+		mtable += "          </div>";
+		mtable += "        </div>";
+		mtable += "        <div class='stepper_box'>";
+		mtable += "          <button type='button' class='ctrlbutton btn_stepper' id='tempsetup_" + (i + 1) + "'>▲</button>";
+		mtable += "          <button type='button' class='ctrlbutton btn_stepper' id='tempsetdn_" + (i + 1) + "'>▼</button>";
+		mtable += "        </div>";
+		mtable += "      </div>"; // end .temp_item_set
+		mtable += "    </div>"; // end .temp_main_top
+
+		// Horizontal divider between top and bottom sub-row in left section
+		mtable += "    <div class='temp_inner_divider_h'></div>";
+
+		// Bottom Sub-row: COOL, HEAT, Output
+		mtable += "    <div class='temp_main_bottom'>";
+		// COOL
+		mtable += "      <div class='temp_status_item mode_cool' id='tempmodecool_" + (i + 1) + "'>";
+		mtable += "        <div class='mode_icon mode_icon_cool'>";
+		mtable += "          <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='2' x2='12' y2='22'/><line x1='2' y1='12' x2='22' y2='12'/><line x1='4.93' y1='4.93' x2='19.07' y2='19.07'/><line x1='19.07' y1='4.93' x2='4.93' y2='19.07'/><polyline points='10 4 12 2 14 4'/><polyline points='10 20 12 22 14 20'/><polyline points='4 10 2 12 4 14'/><polyline points='20 10 22 12 20 14'/></svg>";
+		mtable += "        </div>";
+		mtable += "        <span class='mode_title mode_title_cool'>COOL</span>";
+		mtable += "        <img class='temp_mode_indicator' id='templampcool_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
+		mtable += "      </div>";
+		// HEAT
+		mtable += "      <div class='temp_status_item mode_heat' id='tempmodeheat_" + (i + 1) + "'>";
+		mtable += "        <div class='mode_icon mode_icon_heat'>";
+		mtable += "          <svg viewBox='0 0 24 24' width='18' height='18' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z'/></svg>";
+		mtable += "        </div>";
+		mtable += "        <span class='mode_title mode_title_heat'>HEAT</span>";
+		mtable += "        <img class='temp_mode_indicator' id='templampheat_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
+		mtable += "      </div>";
+		// Output
+		mtable += "      <div class='temp_status_item temp_status_output'>";
+		mtable += "        <span class='output_title'>Output</span>";
+		mtable += "        <img class='temp_output_led' id='templampout_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
+		mtable += "      </div>";
+		mtable += "    </div>"; // end .temp_main_bottom
+
+		mtable += "  </div>"; // end .temp_col_main
+
+		// Vertical divider separating Left and Right section
+		mtable += "  <div class='temp_col_divider_v'></div>";
+
+		// RIGHT SECTION: MANUAL CONTROL WITH CIRCULAR POWER BUTTON
+		mtable += "  <div class='temp_col_manual'>";
+		mtable += "    <div class='manual_ctrl_title'>Manual Control</div>";
+		mtable += "    <div class='temp_manual_btn_wrap'>";
+		mtable += "      <button type='button' class='temp_manual_power_btn' id='tempoutbt_" + (i + 1) + "' data-state='0' src='/html/img/png_image/off_disable(96).png'>";
+		mtable += "        <svg class='temp_power_svg' viewBox='0 0 24 24' width='36' height='36' fill='none' stroke='#FFFFFF' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><path d='M18.36 6.64a9 9 0 1 1-12.73 0'/><line x1='12' y1='2' x2='12' y2='12'/></svg>";
+		mtable += "      </button>";
+		mtable += "      <input type='hidden' id='tempoutbtstate_" + (i + 1) + "' value='0'>";
 		mtable += "    </div>";
-		mtable += "  </div>";
-		mtable += "</div>"; // end .temp_col_current
+		mtable += "  </div>"; // end .temp_col_manual
 
-		// COLUMN 2: SET TEMPERATURE & STEPPERS (Set Temp.)
-		mtable += "<div class='temp_col temp_col_setting'>";
-		mtable += "  <div class='temp_info_box'>";
-		mtable += "    <div class='ctrl_label'>Set Temp.</div>";
-		mtable += "    <div class='temp_value_row'>";
-		mtable += "      <input type='number' step='0.1' class='txt_item_value temp_val_set' id='tempset_" + (i + 1) + "' disabled>";
-		mtable += "      <span class='ctrl_unit_c unit_set'>℃</span>";
-		mtable += "    </div>";
-		mtable += "  </div>";
-		mtable += "  <div class='stepper_box'>";
-		mtable += "    <button type='button' class='ctrlbutton btn_stepper' id='tempsetup_" + (i + 1) + "'>▲</button>";
-		mtable += "    <button type='button' class='ctrlbutton btn_stepper' id='tempsetdn_" + (i + 1) + "'>▼</button>";
-		mtable += "  </div>";
-		mtable += "</div>"; // end .temp_col_setting
-
-		// COLUMN 3: OPERATION MODE SECTION (COOL & HEAT)
-		mtable += "<div class='temp_col temp_col_mode'>";
-		// Sub-item COOL
-		mtable += "  <div class='mode_item mode_cool' id='tempmodecool_" + (i + 1) + "'>";
-		mtable += "    <div class='mode_title mode_title_cool'>COOL</div>";
-		mtable += "    <div class='mode_icon mode_icon_cool'>";
-		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='2' x2='12' y2='22'/><line x1='2' y1='12' x2='22' y2='12'/><line x1='4.93' y1='4.93' x2='19.07' y2='19.07'/><line x1='19.07' y1='4.93' x2='4.93' y2='19.07'/><polyline points='10 4 12 2 14 4'/><polyline points='10 20 12 22 14 20'/><polyline points='4 10 2 12 4 14'/><polyline points='20 10 22 12 20 14'/></svg>";
-		mtable += "    </div>";
-		mtable += "    <img class='temp_mode_indicator' id='templampcool_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
-		mtable += "  </div>";
-		// Sub-item HEAT
-		mtable += "  <div class='mode_item mode_heat' id='tempmodeheat_" + (i + 1) + "'>";
-		mtable += "    <div class='mode_title mode_title_heat'>HEAT</div>";
-		mtable += "    <div class='mode_icon mode_icon_heat'>";
-		mtable += "      <svg viewBox='0 0 24 24' width='24' height='24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z'/></svg>";
-		mtable += "    </div>";
-		mtable += "    <img class='temp_mode_indicator' id='templampheat_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
-		mtable += "  </div>";
-		mtable += "</div>"; // end .temp_col_mode
-
-		// COLUMN 4: OUTPUT
-		mtable += "<div class='temp_col temp_col_output'>";
-		mtable += "  <div class='output_title'>Output</div>";
-		mtable += "  <img class='temp_output_led' id='templampout_" + (i + 1) + "' src='/html/img/png_image/LED_Disable(32).png'>";
-		// Preserve hidden inputs for tempoutbt to keep event listener and state logic
-		mtable += "  <input type='image' id='tempoutbt_" + (i + 1) + "' style='display:none;' src='/html/img/png_image/off_disable(96).png'>";
-		mtable += "  <input type='hidden' id='tempoutbtstate_" + (i + 1) + "' value='0'>";
-		mtable += "</div>"; // end .temp_col_output
-
-		mtable += "</div>"; // end .temp_control_top
+		mtable += "</div>"; // end .temp_card_content
 
 		// --- HORIZONTAL DIVIDER ---
 		mtable += "<div class='card_divider_main'></div>";
@@ -1048,6 +1072,14 @@ function display_nowdata(data) {
 			if (elapsedTime >= 2) {
 				$("#tempoutbt_" + (i + 1)).prop('disabled', false);
 				upclickok[8 + i] = 0;
+			}
+		}
+
+		if (upclickok[8 + i] == 0) {
+			if (Number($("#tempoutbtstate_" + (i + 1)).prop("value")) == 1) {
+				$("#tempoutbt_" + (i + 1)).attr('src', '/html/img/png_image/on_enable(96).png').addClass('is_active active').attr('data-state', '1');
+			} else {
+				$("#tempoutbt_" + (i + 1)).attr('src', '/html/img/png_image/off_disable(96).png').removeClass('is_active active').attr('data-state', '0');
 			}
 		}
 
