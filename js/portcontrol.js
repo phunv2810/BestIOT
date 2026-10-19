@@ -1173,18 +1173,19 @@ function display_nowdata(data) {
 				}
 			}
 
-			if (Number(data[idx + 1]) == 0) {
+			var out_state = Number(split16Bit(data[idx + 1]).low);
+			if (out_state == 0) {
 				//정지
 				$("#tmr_openout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
 				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
-			} else if (Number(data[idx + 1]) == 1) {
+			} else if (out_state == 1) {
 				//열림
 				$("#tmr_openout" + (i + 1)).attr('src', '/html/img/png_image/LED_Red(32).png');
 				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
-			} else if (Number(data[idx + 1]) == 2) {
+			} else if (out_state == 2) {
 				//닫힘
 				$("#tmr_openout" + (i + 1)).attr('src', '/html/img/png_image/LED_Disable(32).png');
-				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Red(32).png');
+				$("#tmr_closeout" + (i + 1)).attr('src', '/html/img/png_image/LED_Blue(32).png');
 			}
 		} else if (ctrl_mode[i] == 11) {
 			//플리커 모드
@@ -1348,7 +1349,30 @@ function display_nowdata(data) {
 				$("#tmr_excloseout" + (i + 1)).attr('src', '/html/img/png_image/LED_Blue(32).png');
 			}
 		}
+		var nowtmrmode = Number(split16Bit(data[idx + 1]).high);
+		var out_state = Number(split16Bit(data[idx + 1]).low);
+		if (nowtmrmode == 13) {
+			if (out_state == 1) {
+				//열림 상태인 경우
+				$("#tmr_up" + (i + 1)).attr('src', "/html/img/png_image/up_enable(96).png");
+				$("#tmr_upstate" + (i + 1)).prop("value", 1);
+				setManualBtnState("tmr_up" + (i + 1), "up", true);
+			} else if (out_state == 2) {
+				//닫힘 상태인 경우
+				$("#tmr_dn" + (i + 1)).attr('src', "/html/img/png_image/down_enable(96).png");
+				$("#tmr_dnstate" + (i + 1)).prop("value", 1);
+				setManualBtnState("tmr_dn" + (i + 1), "dn", true);
+			}
+		} else {
+			$("#tmr_up" + (i + 1)).attr('src', "/html/img/png_image/up_disable(96).png");
+			$("#tmr_dn" + (i + 1)).attr('src', "/html/img/png_image/down_disable(96).png");
+			$("#tmr_upstate" + (i + 1)).prop("value", 0);
+			$("#tmr_dnstate" + (i + 1)).prop("value", 0);
+			setManualBtnState("tmr_up" + (i + 1), "up", false);
+			setManualBtnState("tmr_dn" + (i + 1), "dn", false);
+		}
 	}
+
 }
 
 function draw_ctrlgauge(gauge_index, temp_index, ctrl_type) {
@@ -1778,4 +1802,23 @@ function formatTime(hour, minute) {
 	var m = String(minute).padStart(2, '0');
 
 	return h + ':' + m;
+}
+
+function split16Bit(value) {
+	// 16비트 범위(0 ~ 65535)로 제한
+	var val = value & 0xFFFF;
+
+	var highByte = (val >> 8) & 0xFF; // 상위 8비트
+	var lowByte = val & 0xFF;         // 하위 8비트
+
+	return {
+		high: highByte,
+		low: lowByte
+	};
+
+	//예제
+	//var data = 0x1234;
+	//var result = split16Bit(data);
+	//console.log("High Byte (10진수):", result.high); // 18
+	//console.log("Low Byte  (10진수):", result.low);  // 52
 }

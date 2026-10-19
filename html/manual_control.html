@@ -14,13 +14,11 @@
     <!--<script type="text/javascript" src="/js/jQuery.min.js"></script>//-->
     <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>//-->
     <script type="text/javascript" src="/js/jQuery.v1.7.min.js"></script>
-    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.6.0.min.js"><\/script>')</script>
     <script src="/js/animsition.js" charset="utf-8"></script>
     <link rel="stylesheet" href="css/animsition.min.css">
 
     <script type="text/javascript" src="/js/detect-swipe-event.js"></script>
     <script type="text/javascript" src="/canvas-gauges-master/gauge.min.js"></script>
-    <script>window.RadialGauge || document.write('<script src="https://cdn.jsdelivr.net/npm/canvas-gauges@2.1.7/gauge.min.js"><\/script>')</script>
 
     <script class="include" type="text/javascript" src="/jqPlot/jquery.jqplot.js"></script>
     <script type="text/javascript" src="/jqPlot/plugins/jqplot.canvasTextRenderer.js"></script>
@@ -1158,26 +1156,6 @@
             border-color: #09633C !important;
         }
 
-        @media (max-width: 768px) {
-            .ctrl_tab_bar {
-                gap: 8px !important;
-            }
-
-            .ctrl_tab_btn {
-                font-size: 0.95rem !important;
-                height: 44px !important;
-                padding: 0 6px !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .ctrl_tab_btn {
-                font-size: 0.85rem !important;
-                height: 42px !important;
-                padding: 0 4px !important;
-            }
-        }
-
         /* ==========================================================================
            12. TIMER CONTROLLER STYLES (.tbl_channel2)
            ========================================================================== */
@@ -1656,97 +1634,6 @@
             font-size: 16px !important;
             box-sizing: border-box !important;
         }
-
-        @media (max-width: 768px) {
-
-            .temp_card_content,
-            .timer_card_content,
-            .timer2_card_content {
-                flex-direction: column !important;
-            }
-
-            .temp_col_divider_v,
-            .timer_col_divider_v {
-                width: 100% !important;
-                height: 1px !important;
-                margin: 0 !important;
-            }
-
-            .temp_main_top,
-            .temp_main_bottom {
-                gap: 20px !important;
-                justify-content: space-between !important;
-            }
-
-            .timer_col_status,
-            .timer2_col_control {
-                width: 100% !important;
-                flex-direction: row !important;
-                justify-content: space-around !important;
-                padding: 16px 20px !important;
-            }
-
-            .timer_status_divider {
-                display: none !important;
-            }
-
-            .timer_time_box,
-            .timer_col_manual .btn_manual {
-                max-width: 100% !important;
-            }
-
-            .timer3_card_inner {
-                padding: 14px 10px !important;
-            }
-
-            .timer3_table thead th {
-                font-size: 13px !important;
-                padding: 6px 2px 10px 2px !important;
-            }
-
-            .timer3_table tbody tr td {
-                padding: 4px 2px !important;
-            }
-
-            .timer3_time_input {
-                font-size: 14px !important;
-                height: 36px !important;
-                width: 96% !important;
-            }
-
-            .timer3_output_val {
-                font-size: 15px !important;
-            }
-
-            .timer3_bottom_section {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 14px !important;
-            }
-
-            .timer3_bottom_status {
-                width: 100% !important;
-                justify-content: space-around !important;
-                padding: 0 !important;
-                gap: 20px !important;
-            }
-
-            .timer3_bottom_section .timer_col_divider_v {
-                display: none !important;
-            }
-
-            .timer3_bottom_manual {
-                width: 100% !important;
-            }
-
-            .manual_btn_row {
-                justify-content: center !important;
-            }
-
-            .manual_btn_row .btn_manual {
-                max-width: 50% !important;
-            }
-        }
     </style>
 
 </head>
@@ -1782,104 +1669,104 @@
     </div>
 
     <script type="text/javascript">
-            (function () {
+        (function () {
 
-                // Current active tab ('vent', 'temp', or 'timer')
-                var currentActiveTab = 'vent';
+            // Current active tab ('vent', 'temp', or 'timer')
+            var currentActiveTab = 'vent';
 
-                // Switch between Vent Controller (Type 1), Temperature Controller (Type 2), and Timer Controller (Type 3)
-                window.switchControllerTab = function (tabName) {
-                    if (tabName) currentActiveTab = tabName;
-                    var isVent = (currentActiveTab === 'vent');
-                    var isTemp = (currentActiveTab === 'temp');
-                    var isTimer = (currentActiveTab === 'timer');
+            // Switch between Vent Controller (Type 1), Temperature Controller (Type 2), and Timer Controller (Type 3)
+            window.switchControllerTab = function (tabName) {
+                if (tabName) currentActiveTab = tabName;
+                var isVent = (currentActiveTab === 'vent');
+                var isTemp = (currentActiveTab === 'temp');
+                var isTimer = (currentActiveTab === 'timer');
 
-                    // 1. Update active tab button class
-                    var btnVent = document.getElementById('tab_btn_vent');
-                    var btnTemp = document.getElementById('tab_btn_temp');
-                    var btnTimer = document.getElementById('tab_btn_timer');
-                    if (btnVent) {
-                        if (isVent) btnVent.classList.add('active');
-                        else btnVent.classList.remove('active');
-                    }
-                    if (btnTemp) {
-                        if (isTemp) btnTemp.classList.add('active');
-                        else btnTemp.classList.remove('active');
-                    }
-                    if (btnTimer) {
-                        if (isTimer) btnTimer.classList.add('active');
-                        else btnTimer.classList.remove('active');
-                    }
+                // 1. Update active tab button class
+                var btnVent = document.getElementById('tab_btn_vent');
+                var btnTemp = document.getElementById('tab_btn_temp');
+                var btnTimer = document.getElementById('tab_btn_timer');
+                if (btnVent) {
+                    if (isVent) btnVent.classList.add('active');
+                    else btnVent.classList.remove('active');
+                }
+                if (btnTemp) {
+                    if (isTemp) btnTemp.classList.add('active');
+                    else btnTemp.classList.remove('active');
+                }
+                if (btnTimer) {
+                    if (isTimer) btnTimer.classList.add('active');
+                    else btnTimer.classList.remove('active');
+                }
 
-                    // 2. Toggle visibility for controller cards
-                    var ventItems = document.querySelectorAll('.card_vent_group');
-                    var tempItems = document.querySelectorAll('.card_temp_group');
-                    var timerItems = document.querySelectorAll('.card_timer_group');
-                    ventItems.forEach(function (el) { el.style.display = isVent ? '' : 'none'; });
-                    tempItems.forEach(function (el) { el.style.display = isTemp ? '' : 'none'; });
-                    timerItems.forEach(function (el) { el.style.display = isTimer ? '' : 'none'; });
+                // 2. Toggle visibility for controller cards
+                var ventItems = document.querySelectorAll('.card_vent_group');
+                var tempItems = document.querySelectorAll('.card_temp_group');
+                var timerItems = document.querySelectorAll('.card_timer_group');
+                ventItems.forEach(function (el) { el.style.display = isVent ? '' : 'none'; });
+                tempItems.forEach(function (el) { el.style.display = isTemp ? '' : 'none'; });
+                timerItems.forEach(function (el) { el.style.display = isTimer ? '' : 'none'; });
 
-                    // 3. Filter table rows when rendered with portcontrol.js
-                    var tblControl = document.querySelector('.tbl_control');
-                    if (tblControl) {
-                        // Group 1: Vent Controller (Type 1)
-                        var ocElements = tblControl.querySelectorAll('.card_vent_group, .txt_occtrl_title, .txt_occtrl_name, .tbl_sensor');
-                        ocElements.forEach(function (el) {
-                            var tr = el.closest('tr');
-                            if (tr) tr.style.display = isVent ? '' : 'none';
-                        });
+                // 3. Filter table rows when rendered with portcontrol.js
+                var tblControl = document.querySelector('.tbl_control');
+                if (tblControl) {
+                    // Group 1: Vent Controller (Type 1)
+                    var ocElements = tblControl.querySelectorAll('.card_vent_group, .txt_occtrl_title, .txt_occtrl_name, .tbl_sensor');
+                    ocElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = isVent ? '' : 'none';
+                    });
 
-                        // Group 2: Temperature Controller (Type 2)
-                        var tempElements = tblControl.querySelectorAll('.card_temp_group, .txt_tempctrl_title, .txt_tempctrl_name, .tbl_sensor2');
-                        tempElements.forEach(function (el) {
-                            var tr = el.closest('tr');
-                            if (tr) tr.style.display = isTemp ? '' : 'none';
-                        });
+                    // Group 2: Temperature Controller (Type 2)
+                    var tempElements = tblControl.querySelectorAll('.card_temp_group, .txt_tempctrl_title, .txt_tempctrl_name, .tbl_sensor2');
+                    tempElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = isTemp ? '' : 'none';
+                    });
 
-                        // Group 3: Timer Controller (Type 3)
-                        var timerElements = tblControl.querySelectorAll('.card_timer_group, .txt_timectrl_title, .txt_timectrl_name, .tbl_channel2, .timer_smart_card');
-                        timerElements.forEach(function (el) {
-                            var tr = el.closest('tr');
-                            if (tr) tr.style.display = isTimer ? '' : 'none';
-                        });
+                    // Group 3: Timer Controller (Type 3)
+                    var timerElements = tblControl.querySelectorAll('.card_timer_group, .txt_timectrl_title, .txt_timectrl_name, .tbl_channel2, .timer_smart_card');
+                    timerElements.forEach(function (el) {
+                        var tr = el.closest('tr');
+                        if (tr) tr.style.display = isTimer ? '' : 'none';
+                    });
 
-                        // Hide spacer rows between groups
-                        var spacerTds = tblControl.querySelectorAll('td[style*="font-size:10px"]');
-                        spacerTds.forEach(function (spacerTd) {
-                            var tr = spacerTd.closest('tr');
-                            if (tr) tr.style.display = 'none';
-                        });
-                    }
+                    // Hide spacer rows between groups
+                    var spacerTds = tblControl.querySelectorAll('td[style*="font-size:10px"]');
+                    spacerTds.forEach(function (spacerTd) {
+                        var tr = spacerTd.closest('tr');
+                        if (tr) tr.style.display = 'none';
+                    });
+                }
 
-                    // 4. Resize Chart.js charts to full width on tab switch
-                    setTimeout(function () {
-                        if (window.chartplot && Array.isArray(window.chartplot)) {
-                            for (var c = 0; c < window.chartplot.length; c++) {
-                                if (window.chartplot[c] && typeof window.chartplot[c].resize === 'function') {
-                                    window.chartplot[c].resize();
-                                }
+                // 4. Resize Chart.js charts to full width on tab switch
+                setTimeout(function () {
+                    if (window.chartplot && Array.isArray(window.chartplot)) {
+                        for (var c = 0; c < window.chartplot.length; c++) {
+                            if (window.chartplot[c] && typeof window.chartplot[c].resize === 'function') {
+                                window.chartplot[c].resize();
                             }
                         }
-                    }, 60);
-                };
+                    }
+                }, 60);
+            };
 
-                // Trigger tab filtering when portcontrol.js renders into #main
-                var mainContainer = document.getElementById('main');
-                if (mainContainer && window.MutationObserver) {
-                    var observer = new MutationObserver(function () {
-                        window.switchControllerTab();
-                    });
-                    observer.observe(mainContainer, { childList: true });
-                }
+            // Trigger tab filtering when portcontrol.js renders into #main
+            var mainContainer = document.getElementById('main');
+            if (mainContainer && window.MutationObserver) {
+                var observer = new MutationObserver(function () {
+                    window.switchControllerTab();
+                });
+                observer.observe(mainContainer, { childList: true });
+            }
 
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', function () {
-                        switchControllerTab('vent');
-                    });
-                } else {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () {
                     switchControllerTab('vent');
-                }
-            })();
+                });
+            } else {
+                switchControllerTab('vent');
+            }
+        })();
     </script>
 </body>
 
