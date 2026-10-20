@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="shortcut icon" href="./img/shotcut_icon.ico" type="image/x-icon">
+
+	<title>고도리 스마트팜</title>
+
+	<link rel="stylesheet" href="./css/login.css?v=1.00">
+
+	<script type="text/javascript" src="/js/jQuery.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
+	<script class="include" type="text/javascript" src="/js/login.js?v=1.00"></script>
+</head>
+
+<body>
+<div class="bgscreen">
+	<div class="wrapper">
+		<div class="form-box">
+			<!-- Crimson Top Header with Logo -->
+			<div class="card-header">
+				<svg class="header-logo" width="42" height="29" viewBox="0 0 568 392" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+					<g transform="translate(0,392) scale(0.1,-0.1)">
+						<path d="M5146 3787 c-8 -7 -22 -28 -30 -47 -8 -19 -29 -49 -48 -66 -18 -17 -71 -74 -118 -126 -47 -53 -98 -102 -115 -110 -16 -9 -52 -35 -80 -60 -27 -24 -72 -57 -98 -72 -27 -15 -51 -34 -54 -42 -3 -8 -20 -22 -37 -31 -17 -8 -40 -23 -51 -33 -11 -10 -51 -34 -90 -54 -38 -20 -76 -43 -85 -50 -8 -7 -30 -18 -49 -25 -19 -6 -42 -18 -50 -25 -22 -20 -121 -71 -166 -86 -20 -7 -51 -21 -68 -32 -190 -119 -351 -240 -465 -350 -13 -13 -55 -61 -94 -108 -38 -47 -83 -96 -98 -110 -15 -14 -30 -36 -33 -50 -4 -14 -23 -44 -43 -66 -57 -62 -147 -226 -237 -429 -71 -159 -104 -252 -132 -375 -14 -63 -37 -158 -50 -210 -29 -119 -49 -265 -37 -286 7 -13 12 -12 36 7 15 12 44 44 66 73 66 88 282 296 350 337 19 12 55 40 80 61 25 22 65 51 90 64 25 14 66 41 92 62 26 20 89 59 140 86 51 27 104 57 117 67 13 11 32 19 42 19 17 0 190 77 302 135 26 14 53 25 61 25 7 0 26 10 42 23 15 12 42 31 60 42 137 84 287 205 311 250 7 13 29 33 48 45 20 12 43 36 52 53 15 29 52 76 129 166 18 20 37 54 43 77 6 22 19 49 30 58 10 9 33 52 51 94 17 42 36 84 41 92 92 150 188 604 189 886 0 127 -7 148 -44 121z"/>
+						<path d="M750 2112 c-71 -4 -231 -32 -275 -48 -22 -8 -60 -21 -85 -29 -51 -17 -110 -50 -110 -64 0 -15 23 -29 70 -41 25 -6 55 -18 68 -27 13 -8 41 -20 61 -28 45 -16 137 -79 168 -116 13 -15 35 -32 51 -38 16 -7 44 -31 64 -54 49 -59 148 -212 148 -229 0 -7 16 -43 35 -78 19 -36 46 -90 61 -120 14 -30 36 -66 49 -80 13 -14 37 -49 53 -77 32 -60 219 -267 328 -364 16 -14 39 -38 51 -52 13 -15 29 -27 37 -27 8 0 36 -18 64 -39 27 -21 67 -48 90 -60 22 -11 44 -25 47 -31 8 -14 97 -58 160 -80 27 -10 90 -37 140 -60 101 -47 162 -63 355 -90 313 -45 353 -46 660 -9 219 27 349 49 381 65 34 17 53 40 40 49 -14 8 -213 41 -301 50 -84 9 -157 27 -305 76 -151 51 -243 87 -275 109 -14 9 -43 22 -65 28 -22 6 -82 43 -134 82 -52 38 -99 70 -104 70 -11 0 -136 109 -200 175 -26 28 -64 75 -84 105 -19 30 -44 64 -54 76 -11 11 -51 83 -89 159 -39 77 -81 151 -94 165 -12 14 -29 40 -36 59 -8 19 -31 54 -52 78 -21 24 -38 47 -38 51 0 9 -196 212 -205 212 -3 0 -34 22 -67 49 -58 47 -172 111 -197 111 -7 0 -28 8 -49 19 -59 30 -260 59 -362 53z"/>
+						<path d="M5192 1914 c-24 -17 -291 -112 -402 -144 -36 -10 -77 -23 -91 -28 -15 -6 -60 -14 -100 -18 -80 -7 -287 -47 -469 -90 -108 -25 -186 -56 -290 -116 -25 -14 -63 -31 -85 -38 -22 -7 -56 -25 -75 -40 -19 -15 -55 -38 -80 -51 -25 -13 -67 -42 -95 -65 -27 -23 -58 -46 -69 -51 -31 -17 -155 -124 -229 -197 -108 -109 -267 -292 -267 -309 0 -27 117 -72 270 -104 69 -14 133 -17 345 -17 237 1 267 3 345 23 108 29 309 99 335 117 11 8 27 14 36 14 21 0 133 60 229 122 118 76 169 118 294 244 115 115 124 125 187 214 29 41 63 86 75 100 12 14 38 59 57 100 18 41 45 93 59 115 14 22 38 80 54 128 24 76 26 89 14 97 -20 13 -22 13 -48 -6z"/>
+					</g>
+				</svg>
+				<span class="header-title">고도리 스마트팜</span>
+			</div>
+
+			<!-- Main Form Body -->
+			<form class="form" onsubmit="return false;">
+				<!-- User ID Field -->
+				<div class="form-group">
+					<label class="form-label" for="input_id">User ID</label>
+					<div class="input-container">
+						<span class="input-icon">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+							</svg>
+						</span>
+						<input type="text" class="input-field input" placeholder="Enter your user ID" id="input_id" autocomplete="username">
+					</div>
+				</div>
+
+				<!-- Password Field -->
+				<div class="form-group">
+					<label class="form-label" for="input_pw">Password</label>
+					<div class="input-container">
+						<span class="input-icon">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+							</svg>
+						</span>
+						<input type="password" class="input-field input" placeholder="Enter your password" id="input_pw" autocomplete="current-password">
+						<button type="button" class="toggle-pw-btn" id="toggle_pw" aria-label="Toggle password visibility">
+							<svg id="eye_icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+								<line x1="1" y1="1" x2="23" y2="23"></line>
+							</svg>
+						</button>
+					</div>
+				</div>
+
+				<!-- Remember my ID Checkbox -->
+				<div class="remember-row">
+					<label class="checkbox-label" for="save_id">
+						<input type="checkbox" name="save_id" id="save_id" value="save_id">
+						<span>Remember my ID</span>
+					</label>
+				</div>
+
+				<!-- Login Button -->
+				<button type="button" id="connect" class="btn-login">Login</button>
+
+				<!-- Connection Information Box -->
+				<div class="connection_info">
+					<div class="info-row">
+						<span class="info-label">Your IP</span>
+						<input name="ipaddr" type="text" id="ipaddr" value="182.217.148.34" disabled class="info-input">
+					</div>
+					<div class="info-row">
+						<span class="info-label">Login Count</span>
+						<input name="con_count" type="text" id="con_count" value="10" disabled class="info-input">
+					</div>
+					<div class="info-row">
+						<span class="info-label">Login Error</span>
+						<input name="con_error" type="text" id="con_error" value="0" disabled class="info-input">
+					</div>
+					<div class="info-warning">Locked after 5 failed attempts</div>
+				</div>
+			</form>
+
+			<!-- Bottom Footer Section -->
+			<div class="form-section">
+				<p>Don't have an account? <a href="join.html" class="signup-link" style="pointer-events: none">Sign Up</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
